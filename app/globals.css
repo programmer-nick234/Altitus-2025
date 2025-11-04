@@ -1,26 +1,184 @@
 @import "tailwindcss";
 
+/* Altius 2025 Color Palette */
+@import "tailwindcss";
+
+/* Altius 2025 Color Palette */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Dark Theme Colors */
+  --background: #0B0C10;
+  --foreground: #F1FAEE;
+  
+  /* Brand Colors */
+  --accent-blue: #1D3557;
+  --accent-red: #E63946;
+  --text-primary: #F1FAEE;
+  --text-secondary: #C5C6C7;
+  
+  /* UI Colors */
+  --card-bg: #1F2833;
+  --hover-blue: #457B9D;
+  
+  /* Fonts */
+  --font-goldman: "Goldman", sans-serif;
+  --font-inter: "Inter", sans-serif;
+  --font-montserrat: "Montserrat", sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Goldman Font Classes */
+.goldman-regular {
+  font-family: var(--font-goldman);
+  font-weight: 400;
+  font-style: normal;
+}
+
+.goldman-bold {
+  font-family: var(--font-goldman);
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* Inter Font Variable Classes */
+.inter-light {
+  font-family: var(--font-inter);
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.inter-regular {
+  font-family: var(--font-inter);
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.inter-medium {
+  font-family: var(--font-inter);
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.inter-semibold {
+  font-family: var(--font-inter);
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.inter-bold {
+  font-family: var(--font-inter);
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* Montserrat Font Variable Classes */
+.montserrat-light {
+  font-family: var(--font-montserrat);
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.montserrat-regular {
+  font-family: var(--font-montserrat);
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.montserrat-medium {
+  font-family: var(--font-montserrat);
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.montserrat-semibold {
+  font-family: var(--font-montserrat);
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.montserrat-bold {
+  font-family: var(--font-montserrat);
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.montserrat-extrabold {
+  font-family: var(--font-montserrat);
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-blue);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--hover-blue);
+}
+
+/* Glassmorphism utility class */
+.glass {
+  background: rgba(31, 40, 51, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(69, 123, 157, 0.2);
+}
+
+/* Gradient backgrounds */
+.gradient-blue-red {
+  background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-red) 100%);
+}
+
+.gradient-overlay {
+  background: linear-gradient(135deg, rgba(29, 53, 87, 0.8) 0%, rgba(230, 57, 70, 0.8) 100%);
 }
