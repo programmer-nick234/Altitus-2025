@@ -1,15 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Play, Image as ImageIcon, Video as VideoIcon } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { gallery, type GalleryItem } from "@/lib/mockData";
+import { Button } from "@/components/ui";
 
 export default function GalleryPage() {
   const [filter, setFilter] = useState<"all" | "photo" | "video">("all");
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
+
+  // Scroll to top when page loads
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, []);
 
   const filteredGallery = gallery.filter(item => 
     filter === "all" ? true : item.type === filter
@@ -20,18 +26,19 @@ export default function GalleryPage() {
       <Navbar />
 
       {/* Header */}
-      <section className="pt-32 pb-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+      <section className="pt-32 md:pt-40 pb-16 md:pb-20 min-h-[50vh] flex items-center">
+        <div className="content-container w-full">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-12"
+            transition={{ duration: 0.6 }}
+            className="text-center space-y-6 mb-16"
           >
-            <h1 className="text-5xl md:text-6xl font-bold text-[#F1FAEE] mb-4 goldman-bold">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#F1FAEE] goldman-bold drop-shadow-[0_0_30px_rgba(230,57,70,0.3)]">
               Event <span className="text-[#E63946]">Gallery</span>
             </h1>
-            <div className="w-24 h-1 bg-gradient-to-r from-[#1D3557] to-[#E63946] mx-auto mb-6" />
-            <p className="text-[#C5C6C7] text-lg max-w-2xl mx-auto inter-regular">
+            <div className="w-24 h-1 bg-gradient-to-r from-[#1D3557] to-[#E63946] mx-auto rounded-full" />
+            <p className="text-[#C5C6C7] text-xl md:text-2xl max-w-3xl mx-auto inter-regular leading-relaxed px-4">
               Relive the amazing moments from Altius 2025. Browse through photos and videos from all our events.
             </p>
           </motion.div>
@@ -43,17 +50,15 @@ export default function GalleryPage() {
             transition={{ delay: 0.2 }}
             className="flex justify-center mb-12"
           >
-            <div className="glass rounded-xl p-2 inline-flex space-x-2">
+            <div className="glass rounded-xl p-2 inline-flex flex-wrap gap-2 justify-center">
               {[
                 { value: "all", label: "All", icon: null },
                 { value: "photo", label: "Photos", icon: ImageIcon },
                 { value: "video", label: "Videos", icon: VideoIcon },
               ].map(({ value, label, icon: Icon }) => (
-                <motion.button
+                <button
                   key={value}
                   onClick={() => setFilter(value as typeof filter)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
                   className={`px-6 py-3 rounded-lg inter-regular font-medium transition-all flex items-center space-x-2 ${
                     filter === value
                       ? "gradient-blue-red text-white shadow-lg"
@@ -62,7 +67,7 @@ export default function GalleryPage() {
                 >
                   {Icon && <Icon size={18} />}
                   <span>{label}</span>
-                </motion.button>
+                </button>
               ))}
             </div>
           </motion.div>
@@ -71,15 +76,15 @@ export default function GalleryPage() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="mb-6"
+            className="mb-10 text-center"
           >
-            <p className="text-[#C5C6C7] inter-regular text-center">
+            <p className="text-[#C5C6C7] inter-regular text-lg">
               Showing <span className="text-[#457B9D] font-semibold">{filteredGallery.length}</span> {filter === "all" ? "items" : filter === "photo" ? "photos" : "videos"}
             </p>
           </motion.div>
 
           {/* Masonry Grid */}
-          <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+          <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8 max-w-7xl mx-auto">
             <AnimatePresence mode="popLayout">
               {filteredGallery.map((item, index) => (
                 <motion.div

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Calendar, Clock, MapPin, Radio } from "lucide-react";
 import type { Event } from "@/lib/mockData";
+import { Button } from "@/components/ui";
 
 interface EventCardProps {
   event: Event;
@@ -52,32 +53,32 @@ export default function EventCard({ event, onRegister }: EventCardProps) {
       </div>
 
       {/* Content */}
-      <div className="p-4 md:p-6 space-y-3 md:space-y-4 flex-grow flex flex-col">
+      <div className="event-card-content card-inner-spacing">
         {/* Department Badge */}
-        <div className="flex items-center justify-between gap-2 flex-wrap">
-          <span className="px-2.5 md:px-3 py-1 bg-[#1D3557]/50 text-[#457B9D] text-[10px] md:text-xs font-semibold rounded-full inter-regular">
+        <div className="flex items-center justify-center gap-2 flex-wrap">
+          <span className="px-3 md:px-4 py-1.5 bg-[#1D3557]/50 text-[#457B9D] text-xs font-semibold rounded-full inter-regular">
             {event.department}
           </span>
-          <span className="px-2.5 md:px-3 py-1 bg-[#E63946]/10 text-[#E63946] text-[10px] md:text-xs font-semibold rounded-full inter-regular">
+          <span className="px-3 md:px-4 py-1.5 bg-[#E63946]/10 text-[#E63946] text-xs font-semibold rounded-full inter-regular">
             {event.type}
           </span>
         </div>
 
         {/* Title */}
-        <h3 className="text-lg md:text-xl font-bold text-[#F1FAEE] goldman-bold group-hover:text-[#457B9D] transition-colors line-clamp-2">
+        <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-[#F1FAEE] goldman-bold group-hover:text-[#457B9D] transition-colors line-clamp-2 text-center px-2">
           {event.name}
         </h3>
 
         {/* Description */}
-        <p className="text-[#C5C6C7] text-xs md:text-sm leading-relaxed inter-regular line-clamp-2 flex-grow">
+        <p className="text-[#C5C6C7] text-sm md:text-base leading-relaxed inter-regular line-clamp-3 flex-grow text-center px-2 max-w-prose mx-auto">
           {event.description}
         </p>
 
         {/* Event Details */}
-        <div className="space-y-1.5 md:space-y-2">
-          <div className="flex items-center space-x-2 text-[#C5C6C7] text-xs md:text-sm">
-            <Calendar size={14} className="text-[#457B9D] flex-shrink-0" />
-            <span className="inter-regular truncate">
+        <div className="space-y-2 md:space-y-3 w-full">
+          <div className="flex items-center justify-center space-x-2 text-[#C5C6C7] text-sm md:text-base">
+            <Calendar size={16} className="text-[#457B9D] flex-shrink-0" />
+            <span className="inter-regular">
               {new Date(event.date).toLocaleDateString('en-US', { 
                 month: 'short', 
                 day: 'numeric', 
@@ -85,25 +86,25 @@ export default function EventCard({ event, onRegister }: EventCardProps) {
               })}
             </span>
           </div>
-          <div className="flex items-center space-x-2 text-[#C5C6C7] text-xs md:text-sm">
-            <Clock size={14} className="text-[#457B9D] flex-shrink-0" />
-            <span className="inter-regular truncate">{event.time}</span>
+          <div className="flex items-center justify-center space-x-2 text-[#C5C6C7] text-sm md:text-base">
+            <Clock size={16} className="text-[#457B9D] flex-shrink-0" />
+            <span className="inter-regular">{event.time}</span>
           </div>
-          <div className="flex items-center space-x-2 text-[#C5C6C7] text-xs md:text-sm">
-            <MapPin size={14} className="text-[#457B9D] flex-shrink-0" />
-            <span className="inter-regular truncate">{event.venue}</span>
+          <div className="flex items-center justify-center space-x-2 text-[#C5C6C7] text-sm md:text-base">
+            <MapPin size={16} className="text-[#457B9D] flex-shrink-0" />
+            <span className="inter-regular">{event.venue}</span>
           </div>
         </div>
 
         {/* Register Button */}
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+        <Button
+          variant="gradient"
+          size="lg"
+          fullWidth
           onClick={() => onRegister?.(event)}
-          className="w-full py-2.5 md:py-3 gradient-blue-red text-white font-semibold rounded-lg inter-regular text-sm md:text-base hover:shadow-lg hover:shadow-[#E63946]/20 transition-all mt-auto"
         >
           {event.isLive ? "Join Now" : "Register"}
-        </motion.button>
+        </Button>
       </div>
 
       {/* Hover Glow Effect */}

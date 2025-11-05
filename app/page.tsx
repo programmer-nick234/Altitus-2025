@@ -1,13 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowDown, Calendar, MapPin, Users } from "lucide-react";
+import { ArrowDown, Calendar, MapPin, Users, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CountdownTimer from "@/components/CountdownTimer";
 import EventCard from "@/components/EventCard";
+import { Button } from "@/components/ui";
 import { EVENT_START_DATE, events } from "@/lib/mockData";
 
 export default function Home() {
@@ -22,8 +23,7 @@ export default function Home() {
       <Navbar />
 
       {/* Hero Section */}
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="hero-section overflow-hidden">
         {/* Animated Background */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#0B0C10] via-[#1D3557]/20 to-[#0B0C10]">
           <motion.div
@@ -75,9 +75,9 @@ export default function Home() {
               <Image
                 src="/altius-bg.png"
                 alt="Altius Logo"
-                width={240}
-                height={240}
-                className="w-40 h-40 md:w-52 md:h-52 lg:w-60 lg:h-60"
+                width={260}
+                height={260}
+                className="w-44 h-44 md:w-56 md:h-56 lg:w-64 lg:h-64"
                 priority
                 style={{
                   filter: 'drop-shadow(0 0 40px rgba(230, 57, 70, 0.4))',
@@ -115,7 +115,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-[#457B9D] font-semibold montserrat-semibold tracking-wide mb-2"
+            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-[#457B9D] font-semibold montserrat-semibold tracking-wide mt-4 md:mt-6 mb-2"
           >
             Soar Beyond Limits 🚀
           </motion.p>
@@ -134,29 +134,40 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8 }}
-            className="flex flex-wrap justify-center items-center gap-4 md:gap-6"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-16 w-full max-w-5xl"
           >
-            <div className="flex items-center gap-3 glass px-5 py-3 rounded-xl hover:border-[#E63946]/50 transition-all">
-              <Calendar className="text-[#E63946] flex-shrink-0 w-5 h-5 md:w-6 md:h-6" />
-              <div className="flex flex-col items-start">
-                <span className="text-[10px] text-[#C5C6C7]/60 inter-medium uppercase tracking-wider">Date</span>
-                <span className="text-[#F1FAEE] text-sm md:text-base inter-semibold">Nov 10, 2025</span>
+            <motion.div 
+              whileHover={{ scale: 1.05, y: -5 }}
+              className="flex flex-col items-center justify-center gap-4 bg-white/5 border border-white/10 backdrop-blur-md px-8 py-6 md:px-10 md:py-8 rounded-2xl hover:border-[#E63946]/50 hover:shadow-[0_0_25px_rgba(230,57,70,0.15)] transition-all duration-300"
+            >
+              <Calendar className="text-[#E63946] w-10 h-10 md:w-12 md:h-12" />
+              <div className="flex flex-col items-center text-center gap-2">
+                <span className="text-xs text-[#C5C6C7]/70 inter-medium uppercase tracking-widest">Date</span>
+                <span className="text-[#F1FAEE] text-lg md:text-xl inter-bold">Nov 10, 2025</span>
               </div>
-            </div>
-            <div className="flex items-center gap-3 glass px-5 py-3 rounded-xl hover:border-[#1D3557]/50 transition-all">
-              <MapPin className="text-[#1D3557] flex-shrink-0 w-5 h-5 md:w-6 md:h-6" />
-              <div className="flex flex-col items-start">
-                <span className="text-[10px] text-[#C5C6C7]/60 inter-medium uppercase tracking-wider">Venue</span>
-                <span className="text-[#F1FAEE] text-sm md:text-base inter-semibold">SIT, Mangalore</span>
+            </motion.div>
+
+            <motion.div 
+              whileHover={{ scale: 1.05, y: -5 }}
+              className="flex flex-col items-center justify-center gap-4 bg-white/5 border border-white/10 backdrop-blur-md px-8 py-6 md:px-10 md:py-8 rounded-2xl hover:border-[#1D3557]/50 hover:shadow-[0_0_25px_rgba(230,57,70,0.15)] transition-all duration-300"
+            >
+              <MapPin className="text-[#1D3557] w-10 h-10 md:w-12 md:h-12" />
+              <div className="flex flex-col items-center text-center gap-2">
+                <span className="text-xs text-[#C5C6C7]/70 inter-medium uppercase tracking-widest">Venue</span>
+                <span className="text-[#F1FAEE] text-lg md:text-xl inter-bold">SIT, Mangalore</span>
               </div>
-            </div>
-            <div className="flex items-center gap-3 glass px-5 py-3 rounded-xl hover:border-[#457B9D]/50 transition-all">
-              <Users className="text-[#457B9D] flex-shrink-0 w-5 h-5 md:w-6 md:h-6" />
-              <div className="flex flex-col items-start">
-                <span className="text-[10px] text-[#C5C6C7]/60 inter-medium uppercase tracking-wider">Expected</span>
-                <span className="text-[#F1FAEE] text-sm md:text-base inter-semibold">500+ Students</span>
+            </motion.div>
+
+            <motion.div 
+              whileHover={{ scale: 1.05, y: -5 }}
+              className="flex flex-col items-center justify-center gap-4 bg-white/5 border border-white/10 backdrop-blur-md px-8 py-6 md:px-10 md:py-8 rounded-2xl hover:border-[#457B9D]/50 hover:shadow-[0_0_25px_rgba(230,57,70,0.15)] transition-all duration-300"
+            >
+              <Users className="text-[#457B9D] w-10 h-10 md:w-12 md:h-12" />
+              <div className="flex flex-col items-center text-center gap-2">
+                <span className="text-xs text-[#C5C6C7]/70 inter-medium uppercase tracking-widest">Expected</span>
+                <span className="text-[#F1FAEE] text-lg md:text-xl inter-bold">500+ Students</span>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
 
           {/* Countdown Timer with Enhanced Spacing */}
@@ -164,7 +175,7 @@ export default function Home() {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 1.0 }}
-            className="w-full max-w-4xl mt-8 md:mt-12 lg:mt-16 mb-8 md:mb-10 lg:mb-12"
+            className="w-full max-w-14xl mt-12 md:mt-16"
           >
             <CountdownTimer targetDate={EVENT_START_DATE} />
           </motion.div>
@@ -174,71 +185,28 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.2 }}
-            className="flex flex-col sm:flex-row gap-4 md:gap-5 justify-center items-stretch sm:items-center w-full max-w-2xl px-4"
+            className="flex flex-col sm:flex-row gap-6 justify-center items-center w-full max-w-2xl px-4 mt-10 md:mt-12"
           >
-            <Link href="/events" className="flex-1 sm:flex-initial">
-              <motion.button
-                whileHover={{ scale: 1.03, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full sm:w-auto group relative px-8 md:px-10 lg:px-12 py-4 md:py-4.5 lg:py-5 bg-gradient-to-r from-[#1D3557] via-[#457B9D] to-[#1D3557] bg-size-200 bg-pos-0 hover:bg-pos-100 text-white rounded-xl font-bold text-base md:text-lg inter-bold shadow-xl shadow-[#457B9D]/40 hover:shadow-2xl hover:shadow-[#457B9D]/60 transition-all duration-300 overflow-hidden"
-                style={{
-                  backgroundSize: '200% 100%',
-                }}
+            <Link href="/events" className="w-full sm:w-auto">
+              <Button 
+                variant="gradient" 
+                size="xl"
+                icon={<ChevronRight className="w-5 h-5" />}
+                iconPosition="right"
+                className="min-w-[220px] px-12 py-5 text-lg font-bold tracking-wide rounded-full w-full sm:w-auto shadow-2xl hover:shadow-[0_0_40px_rgba(69,123,157,0.5)] transition-all duration-300"
               >
-                {/* Shimmer Effect */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                  initial={{ x: '-100%' }}
-                  whileHover={{ x: '100%' }}
-                  transition={{ duration: 0.6 }}
-                />
-                <span className="relative z-10 flex items-center justify-center gap-2">
-                  Explore Events
-                  <motion.span
-                    initial={{ x: 0 }}
-                    whileHover={{ x: 5 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    →
-                  </motion.span>
-                </span>
-              </motion.button>
+                Explore Events
+              </Button>
             </Link>
             
-            <Link href="/register" className="flex-1 sm:flex-initial">
-              <motion.button
-                whileHover={{ scale: 1.03, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full sm:w-auto group relative px-8 md:px-10 lg:px-12 py-4 md:py-4.5 lg:py-5 bg-gradient-to-r from-[#E63946] to-[#C5283D] text-white rounded-xl font-bold text-base md:text-lg inter-bold shadow-xl shadow-[#E63946]/40 hover:shadow-2xl hover:shadow-[#E63946]/60 transition-all duration-300 overflow-hidden border-2 border-[#E63946]/50 hover:border-[#E63946]"
+            <Link href="/register" className="w-full sm:w-auto">
+              <Button 
+                variant="primary" 
+                size="xl"
+                className="min-w-[220px] px-12 py-5 text-lg font-bold tracking-wide rounded-full w-full sm:w-auto shadow-2xl hover:shadow-[0_0_40px_rgba(230,57,70,0.5)] transition-all duration-300"
               >
-                {/* Animated Glow Effect */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                  animate={{
-                    x: ['-100%', '100%'],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    repeatDelay: 1,
-                  }}
-                />
-                <span className="relative z-10 flex items-center justify-center gap-2">
-                  Register Now
-                  <motion.span
-                    className="inline-block"
-                    animate={{
-                      scale: [1, 1.2, 1],
-                    }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: Infinity,
-                    }}
-                  >
-                    ⚡
-                  </motion.span>
-                </span>
-              </motion.button>
+                Register Now
+              </Button>
             </Link>
           </motion.div>
 
@@ -256,19 +224,19 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section id="about-section" className="py-20 md:py-28 lg:py-36 bg-[#0B0C10]">
-        <div className="max-w-7xl mx-auto px-8 sm:px-10 lg:px-16">
+      <section id="about-section" className="pt-24 md:pt-32 pb-16 md:pb-24 relative bg-[#0B0C10]">
+        <div className="content-container">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16 md:mb-24"
+            className="text-center space-y-6 mb-20"
           >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#F1FAEE] mb-5 md:mb-7 goldman-bold">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#F1FAEE] goldman-bold">
               About <span className="text-[#E63946]">Altius 2025</span>
             </h2>
-            <div className="w-24 md:w-32 h-1.5 bg-gradient-to-r from-[#1D3557] to-[#E63946] mx-auto mb-7 md:mb-10 rounded-full" />
-            <p className="text-[#C5C6C7] text-base md:text-lg lg:text-xl max-w-4xl mx-auto inter-regular leading-relaxed">
+            <div className="w-24 h-1 bg-gradient-to-r from-[#1D3557] to-[#E63946] mx-auto rounded-full" />
+            <p className="text-[#C5C6C7] text-lg md:text-xl max-w-4xl mx-auto inter-regular leading-relaxed px-4">
               Altius 2025 is the premier inter-department technical fest at Srinivas Institute of Technology. 
               Bringing together brilliant minds from across departments to compete, collaborate, and celebrate innovation. 
               Experience cutting-edge technology, intense competitions, and unforgettable moments.
@@ -276,7 +244,7 @@ export default function Home() {
           </motion.div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10 lg:gap-12 mb-20 md:mb-28">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-16 mb-24">
             {[
               { value: "20+", label: "Events" },
               { value: "500+", label: "Participants" },
@@ -289,12 +257,12 @@ export default function Home() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="glass rounded-xl md:rounded-2xl p-6 md:p-8 text-center hover:border-[#457B9D]/50 hover:scale-105 transition-all group"
+                className="flex flex-col items-center justify-center p-6 md:p-8 bg-white/5 border border-white/10 backdrop-blur-md rounded-xl hover:border-[#457B9D]/50 hover:scale-105 hover:shadow-[0_0_25px_rgba(230,57,70,0.15)] transition-all duration-300 group"
               >
-                <div className="text-4xl md:text-5xl lg:text-6xl font-bold gradient-blue-red bg-clip-text text-transparent goldman-bold mb-2 md:mb-3 group-hover:scale-110 transition-transform">
+                <div className="text-6xl md:text-7xl font-bold gradient-blue-red bg-clip-text text-transparent goldman-bold mb-4 group-hover:scale-110 transition-transform">
                   {stat.value}
                 </div>
-                <div className="text-sm md:text-base lg:text-lg text-[#C5C6C7] inter-semibold uppercase tracking-wider">{stat.label}</div>
+                <div className="text-lg md:text-xl text-[#C5C6C7] inter-semibold uppercase tracking-wider">{stat.label}</div>
               </motion.div>
             ))}
           </div>
@@ -306,16 +274,17 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="text-center mb-12 md:mb-20"
+                className="text-center space-y-6 mb-16"
               >
-                <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#F1FAEE] mb-4 md:mb-6 goldman-bold">
+                <h3 className="text-4xl md:text-5xl font-bold text-[#F1FAEE] goldman-bold">
                   Live <span className="text-[#E63946]">Events</span>
                 </h3>
-                <p className="text-[#C5C6C7] text-base md:text-lg lg:text-xl inter-regular mt-4 md:mt-5">
+                <div className="w-24 h-1 bg-gradient-to-r from-[#1D3557] to-[#E63946] mx-auto rounded-full" />
+                <p className="text-[#C5C6C7] text-lg md:text-xl inter-regular max-w-2xl mx-auto px-4">
                   Join the action happening right now
                 </p>
               </motion.div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 lg:gap-12">
+              <div className="card-grid card-grid-3">
                 {featuredEvents.map((event, index) => (
                   <motion.div
                     key={event.id}
