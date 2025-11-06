@@ -8,30 +8,34 @@ import Footer from "@/components/Footer";
 import { createClient } from "@supabase/supabase-js";
 import type { Database, Department } from "@/types/database.types";
 
+// --- UPDATE 1: Supabase client is created ONCE at the module level ---
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+
+const isValidUrl = supabaseUrl.startsWith('https://') && supabaseUrl.includes('.supabase.co');
+const isNotPlaceholder = supabaseUrl !== 'your_supabase_project_url'; // User's original check
+
+const supabase = (isValidUrl && isNotPlaceholder && supabaseAnonKey)
+  ? createClient<Database>(supabaseUrl, supabaseAnonKey, {
+      auth: { persistSession: false },
+      realtime: { params: { eventsPerSecond: 10 } },
+    })
+  : null;
+// --- End Update 1 ---
+
 export default function ScoreboardPage() {
   const [departments, setDepartments] = useState<Department[]>([]);
   const [lastUpdate, setLastUpdate] = useState(new Date());
   const [isLive, setIsLive] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Initialize Supabase client
+  // Simplified client getter
   const getSupabaseClient = () => {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
-    
-    // Validate URL format and ensure it's not placeholder
-    const isValidUrl = supabaseUrl.startsWith('https://') && supabaseUrl.includes('.supabase.co');
-    const isNotPlaceholder = supabaseUrl !== 'your_supabase_project_url';
-    
-    if (!supabaseUrl || !supabaseAnonKey || !isValidUrl || !isNotPlaceholder) {
+    if (!supabase) {
       console.log('Supabase not configured - using mock data');
       return null;
     }
-    
-    return createClient<Database>(supabaseUrl, supabaseAnonKey, {
-      auth: { persistSession: false },
-      realtime: { params: { eventsPerSecond: 10 } },
-    });
+    return supabase;
   };
 
   // Scroll to top when page loads
@@ -41,9 +45,9 @@ export default function ScoreboardPage() {
 
   // Fetch leaderboard data
   const fetchLeaderboard = async () => {
-    const supabase = getSupabaseClient();
+    const supabaseClient = getSupabaseClient();
     
-    if (!supabase) {
+    if (!supabaseClient) {
       console.log('Supabase not configured - using mock data');
       // Use comprehensive mock data if Supabase not configured
       setDepartments([
@@ -67,7 +71,7 @@ export default function ScoreboardPage() {
     }
 
     try {
-      const { data, error } = await supabase
+      const { data, error } = await supabaseClient
         .from('departments')
         .select('*')
         .order('total_points', { ascending: false });
@@ -92,10 +96,10 @@ export default function ScoreboardPage() {
 
   // Realtime subscription
   useEffect(() => {
-    const supabase = getSupabaseClient();
-    if (!supabase) return;
+    const supabaseClient = getSupabaseClient();
+    if (!supabaseClient) return;
 
-    const channel = supabase
+    const channel = supabaseClient
       .channel('departments-changes')
       .on(
         'postgres_changes',
@@ -104,15 +108,44 @@ export default function ScoreboardPage() {
           schema: 'public',
           table: 'departments',
         },
+        // --- UPDATE 2: Efficient real-time update using the payload ---
         (payload) => {
           console.log('Realtime update:', payload);
-          fetchLeaderboard();
+          const newDept = payload.new as Department;
+
+          setDepartments(currentDepts => {
+            let updatedDepts: Department[];
+
+            if (payload.eventType === 'INSERT') {
+              updatedDepts = [...currentDepts, newDept];
+            } else if (payload.eventType === 'UPDATE') {
+              updatedDepts = currentDepts.map(dept => 
+                dept.id === newDept.id ? newDept : dept
+              );
+            } else if (payload.eventType === 'DELETE') {
+              // Ensure payload.old has the 'id' property
+              const oldId = (payload.old as { id?: string })?.id;
+              if (oldId) {
+                updatedDepts = currentDepts.filter(dept => dept.id !== oldId);
+              } else {
+                updatedDepts = currentDepts; // Fallback: no change if old id is missing
+              }
+            } else {
+              return currentDepts; // No change
+            }
+
+            // Re-sort the list based on the new points
+            return updatedDepts.sort((a, b) => b.total_points - a.total_points);
+          });
+          
+          setLastUpdate(new Date()); // Update the timestamp
         }
+        // --- End Update 2 ---
       )
       .subscribe();
 
     return () => {
-      supabase.removeChannel(channel);
+      supabaseClient.removeChannel(channel);
     };
   }, []);
 
@@ -173,7 +206,9 @@ export default function ScoreboardPage() {
       <Navbar />
 
       {/* Header */}
-      <section className="pt-32 md:pt-40 pb-16 md:pb-20 min-h-[50vh] flex items-center">
+      {/* --- UPDATE 3: Using .section-spacing from global.css --- */}
+      <section className="section-spacing min-h-[50vh] flex items-center">
+      {/* --- End Update 3 --- */}
         <div className="content-container w-full">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
