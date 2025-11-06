@@ -39,7 +39,7 @@
   
   /* ===== Industry-Grade Spacing System ===== */
   /* Base spacing unit: 4px (0.25rem) */
-  --spacing-0: 0;
+  --spacing-0: 0.25rem;
   --spacing-1: 0.25rem;    /* 4px */
   --spacing-2: 0.5rem;     /* 8px */
   --spacing-3: 0.75rem;    /* 12px */
@@ -80,11 +80,19 @@
   --z-modal: 1050;
   --z-popover: 1060;
   --z-tooltip: 1070;
+
+  /* Renamed variables from the second file for compatibility */
+  --background: var(--color-bg-primary);
+  --foreground: var(--color-text-primary);
+  --font-body: var(--font-inter);
+  --accent-blue: var(--color-accent-blue);
+  --accent-red: var(--color-accent-red);
+  --hover-blue: var(--color-accent-blue-light);
 }
 
 /* ===== Global Reset ===== */
 * {
-  margin: 0;
+  margin: 7px;
   padding: 0;
   box-sizing: border-box;
 }
@@ -98,28 +106,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
-}
-
-/* ===== Global Center Alignment ===== */
-main,
-section,
-article {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-/* Center all direct children containers */
-.max-w-7xl,
-.max-w-6xl,
-.max-w-5xl,
-.max-w-4xl,
-.max-w-3xl,
-.max-w-2xl,
-.max-w-xl {
-  margin-left: auto;
-  margin-right: auto;
 }
 
 /* Mobile-first responsive images */
@@ -137,6 +123,11 @@ body {
   overflow-x: hidden;
 }
 
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
 /* Mobile touch optimization */
 @media (hover: none) and (pointer: coarse) {
   * {
@@ -148,6 +139,10 @@ body {
     touch-action: manipulation;
   }
 }
+
+/* ========================================
+   FONT UTILITY CLASSES
+   ======================================== */
 
 /* Goldman Font Classes */
 .goldman-regular {
@@ -241,23 +236,10 @@ body {
   font-style: normal;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-body), system-ui, -apple-system, sans-serif;
-  overflow-x: hidden;
-}
-
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
-}
+/* ========================================
+   CUSTOM COMPONENT CLASSES
+   ======================================== */
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
@@ -292,19 +274,6 @@ html {
 
 .gradient-overlay {
   background: linear-gradient(135deg, rgba(29, 53, 87, 0.8) 0%, rgba(230, 57, 70, 0.8) 100%);
-}
-
-/* Button Animation Utilities */
-.bg-size-200 {
-  background-size: 200% 100%;
-}
-
-.bg-pos-0 {
-  background-position: 0% 0%;
-}
-
-.bg-pos-100 {
-  background-position: 100% 0%;
 }
 
 /* Industry-Grade Button Styles */
@@ -388,68 +357,6 @@ textarea {
   }
 }
 
-/* Vertical Rhythm - Content spacing between elements */
-.content-gap-xs > * + * {
-  margin-top: var(--content-gap-xs);
-}
-
-.content-gap-sm > * + * {
-  margin-top: var(--content-gap-sm);
-}
-
-.content-gap-md > * + * {
-  margin-top: var(--content-gap-md);
-}
-
-.content-gap-lg > * + * {
-  margin-top: var(--content-gap-lg);
-}
-
-.content-gap-xl > * + * {
-  margin-top: var(--content-gap-xl);
-}
-
-/* Grid Spacing */
-.grid-gap-sm {
-  gap: var(--content-gap-sm);
-}
-
-.grid-gap-md {
-  gap: var(--content-gap-md);
-}
-
-.grid-gap-lg {
-  gap: var(--content-gap-lg);
-}
-
-/* Card Spacing */
-.card-padding {
-  padding: var(--spacing-6);
-}
-
-@media (min-width: 768px) {
-  .card-padding {
-    padding: var(--spacing-8);
-  }
-}
-
-@media (min-width: 1024px) {
-  .card-padding {
-    padding: var(--spacing-10);
-  }
-}
-
-/* Section Title Spacing */
-.section-title {
-  margin-bottom: var(--spacing-12);
-}
-
-@media (min-width: 768px) {
-  .section-title {
-    margin-bottom: var(--spacing-16);
-  }
-}
-
 /* Hero Section Specific Spacing */
 .hero-section {
   min-height: 100vh;
@@ -458,49 +365,6 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-/* First Section after Hero - Reduce top padding */
-.hero-section + section,
-.hero-section + .section-spacing {
-  padding-top: var(--section-padding-mobile);
-}
-
-@media (min-width: 768px) {
-  .hero-section + section,
-  .hero-section + .section-spacing {
-    padding-top: var(--section-padding-tablet);
-  }
-}
-
-@media (min-width: 1024px) {
-  .hero-section + section,
-  .hero-section + .section-spacing {
-    padding-top: var(--section-padding-desktop);
-  }
-}
-
-/* Consistent button spacing */
-.button-group {
-  display: flex;
-  gap: var(--spacing-4);
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: var(--spacing-8);
-}
-
-@media (min-width: 768px) {
-  .button-group {
-    gap: var(--spacing-6);
-    margin-top: var(--spacing-10);
-  }
-}
-
-/* Text Content Max Width for readability */
-.prose {
-  max-width: 70ch;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 /* Alternating Section Backgrounds with proper spacing */
@@ -524,133 +388,6 @@ section:nth-of-type(odd) {
   align-items: center;
   justify-content: center;
   text-align: center;
-}
-
-/* Card Content Centering */
-.card-content-center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-}
-
-/* Standard Card Padding Variants */
-.card-sm {
-  padding: var(--spacing-4);
-}
-
-@media (min-width: 768px) {
-  .card-sm {
-    padding: var(--spacing-5);
-  }
-}
-
-.card-md {
-  padding: var(--spacing-6);
-}
-
-@media (min-width: 768px) {
-  .card-md {
-    padding: var(--spacing-8);
-  }
-}
-
-.card-lg {
-  padding: var(--spacing-8);
-}
-
-@media (min-width: 768px) {
-  .card-lg {
-    padding: var(--spacing-10);
-  }
-}
-
-@media (min-width: 1024px) {
-  .card-lg {
-    padding: var(--spacing-12);
-  }
-}
-
-/* Glass Cards - Enhanced with better centering */
-.glass {
-  min-height: fit-content;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-/* Card Grid Systems with proper spacing */
-.card-grid {
-  display: grid;
-  gap: var(--spacing-6);
-}
-
-@media (min-width: 640px) {
-  .card-grid {
-    gap: var(--spacing-8);
-  }
-}
-
-@media (min-width: 1024px) {
-  .card-grid {
-    gap: var(--spacing-10);
-  }
-}
-
-/* Card Grid Columns */
-.card-grid-1 {
-  grid-template-columns: 1fr;
-}
-
-.card-grid-2 {
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 768px) {
-  .card-grid-2 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-.card-grid-3 {
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 768px) {
-  .card-grid-3 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1024px) {
-  .card-grid-3 {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-.card-grid-4 {
-  grid-template-columns: repeat(2, 1fr);
-}
-
-@media (min-width: 1024px) {
-  .card-grid-4 {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-/* Card Inner Content Spacing */
-.card-inner-spacing > * + * {
-  margin-top: var(--spacing-4);
-}
-
-@media (min-width: 768px) {
-  .card-inner-spacing > * + * {
-    margin-top: var(--spacing-5);
-  }
 }
 
 /* Stats Card - Special centered layout */
@@ -704,39 +441,6 @@ section:nth-of-type(odd) {
     padding: var(--spacing-8);
     gap: var(--spacing-5);
   }
-}
-
-/* Card Title Spacing */
-.card-title {
-  margin-bottom: var(--spacing-3);
-}
-
-.card-subtitle {
-  margin-bottom: var(--spacing-2);
-}
-
-/* Card Description Spacing */
-.card-description {
-  margin-top: var(--spacing-3);
-  margin-bottom: var(--spacing-4);
-  line-height: 1.6;
-}
-
-/* Card Actions - Button container */
-.card-actions {
-  margin-top: auto;
-  padding-top: var(--spacing-4);
-  display: flex;
-  gap: var(--spacing-3);
-  justify-content: center;
-  width: 100%;
-}
-
-/* Ensure all card children are properly spaced */
-.glass > *,
-.card-base > * {
-  margin-left: auto;
-  margin-right: auto;
 }
 
 /* ========================================
@@ -814,23 +518,3 @@ section:nth-of-type(odd) {
     border-radius: 1rem;
   }
 }
-
-/* Results Grid Spacing */
-.results-grid {
-  display: grid;
-  gap: var(--spacing-6);
-  margin-top: var(--spacing-8);
-}
-
-@media (min-width: 640px) {
-  .results-grid {
-    gap: var(--spacing-8);
-  }
-}
-
-@media (min-width: 1024px) {
-  .results-grid {
-    gap: var(--spacing-10);
-  }
-}
-

@@ -54,13 +54,17 @@ export default function Home() {
         </div>
 
         {/* Content - Perfectly Centered */}
-        <div className="relative z-10 max-w-6xl mx-auto px-6 text-center flex flex-col items-center justify-center space-y-4 md:space-y-6 lg:space-y-8">
+        {/* REMOVED: space-y-4 md:space-y-6 lg:space-y-8 
+          This container now lets children define their own top margin for precise control.
+        */}
+        <div className="relative z-10 max-w-6xl mx-auto px-6 text-center flex flex-col items-center justify-center">
+          
           {/* Logo with Animation */}
           <motion.div
             initial={{ scale: 0, rotate: -180 }}
             animate={{ scale: 1, rotate: 0 }}
             transition={{ duration: 0.8, type: "spring" }}
-            className="relative inline-block mb-2"
+            className="relative inline-block" // REMOVED: mb-2
           >
             <motion.div
               animate={{
@@ -105,7 +109,8 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-[#F1FAEE] goldman-bold leading-none tracking-wide mb-3"
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-[#F1FAEE] goldman-bold leading-none tracking-wide 
+                       mt-4" // ADDED: mt-4, REMOVED: mb-3
           >
             ALTIUS <span className="text-[#E63946]">2025</span>
           </motion.h1>
@@ -115,7 +120,8 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-[#457B9D] font-semibold montserrat-semibold tracking-wide mt-4 md:mt-6 mb-2"
+            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-[#457B9D] font-semibold montserrat-semibold tracking-wide 
+                       mt-6 md:mt-8" // CHANGED: from mt-4 md:mt-6 mb-2
           >
             Soar Beyond Limits 🚀
           </motion.p>
@@ -124,7 +130,8 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="text-base md:text-lg lg:text-xl text-[#C5C6C7] inter-regular max-w-3xl leading-relaxed mb-6"
+            className="text-base md:text-lg lg:text-xl text-[#C5C6C7] inter-regular max-w-3xl leading-relaxed 
+                       mt-4" // ADDED: mt-4, REMOVED: mb-6
           >
             Inter-Department Technical Fest | Srinivas Institute of Technology
           </motion.p>
@@ -134,7 +141,8 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-16 w-full max-w-5xl"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-16 w-full max-w-5xl 
+                       mt-10 md:mt-12 lg:mt-16" // ADDED: Explicit margin-top
           >
             <motion.div 
               whileHover={{ scale: 1.05, y: -5 }}
@@ -216,7 +224,8 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, y: [0, 10, 0] }}
             transition={{ delay: 1.5, y: { repeat: Infinity, duration: 1.5 } }}
-            className="text-[#457B9D] hover:text-[#F1FAEE] transition-colors"
+            className="text-[#457B9D] hover:text-[#F1FAEE] transition-colors
+                       mt-12 md:mt-16" // ADDED: Explicit margin-top
           >
             <ArrowDown size={32} />
           </motion.button>
@@ -224,7 +233,8 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section id="about-section" className="pt-24 md:pt-32 pb-16 md:pb-24 relative bg-[#0B0C10]">
+      {/* UPDATED: Using .section-spacing from global.css */}
+      <section id="about-section" className="section-spacing relative bg-[#0B0C10]">
         <div className="content-container">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -284,7 +294,11 @@ export default function Home() {
                   Join the action happening right now
                 </p>
               </motion.div>
-              <div className="card-grid card-grid-3">
+              
+              {/* UPDATED: Replaced .card-grid.card-grid-3 with Tailwind utility classes.
+                The gaps are based on the variables in your global.css
+              */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
                 {featuredEvents.map((event, index) => (
                   <motion.div
                     key={event.id}
