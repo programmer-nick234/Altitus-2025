@@ -10,9 +10,13 @@ import CountdownTimer from "@/components/CountdownTimer";
 import EventCard from "@/components/EventCard";
 import { Button } from "@/components/ui";
 import { EVENT_START_DATE, events } from "@/lib/mockData";
+import { getEventStatus } from "@/lib/eventUtils";
 
 export default function Home() {
-  const featuredEvents = events.filter(e => e.isLive).slice(0, 3);
+  const currentTime = new Date();
+  const featuredEvents = events
+    .filter(e => getEventStatus(e, currentTime) === "live")
+    .slice(0, 3);
 
   const scrollToContent = () => {
     document.getElementById("about-section")?.scrollIntoView({ behavior: "smooth" });
