@@ -16,7 +16,7 @@ export default function AboutPage() {
 
   // Count-up animation
   useEffect(() => {
-    const targets = { days: 3, participants: 500, events: 20, departments: 13 };
+    const targets = { days: 1, participants: 500, events: 70, departments: 15 };
     const duration = 2000;
     const steps = 50;
     const interval = duration / steps;
@@ -145,7 +145,7 @@ export default function AboutPage() {
         <div className="content-container">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {[
-              { icon: Calendar, value: counters.days, suffix: "", label: "Days of Innovation", color: "rgba(230, 57, 70, 0.2)" },
+              { icon: Calendar, value: counters.days, suffix: "", label: "Day of Innovation", color: "rgba(230, 57, 70, 0.2)" },
               { icon: Users, value: counters.participants, suffix: "+", label: "Participants", color: "rgba(69, 123, 157, 0.2)" },
               { icon: Zap, value: counters.events, suffix: "+", label: "Events & Workshops", color: "rgba(230, 57, 70, 0.25)" },
               { icon: MapPin, value: counters.departments, suffix: "", label: "Departments", color: "rgba(29, 53, 87, 0.2)" },
