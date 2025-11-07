@@ -1,0 +1,140 @@
+.masonry-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  padding-bottom: 2rem; /* Extra space at bottom */
+}
+
+.masonry-item {
+  position: absolute;
+  cursor: pointer;
+  will-change: transform, opacity;
+  transform-origin: center;
+  overflow: visible; /* Ensure items are visible */
+}
+
+.masonry-spotlight-card {
+  border-radius: 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.masonry-item-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 1rem;
+}
+
+/* Hover effects */
+.masonry-item:hover .masonry-spotlight-card {
+  box-shadow: 
+    0 20px 40px rgba(230, 57, 70, 0.2),
+    0 0 30px rgba(69, 123, 157, 0.15);
+}
+
+/* Image container */
+.masonry-item-content > div {
+  border-radius: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .masonry-item {
+    cursor: default;
+  }
+  
+  .masonry-container {
+    min-height: auto;
+  }
+}
+
+/* Performance optimization */
+.masonry-item img {
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Loading state */
+.masonry-item[data-loading="true"] {
+  opacity: 0;
+}
+
+/* Animation entrance */
+@keyframes masonryFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Smooth transitions */
+.masonry-item * {
+  transition: transform 0.3s ease-out;
+}
+
+/* Grid gap simulation via positioning */
+.masonry-item {
+  box-sizing: border-box;
+}
+
+/* Enhanced spotlight effect for masonry */
+.masonry-spotlight-card::before {
+  border-radius: 1rem;
+}
+
+/* Overlay transitions */
+.masonry-item-content .absolute {
+  transition: opacity 0.3s ease;
+}
+
+/* Play button hover effect */
+.masonry-item-content .absolute.inset-0.flex {
+  backdrop-filter: blur(2px);
+}
+
+/* Badge styles */
+.masonry-item-content .px-2\.5 {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Text shadow for better readability */
+.masonry-item-content h3,
+.masonry-item-content p {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Prevent text selection during animations */
+.masonry-item {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Re-enable text selection on hover */
+.masonry-item:hover {
+  user-select: auto;
+  -webkit-user-select: auto;
+}
+
+/* Accessibility: Focus states */
+.masonry-item:focus-visible {
+  outline: 2px solid rgba(230, 57, 70, 0.6);
+  outline-offset: 4px;
+  border-radius: 1rem;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .masonry-item,
+  .masonry-spotlight-card,
+  .masonry-item-content * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

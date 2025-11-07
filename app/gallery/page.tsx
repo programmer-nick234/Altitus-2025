@@ -1,116 +1,116 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { X, Play, ChevronLeft, ChevronRight, Pause, Download } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import SpotlightCard from "@/components/SpotlightCard";
+import Masonry from "@/components/Masonry";
 import Image from "next/image";
 
 // Gallery data structure
 interface MediaItem {
-  id: number;
-  src: string;
+  id: string;
+  img: string;
   type: "photo" | "video";
   title: string;
   event: string;
   date: string;
   category: string;
-  gridSpan?: string; // For Bento grid layout
+  height: number;
 }
 
-// Gallery data - All images and videos from public/gallery folder
+// Gallery data - All images from public/gallery folder with accurate aspect ratios
 const galleryItems: MediaItem[] = [
-  // Row 1 - Large hero image
   { 
-    id: 1, 
-    src: "/gallery/poster-main.jpeg", 
+    id: "1", 
+    img: "/gallery/poster-main.jpeg", 
     type: "photo", 
     title: "Altius 2024 Official Poster", 
     event: "Main Event Poster", 
     date: "2024-11-10", 
     category: "Promotional", 
-    gridSpan: "md:col-span-2 md:row-span-2" 
+    height: 711  // 899x1599 - Portrait poster
   },
   { 
-    id: 2, 
-    src: "/gallery/altius-inougration.jpeg", 
+    id: "2", 
+    img: "/gallery/altius-inougration.jpeg", 
     type: "photo", 
     title: "Inauguration Ceremony", 
     event: "Opening Day", 
     date: "2024-11-10", 
-    category: "Ceremony" 
+    category: "Ceremony",
+    height: 300  // 1600x1200 - Landscape photo
   },
   { 
-    id: 3, 
-    src: "/gallery/speech.jpeg", 
+    id: "3", 
+    img: "/gallery/speech.jpeg", 
     type: "photo", 
     title: "Keynote Speech", 
     event: "Opening Address", 
     date: "2024-11-10", 
-    category: "Ceremony" 
+    category: "Ceremony",
+    height: 533  // 1200x1600 - Portrait photo
   },
-  
-  // Row 2
   { 
-    id: 4, 
-    src: "/gallery/speech-2.jpeg", 
+    id: "4", 
+    img: "/gallery/speech-2.jpeg", 
     type: "photo", 
     title: "Guest Speaker", 
     event: "Special Address", 
     date: "2024-11-10", 
-    category: "Ceremony" 
+    category: "Ceremony",
+    height: 300  // 4160x3120 - Landscape photo
   },
-  
-  // Row 3
   { 
-    id: 5, 
-    src: "/gallery/team.jpeg", 
+    id: "5", 
+    img: "/gallery/team.jpeg", 
     type: "photo", 
     title: "Organizing Team", 
     event: "Team Photo", 
     date: "2024-11-10", 
-    category: "Behind The Scenes" 
+    category: "Behind The Scenes",
+    height: 300  // 4032x3024 - Landscape photo
   },
   { 
-    id: 6, 
-    src: "/gallery/team-2.jpeg", 
+    id: "6", 
+    img: "/gallery/team-2.jpeg", 
     type: "photo", 
     title: "Core Committee", 
     event: "Team Photo", 
     date: "2024-11-10", 
-    category: "Behind The Scenes" 
+    category: "Behind The Scenes",
+    height: 300  // 4160x3120 - Landscape photo
   },
   { 
-    id: 7, 
-    src: "/gallery/promo launching.jpeg", 
+    id: "7", 
+    img: "/gallery/promo launching.jpeg", 
     type: "photo", 
     title: "Event Promo Launch", 
     event: "Marketing Campaign", 
     date: "2024-11-10", 
-    category: "Promotional" 
+    category: "Promotional",
+    height: 533  // 3120x4160 - Portrait photo
   },
-  
-  // Row 4 - Large poster
   { 
-    id: 8, 
-    src: "/gallery/poster-back.jpeg", 
+    id: "8", 
+    img: "/gallery/poster-back.jpeg", 
     type: "photo", 
     title: "Event Details Poster", 
     event: "Information Board", 
     date: "2024-11-10", 
-    category: "Promotional", 
-    gridSpan: "md:col-span-2 md:row-span-2" 
+    category: "Promotional",
+    height: 711  // 899x1599 - Portrait poster
   },
   { 
-    id: 9, 
-    src: "/gallery/altius-inivites.jpeg", 
+    id: "9", 
+    img: "/gallery/altius-inivites.jpeg", 
     type: "photo", 
     title: "Official Invitations", 
     event: "Invitation Design", 
     date: "2024-11-10", 
-    category: "Promotional" 
+    category: "Promotional",
+    height: 566  // 904x1280 - Portrait design
   },
 ];
 
@@ -118,12 +118,6 @@ export default function GalleryPage() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
 
   // Scroll to top when page loads
   useEffect(() => {
@@ -172,6 +166,12 @@ export default function GalleryPage() {
     window.addEventListener("keydown", handleKeyPress);
     return () => window.removeEventListener("keydown", handleKeyPress);
   }, [selectedIndex]);
+
+  // Map gallery items to masonry format
+  const masonryItems = galleryItems.map((item, index) => ({
+    ...item,
+    onClick: () => setSelectedIndex(index)
+  }));
 
   return (
     <div className="min-h-screen bg-[#0B0C10]">
@@ -238,21 +238,19 @@ export default function GalleryPage() {
         </div>
       </section>
 
-      {/* Gallery Grid Section */}
-      <section ref={containerRef} className="section-spacing relative">
+      {/* Masonry Gallery Section */}
+      <section className="section-spacing relative">
         <div className="content-container">
-          {/* Bento Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6 auto-rows-[200px] md:auto-rows-[280px]">
-            {galleryItems.map((item, index) => (
-              <GalleryCard
-                key={item.id}
-                item={item}
-                index={index}
-                onClick={() => setSelectedIndex(index)}
-                scrollProgress={scrollYProgress}
-              />
-            ))}
-          </div>
+          <Masonry
+            items={masonryItems}
+            ease="power3.out"
+            duration={0.6}
+            stagger={0.05}
+            animateFrom="bottom"
+            scaleOnHover={true}
+            hoverScale={0.98}
+            blurToFocus={true}
+          />
         </div>
       </section>
 
@@ -278,173 +276,6 @@ export default function GalleryPage() {
 
       <Footer />
     </div>
-  );
-}
-
-// Gallery Card Component with SpotlightCard and 3D Tilt
-function GalleryCard({ item, index, onClick, scrollProgress }: {
-  item: MediaItem;
-  index: number;
-  onClick: () => void;
-  scrollProgress: any;
-}) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-  const [imageLoaded, setImageLoaded] = useState(false);
-
-  // Parallax effect based on scroll
-  const y = useTransform(
-    scrollProgress,
-    [0, 1],
-    [index % 2 === 0 ? -50 : 50, index % 2 === 0 ? 50 : -50]
-  );
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    setMousePosition({ x, y });
-  };
-
-  // Alternate spotlight colors for variety
-  const spotlightColors = [
-    "rgba(230, 57, 70, 0.2)",
-    "rgba(69, 123, 157, 0.2)",
-    "rgba(230, 57, 70, 0.25)",
-    "rgba(29, 53, 87, 0.2)",
-  ];
-
-  return (
-    <motion.div
-      ref={cardRef}
-      style={{ y }}
-      initial={{ opacity: 0, scale: 0.8 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{
-        duration: 0.6,
-        delay: index * 0.05,
-        ease: [0.23, 1, 0.32, 1]
-      }}
-      className={`relative group cursor-pointer ${item.gridSpan || ""}`}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => {
-        setIsHovered(false);
-        setMousePosition({ x: 0, y: 0 });
-      }}
-      onClick={onClick}
-    >
-      <SpotlightCard
-        className="relative w-full h-full p-0 overflow-hidden"
-        spotlightColor={spotlightColors[index % spotlightColors.length]}
-      >
-        <motion.div
-          className="relative w-full h-full"
-          animate={{
-            rotateX: isHovered ? mousePosition.y * 3 : 0,
-            rotateY: isHovered ? mousePosition.x * 3 : 0,
-            scale: isHovered ? 1.02 : 1,
-          }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
-          style={{
-            transformStyle: "preserve-3d",
-            perspective: 1000,
-          }}
-        >
-          {/* Loading Skeleton */}
-          {!imageLoaded && (
-            <div className="absolute inset-0 bg-gradient-to-br from-[#1D3557]/50 via-[#457B9D]/50 to-[#1D3557]/50 animate-pulse" />
-          )}
-
-          {/* Actual Image or Video Thumbnail */}
-          {item.type === "photo" ? (
-            <Image
-              src={item.src}
-              alt={item.title}
-              fill
-              className={`object-cover transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              onLoad={() => setImageLoaded(true)}
-            />
-          ) : (
-            <video
-              src={item.src}
-              className="absolute inset-0 w-full h-full object-contain bg-gradient-to-br from-[#1D3557] via-[#457B9D] to-[#1D3557]"
-              muted
-              playsInline
-              preload="metadata"
-              onLoadedData={() => setImageLoaded(true)}
-            />
-          )}
-
-          {/* Glow Effect */}
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-br from-[#E63946]/0 via-[#E63946]/30 to-[#457B9D]/0"
-            animate={{
-              opacity: isHovered ? 1 : 0,
-            }}
-            transition={{ duration: 0.3 }}
-          />
-
-          {/* Content Overlay */}
-          <div className="absolute inset-0 flex flex-col justify-end p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
-            {/* Type Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              className="absolute top-4 right-4"
-            >
-              <div className="px-3 py-1.5 bg-black/60 backdrop-blur-md rounded-full flex items-center gap-2 border border-white/10">
-                {item.type === "video" ? (
-                  <>
-                    <Play size={14} className="text-[#E63946]" fill="#E63946" />
-                    <span className="text-white text-xs inter-semibold">Video</span>
-                  </>
-                ) : (
-                  <>
-                    <div className="w-3 h-3 bg-[#457B9D] rounded-sm" />
-                    <span className="text-white text-xs inter-semibold">Photo</span>
-                  </>
-                )}
-              </div>
-            </motion.div>
-
-            {/* Hover Play Icon for Videos */}
-            {item.type === "video" && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ 
-                  opacity: isHovered ? 1 : 0,
-                  scale: isHovered ? 1 : 0
-                }}
-                className="absolute inset-0 flex items-center justify-center"
-              >
-                <div className="w-20 h-20 rounded-full bg-white/95 backdrop-blur-md flex items-center justify-center shadow-2xl">
-                  <Play className="text-[#E63946] ml-1" size={32} fill="#E63946" />
-                </div>
-              </motion.div>
-            )}
-
-            {/* Text Info - Always Visible */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-lg md:text-xl font-bold text-white goldman-bold mb-1 line-clamp-2">
-                {item.title}
-              </h3>
-              <p className="text-xs md:text-sm text-gray-300 inter-regular line-clamp-1">
-                {item.event}
-              </p>
-            </motion.div>
-          </div>
-        </motion.div>
-      </SpotlightCard>
-    </motion.div>
   );
 }
 
@@ -492,7 +323,7 @@ function LightboxModal({
 
       {/* Download Button */}
       <motion.a
-        href={item.src}
+        href={item.img}
         download={`${item.title}.jpg`}
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -550,16 +381,14 @@ function LightboxModal({
         <div className="relative aspect-video rounded-2xl overflow-hidden mb-6 shadow-2xl shadow-[#E63946]/20">
           {item.type === "video" ? (
             <div className="relative w-full h-full bg-gradient-to-br from-[#1D3557] to-[#457B9D]">
-              {/* Actual Video */}
               <video
                 ref={videoRef}
                 className="w-full h-full object-cover"
                 controls={false}
               >
-                <source src={item.src} type="video/mp4" />
+                <source src={item.img} type="video/mp4" />
               </video>
 
-              {/* Play/Pause Overlay */}
               <div
                 className="absolute inset-0 flex items-center justify-center cursor-pointer"
                 onClick={() => setIsPlaying(!isPlaying)}
@@ -579,7 +408,7 @@ function LightboxModal({
           ) : (
             <div className="relative w-full h-full bg-[#0B0C10]">
               <Image
-                src={item.src}
+                src={item.img}
                 alt={item.title}
                 fill
                 className="object-contain"
