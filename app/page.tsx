@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import CountdownTimer from "@/components/CountdownTimer";
 import EventCard from "@/components/EventCard";
 import SpotlightCard from "@/components/SpotlightCard";
+import PixelBlast from "@/components/PixelBlast";
 import { Button } from "@/components/ui";
 import { EVENT_START_DATE, events } from "@/lib/mockData";
 import { getEventStatus } from "@/lib/eventUtils";
@@ -28,38 +29,48 @@ export default function Home() {
       <Navbar />
 
       {/* Hero Section */}
-<section className="hero-section overflow-hidden relative">
-  {/* Looping Background */}
-  <div className="absolute inset-0 bg-scroll-x z-0" />
+      <section className="hero-section overflow-hidden relative">
+        {/* PixelBlast Background */}
+        <div className="absolute inset-0 z-0">
+          <PixelBlast
+            variant="circle"
+            pixelSize={4}
+            color="#457B9D"
+            patternScale={2.5}
+            patternDensity={1.1}
+            pixelSizeJitter={0.3}
+            enableRipples
+            rippleSpeed={0.35}
+            rippleThickness={0.15}
+            rippleIntensityScale={1.2}
+            liquid
+            liquidStrength={0.08}
+            liquidRadius={1.0}
+            liquidWobbleSpeed={4.0}
+            speed={0.4}
+            edgeFade={0.3}
+            transparent
+          />
+        </div>
 
-  {/* Gradient overlays */}
-  <div className="absolute inset-0 bg-gradient-to-b from-[#0B0C10] via-[#1D3557]/20 to-[#0B0C10] z-10">
-    {/* glowing motion divs */}
-  </div>
-
-  {/* Foreground content */}
-  <div className="relative z-20 max-w-6xl mx-auto px-6 text-center flex flex-col items-center justify-center">
-    {/* Your logo, title, etc. */}
-  </div>
-
-        {/* Animated Background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0B0C10] via-[#1D3557]/20 to-[#0B0C10]">
+        {/* Animated Background Gradients */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0B0C10]/80 via-[#1D3557]/10 to-[#0B0C10]/80 z-[1]">
           <motion.div
             animate={{
               scale: [1, 1.2, 1],
-              opacity: [0.3, 0.5, 0.3],
+              opacity: [0.2, 0.4, 0.2],
             }}
             transition={{
               duration: 8,
               repeat: Infinity,
               ease: "easeInOut",
             }}
-            className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#E63946]/20 rounded-full blur-[120px]"
+            className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#E63946]/15 rounded-full blur-[120px]"
           />
           <motion.div
             animate={{
               scale: [1.2, 1, 1.2],
-              opacity: [0.3, 0.5, 0.3],
+              opacity: [0.2, 0.4, 0.2],
             }}
             transition={{
               duration: 8,
@@ -67,17 +78,12 @@ export default function Home() {
               ease: "easeInOut",
               delay: 1,
             }}
-            className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-[#1D3557]/20 rounded-full blur-[120px]"
+            className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-[#1D3557]/15 rounded-full blur-[120px]"
           />
         </div>
 
         {/* Content - Perfectly Centered */}
-        {/* REMOVED: space-y-4 md:space-y-6 lg:space-y-8 
-          This container now lets children define their own top margin for precise control.
-        */}
-        <div className="relative z-10 max-w-6xl mx-auto px-6 text-center flex flex-col items-center justify-center">
-          
-          {/* Logo with Animation */}
+        <div className="relative z-10 max-w-6xl mx-auto px-6 text-center flex flex-col items-center justify-center">          {/* Logo with Animation */}
           <motion.div
             initial={{ scale: 0, rotate: -180 }}
             animate={{ scale: 1, rotate: 0 }}
@@ -141,7 +147,7 @@ export default function Home() {
             className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-[#457B9D] font-semibold montserrat-semibold tracking-wide 
                        mt-6 md:mt-8" // CHANGED: from mt-4 md:mt-6 mb-2
           >
-            Soar Beyond Limits 🚀
+            Soar Beyond Limits
           </motion.p>
 
           <motion.p
@@ -149,61 +155,61 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
             className="text-base md:text-lg lg:text-xl text-[#C5C6C7] inter-regular max-w-3xl leading-relaxed 
-                       mt-4" // ADDED: mt-4, REMOVED: mb-6
+                       mt-4"
           >
-            Inter-Department Technical Fest | Srinivas Institute of Technology
+            Inter-Department Technical Fest | Srinivas Institute of Technology, Mangalore
           </motion.p>
 
-          {/* Event Details */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-16 w-full max-w-5xl 
-                       mt-10 md:mt-12 lg:mt-16" // ADDED: Explicit margin-top
-          >
-            <motion.div 
-              whileHover={{ scale: 1.05, y: -5 }}
-              className="flex flex-col items-center justify-center gap-4 bg-white/5 border border-white/10 backdrop-blur-md px-8 py-6 md:px-10 md:py-8 rounded-2xl hover:border-[#E63946]/50 hover:shadow-[0_0_25px_rgba(230,57,70,0.15)] transition-all duration-300"
-            >
-              <Calendar className="text-[#E63946] w-10 h-10 md:w-12 md:h-12" />
-              <div className="flex flex-col items-center text-center gap-2">
-                <span className="text-xs text-[#C5C6C7]/70 inter-medium uppercase tracking-widest">Date</span>
-                <span className="text-[#F1FAEE] text-lg md:text-xl inter-bold">Nov 10, 2025</span>
-              </div>
-            </motion.div>
-
-            <motion.div 
-              whileHover={{ scale: 1.05, y: -5 }}
-              className="flex flex-col items-center justify-center gap-4 bg-white/5 border border-white/10 backdrop-blur-md px-8 py-6 md:px-10 md:py-8 rounded-2xl hover:border-[#1D3557]/50 hover:shadow-[0_0_25px_rgba(230,57,70,0.15)] transition-all duration-300"
-            >
-              <MapPin className="text-[#1D3557] w-10 h-10 md:w-12 md:h-12" />
-              <div className="flex flex-col items-center text-center gap-2">
-                <span className="text-xs text-[#C5C6C7]/70 inter-medium uppercase tracking-widest">Venue</span>
-                <span className="text-[#F1FAEE] text-lg md:text-xl inter-bold">SIT, Mangalore</span>
-              </div>
-            </motion.div>
-
-            <motion.div 
-              whileHover={{ scale: 1.05, y: -5 }}
-              className="flex flex-col items-center justify-center gap-4 bg-white/5 border border-white/10 backdrop-blur-md px-8 py-6 md:px-10 md:py-8 rounded-2xl hover:border-[#457B9D]/50 hover:shadow-[0_0_25px_rgba(230,57,70,0.15)] transition-all duration-300"
-            >
-              <Users className="text-[#457B9D] w-10 h-10 md:w-12 md:h-12" />
-              <div className="flex flex-col items-center text-center gap-2">
-                <span className="text-xs text-[#C5C6C7]/70 inter-medium uppercase tracking-widest">Expected</span>
-                <span className="text-[#F1FAEE] text-lg md:text-xl inter-bold">500+ Students</span>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* Countdown Timer with Enhanced Spacing */}
+          {/* Countdown Timer - Now Primary Feature */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 1.0 }}
-            className="w-full max-w-14xl mt-12 md:mt-16"
+            transition={{ delay: 0.8 }}
+            className="w-full max-w-14xl mt-10 md:mt-12 lg:mt-16"
           >
             <CountdownTimer targetDate={EVENT_START_DATE} />
+          </motion.div>
+
+          {/* Event Details - Now Below Countdown */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.0 }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 w-full max-w-4xl 
+                       mt-10 md:mt-12"
+          >
+            <motion.div 
+              whileHover={{ scale: 1.05, y: -5 }}
+              className="flex flex-col items-center justify-center gap-3 bg-white/5 border border-white/10 backdrop-blur-md px-6 py-5 md:px-8 md:py-6 rounded-2xl hover:border-[#E63946]/50 hover:shadow-[0_0_25px_rgba(230,57,70,0.15)] transition-all duration-300"
+            >
+              <Calendar className="text-[#E63946] w-8 h-8 md:w-10 md:h-10" />
+              <div className="flex flex-col items-center text-center gap-1">
+                <span className="text-xs text-[#C5C6C7]/70 inter-medium uppercase tracking-widest">Date</span>
+                <span className="text-[#F1FAEE] text-base md:text-lg inter-bold">Nov 10, 2025</span>
+              </div>
+            </motion.div>
+
+            <motion.div 
+              whileHover={{ scale: 1.05, y: -5 }}
+              className="flex flex-col items-center justify-center gap-3 bg-white/5 border border-white/10 backdrop-blur-md px-6 py-5 md:px-8 md:py-6 rounded-2xl hover:border-[#1D3557]/50 hover:shadow-[0_0_25px_rgba(230,57,70,0.15)] transition-all duration-300"
+            >
+              <MapPin className="text-[#1D3557] w-8 h-8 md:w-10 md:h-10" />
+              <div className="flex flex-col items-center text-center gap-1">
+                <span className="text-xs text-[#C5C6C7]/70 inter-medium uppercase tracking-widest">Venue</span>
+                <span className="text-[#F1FAEE] text-base md:text-lg inter-bold">SIT, Mangalore</span>
+              </div>
+            </motion.div>
+
+            <motion.div 
+              whileHover={{ scale: 1.05, y: -5 }}
+              className="flex flex-col items-center justify-center gap-3 bg-white/5 border border-white/10 backdrop-blur-md px-6 py-5 md:px-8 md:py-6 rounded-2xl hover:border-[#457B9D]/50 hover:shadow-[0_0_25px_rgba(230,57,70,0.15)] transition-all duration-300"
+            >
+              <Users className="text-[#457B9D] w-8 h-8 md:w-10 md:h-10" />
+              <div className="flex flex-col items-center text-center gap-1">
+                <span className="text-xs text-[#C5C6C7]/70 inter-medium uppercase tracking-widest">Expected</span>
+                <span className="text-[#F1FAEE] text-base md:text-lg inter-bold">500+ Students</span>
+              </div>
+            </motion.div>
           </motion.div>
 
           {/* CTA Buttons with Industry-Grade Design */}
@@ -216,10 +222,10 @@ export default function Home() {
             <Link href="/events" className="w-full sm:w-auto">
               <Button 
                 variant="gradient" 
-                size="xl"
+                size="lg"
                 icon={<ChevronRight className="w-5 h-5" />}
                 iconPosition="right"
-                className="min-w-[220px] px-12 py-5 text-lg font-bold tracking-wide rounded-full w-full sm:w-auto shadow-2xl hover:shadow-[0_0_40px_rgba(69,123,157,0.5)] transition-all duration-300"
+                className="min-w-[180px] px-8 py-3 text-base font-bold tracking-wide rounded-full w-full sm:w-auto shadow-2xl transition-all duration-300"
               >
                 Explore Events
               </Button>
@@ -234,10 +240,10 @@ export default function Home() {
 >
   <Button 
     variant="primary" 
-    size="xl"
-    className="min-w-[220px] px-12 py-5 text-lg font-bold tracking-wide rounded-full w-full sm:w-auto shadow-2xl hover:shadow-[0_0_40px_rgba(230,57,70,0.5)] transition-all duration-300"
+    size="lg"
+    className="min-w-[180px] px-8 py-3 text-base font-bold tracking-wide rounded-full w-full sm:w-auto shadow-2xl transition-all duration-300"
   >
-    📘 View Rulebook
+    View Rulebook
   </Button>
 </Link>
           </motion.div>
@@ -262,10 +268,10 @@ export default function Home() {
           {/* Stats - With SpotlightCard */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-24">
             {[
-              { value: "20+", label: "Events", color: "rgba(230, 57, 70, 0.2)" },
+              { value: "80+", label: "Events", color: "rgba(230, 57, 70, 0.2)" },
               { value: "500+", label: "Participants", color: "rgba(69, 123, 157, 0.2)" },
-              { value: "15", label: "Departments", color: "rgba(230, 57, 70, 0.25)" },
-              { value: "1", label: "Days", color: "rgba(29, 53, 87, 0.2)" },
+              { value: "10", label: "Departments", color: "rgba(230, 57, 70, 0.25)" },
+              { value: "1", label: "Day", color: "rgba(29, 53, 87, 0.2)" },
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}

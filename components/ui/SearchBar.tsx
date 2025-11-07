@@ -83,7 +83,7 @@ export default function SearchBar({
         onBlur={() => setIsFocused(false)}
         placeholder={placeholder}
         autoFocus={autoFocus}
-        className={`${sizes[size]} ${value ? 'pr-12' : ''} ${
+        className={`${sizes[size]} ${value ? 'pr-14 md:pr-16' : ''} ${
           fullWidth ? "w-full" : ""
         } bg-[#1F2833] text-[#F1FAEE] rounded-xl inter-regular placeholder:text-[#C5C6C7]/50 focus:outline-none focus:ring-2 focus:ring-[#E63946] transition-all duration-300 border-2 ${
           isFocused ? "border-[#E63946] shadow-lg shadow-[#E63946]/20" : "border-transparent"
@@ -98,7 +98,7 @@ export default function SearchBar({
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.8 }}
           onClick={handleClear}
-          className={`absolute right-3 top-1/2 -translate-y-1/2 text-[#C5C6C7] hover:text-[#E63946] transition-colors focus:outline-none focus:ring-2 focus:ring-[#E63946] rounded-full p-1 z-10`}
+          className={`absolute ${size === 'lg' ? 'right-4 md:right-6' : size === 'md' ? 'right-4' : 'right-3'} top-1/2 -translate-y-1/2 text-[#C5C6C7] hover:text-[#E63946] transition-colors focus:outline-none focus:ring-2 focus:ring-[#E63946] rounded-full p-1 z-10`}
           aria-label="Clear search"
           type="button"
         >

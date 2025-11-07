@@ -7,9 +7,11 @@ export interface Event {
   department: string;
   type: "Technical" | "Non-Technical";
   date: string; // YYYY-MM-DD
-  startTime: string; // HH:MM AM/PM
+  startTime: string; // HH:MM:SS or HH:MM AM/PM
   endTime: string; // HH:MM AM/PM
   venue: string;
+  departmentCoordinator: string;
+  eventCoordinators: string;
   poster?: string; // Path to poster image
   qrCode?: string; // URL or path to QR code
   googleFormLink?: string; // Registration form link
@@ -40,219 +42,108 @@ export interface TeamMember {
 
 // Events Data - Altius 2025 (Nov 10, 2025)
 export const events: Event[] = [
-  // TECHNICAL EVENTS
-  {
-    id: 1,
-    name: "Code Sprint",
-    description: "A high-intensity competitive programming challenge where teams race against time to solve algorithmic problems.",
-    department: "CS",
-    type: "Technical",
-    date: "2025-11-10",
-    startTime: "10:00 AM",
-    endTime: "1:00 PM",
-    venue: "Lab A-301",
-    poster: "/events/cs/code-sprint.jpg",
-    googleFormLink: "GOOGLE_FORM_LINK_1",
-    qrCode: "/qr-codes/code-sprint.png"
-  },
-  {
-    id: 2,
-    name: "Circuit Quest",
-    description: "Design and simulate complex electronic circuits. Test your electronics knowledge and practical skills.",
-    department: "EEE",
-    type: "Technical",
-    date: "2025-11-10",
-    startTime: "10:30 AM",
-    endTime: "1:30 PM",
-    venue: "Lab B-205",
-    poster: "/events/eee/circuit-quest.jpg",
-    googleFormLink: "GOOGLE_FORM_LINK_2",
-    qrCode: "/qr-codes/circuit-quest.png"
-  },
-  {
-    id: 3,
-    name: "Web Wizards",
-    description: "Build a fully functional website within 3 hours. Showcase your frontend and backend development skills.",
-    department: "ISE",
-    type: "Technical",
-    date: "2025-11-10",
-    startTime: "11:00 AM",
-    endTime: "2:00 PM",
-    venue: "Lab A-302",
-    poster: "/events/ise/web-wizards.jpg",
-    googleFormLink: "GOOGLE_FORM_LINK_3",
-    qrCode: "/qr-codes/web-wizards.png"
-  },
-  {
-    id: 4,
-    name: "RoboRace",
-    description: "Navigate your robot through challenging obstacles and mazes. Speed and precision matter!",
-    department: "ME",
-    type: "Technical",
-    date: "2025-11-10",
-    startTime: "11:30 AM",
-    endTime: "2:30 PM",
-    venue: "Robotics Arena",
-    poster: "/events/me/roborace.jpg",
-    googleFormLink: "GOOGLE_FORM_LINK_4",
-    qrCode: "/qr-codes/roborace.png"
-  },
-  {
-    id: 5,
-    name: "AI Hackathon",
-    description: "24-hour hackathon focused on building innovative AI/ML solutions for real-world problems.",
-    department: "AIML",
-    type: "Technical",
-    date: "2025-11-10",
-    startTime: "12:00 PM",
-    endTime: "12:00 PM",
-    venue: "Innovation Lab",
-    poster: "/events/aiml/ai-hackathon.jpg",
-    googleFormLink: "GOOGLE_FORM_LINK_5",
-    qrCode: "/qr-codes/ai-hackathon.png"
-  },
-  {
-    id: 6,
-    name: "Data Science Challenge",
-    description: "Analyze datasets, build predictive models, and present insights in this data science competition.",
-    department: "AIDS",
-    type: "Technical",
-    date: "2025-11-10",
-    startTime: "1:00 PM",
-    endTime: "4:00 PM",
-    venue: "Lab C-101",
-    poster: "/events/aids/data-science-challenge.jpg",
-    googleFormLink: "GOOGLE_FORM_LINK_6",
-    qrCode: "/qr-codes/data-science-challenge.png"
-  },
-  {
-    id: 7,
-    name: "IoT Workshop",
-    description: "Hands-on workshop on Internet of Things. Build smart devices and learn about connected systems.",
-    department: "EC",
-    type: "Technical",
-    date: "2025-11-10",
-    startTime: "2:00 PM",
-    endTime: "5:00 PM",
-    venue: "Workshop Hall",
-    poster: "/events/ec/iot-workshop.jpg",
-    googleFormLink: "GOOGLE_FORM_LINK_7",
-    qrCode: "/qr-codes/iot-workshop.png"
-  },
-  {
-    id: 8,
-    name: "Cyber Security CTF",
-    description: "Capture The Flag competition testing your cybersecurity and ethical hacking skills.",
-    department: "CSBS",
-    type: "Technical",
-    date: "2025-11-10",
-    startTime: "2:30 PM",
-    endTime: "5:30 PM",
-    venue: "Lab D-202",
-    poster: "/events/csbs/cyber-security-ctf.jpg",
-    googleFormLink: "GOOGLE_FORM_LINK_8",
-    qrCode: "/qr-codes/cyber-security-ctf.png"
-  },
-  {
-    id: 9,
-    name: "CAD Modeling Contest",
-    description: "Design innovative 3D models using CAD software. Creativity and precision are key.",
-    department: "MR",
-    type: "Technical",
-    date: "2025-11-10",
-    startTime: "3:00 PM",
-    endTime: "6:00 PM",
-    venue: "Design Studio",
-    poster: "/events/mr/cad-modeling.jpg",
-    googleFormLink: "GOOGLE_FORM_LINK_9",
-    qrCode: "/qr-codes/cad-modeling.png"
-  },
-  {
-    id: 10,
-    name: "Tech Paper Presentation",
-    description: "Present your research and innovative ideas on emerging technologies to a panel of experts.",
-    department: "AU",
-    type: "Technical",
-    date: "2025-11-10",
-    startTime: "3:30 PM",
-    endTime: "6:30 PM",
-    venue: "Seminar Hall 1",
-    poster: "/events/au/tech-paper-presentation.jpg",
-    googleFormLink: "GOOGLE_FORM_LINK_10",
-    qrCode: "/qr-codes/tech-paper-presentation.png"
-  },
+  // AE Department Events
+  { id: 1, name: "Code Master", description: "A high-intensity competitive programming challenge where teams race against time to solve algorithmic problems.", department: "AE", type: "Technical", date: "2025-11-10", startTime: "10:00:00", endTime: "11:00 AM", venue: "AE CS-LAB 3", departmentCoordinator: "Dr Mahadev Prabhu M", eventCoordinators: "Shreyas Bhat, Amulya Rao B" },
+  { id: 2, name: "Logically Solved", description: "Design and simulate complex electronic circuits. Test your electronics knowledge and practical skills.", department: "AE", type: "Technical", date: "2025-11-10", startTime: "11:00:00", endTime: "12:00 PM", venue: "AE CS-LAB 3", departmentCoordinator: "Dr Mahadev Prabhu M", eventCoordinators: "Shreyas Bhat, Amulya Rao B" },
+  { id: 3, name: "Tech Treasure Hunt", description: "Build a fully functional website within 3 hours. Showcase your frontend and backend development skills.", department: "AE", type: "Technical", date: "2025-11-10", startTime: "01:00:00", endTime: "02:00 PM", venue: "AE CS-LAB 3", departmentCoordinator: "Dr Mahadev Prabhu M", eventCoordinators: "Shreyas Bhat, Amulya Rao B" },
+  { id: 4, name: "Blind Coding", description: "Navigate your robot through challenging obstacles and mazes. Speed and precision matter!", department: "AE", type: "Technical", date: "2025-11-10", startTime: "02:00:00", endTime: "03:00 PM", venue: "AE CS-LAB 3", departmentCoordinator: "Dr Mahadev Prabhu M", eventCoordinators: "Shreyas Bhat, Amulya Rao B" },
+  { id: 5, name: "Tech Talk", description: "24-hour hackathon focused on building innovative AI/ML solutions for real-world problems.", department: "AE", type: "Non-Technical", date: "2025-11-10", startTime: "03:00:00", endTime: "04:00 PM", venue: "AE CS-LAB 3", departmentCoordinator: "Dr Mahadev Prabhu M", eventCoordinators: "Shreyas Bhat, Amulya Rao B" },
+  { id: 6, name: "Tech Huddle", description: "Analyze datasets, build predictive models, and present insights in this data science competition.", department: "AE", type: "Non-Technical", date: "2025-11-10", startTime: "04:00:00", endTime: "05:00 PM", venue: "AE CS-LAB 3", departmentCoordinator: "Dr Mahadev Prabhu M", eventCoordinators: "Shreyas Bhat, Amulya Rao B" },
 
-  // NON-TECHNICAL EVENTS
-  {
-    id: 11,
-    name: "Tech Quiz",
-    description: "Test your knowledge across multiple domains including AI, blockchain, cybersecurity, and emerging technologies.",
-    department: "MBA",
-    type: "Non-Technical",
-    date: "2025-11-10",
-    startTime: "10:15 AM",
-    endTime: "12:15 PM",
-    venue: "Auditorium",
-    poster: "/events/mba/tech-quiz.jpg",
-    googleFormLink: "GOOGLE_FORM_LINK_11",
-    qrCode: "/qr-codes/tech-quiz.png"
-  },
-  {
-    id: 12,
-    name: "Poster Presentation",
-    description: "Present your innovative project ideas and research through visually appealing posters.",
-    department: "MCA",
-    type: "Non-Technical",
-    date: "2025-11-10",
-    startTime: "1:30 PM",
-    endTime: "4:30 PM",
-    venue: "Seminar Hall 2",
-    poster: "/events/mca/poster-presentation.jpg",
-    googleFormLink: "GOOGLE_FORM_LINK_12",
-    qrCode: "/qr-codes/poster-presentation.png"
-  },
-  {
-    id: 13,
-    name: "Gaming Tournament",
-    description: "Compete in popular esports titles like BGMI, Valorant, and FIFA. Form your squad and dominate!",
-    department: "CSD",
-    type: "Non-Technical",
-    date: "2025-11-10",
-    startTime: "2:00 PM",
-    endTime: "7:00 PM",
-    venue: "Gaming Zone",
-    poster: "/events/csd/gaming-tournament.jpg",
-    googleFormLink: "GOOGLE_FORM_LINK_13",
-    qrCode: "/qr-codes/gaming-tournament.png"
-  },
-  {
-    id: 14,
-    name: "Treasure Hunt",
-    description: "Navigate through campus solving clues and riddles in this exciting outdoor adventure.",
-    department: "AE",
-    type: "Non-Technical",
-    date: "2025-11-10",
-    startTime: "4:00 PM",
-    endTime: "6:00 PM",
-    venue: "Campus Grounds",
-    poster: "/events/ae/treasure-hunt.jpg",
-    googleFormLink: "GOOGLE_FORM_LINK_14",
-    qrCode: "/qr-codes/treasure-hunt.png"
-  },
-  {
-    id: 15,
-    name: "Cultural Showcase",
-    description: "Celebrate diversity through music, dance, and drama performances representing various cultures.",
-    department: "Kannada Sangha",
-    type: "Non-Technical",
-    date: "2025-11-10",
-    startTime: "5:00 PM",
-    endTime: "8:00 PM",
-    venue: "Main Auditorium",
-    poster: "/events/kannada-sangha/cultural-showcase.jpg",
-    googleFormLink: "GOOGLE_FORM_LINK_15",
-    qrCode: "/qr-codes/cultural-showcase.png"
-  }
+  // AU Department Events
+  { id: 7, name: "UI/UX Designing", description: "Hands-on workshop on Internet of Things. Build smart devices and learn about connected systems.", department: "AU", type: "Technical", date: "2025-11-10", startTime: "10:00:00", endTime: "11:00 AM", venue: "AU CS LAB 7", departmentCoordinator: "Dr Asha P", eventCoordinators: "Kushaal Gowda R, Nanditha M Shetty" },
+  { id: 8, name: "Techie Mind", description: "Capture The Flag competition testing your cybersecurity and ethical hacking skills.", department: "AU", type: "Technical", date: "2025-11-10", startTime: "11:00:00", endTime: "12:00 PM", venue: "AU CS LAB 7", departmentCoordinator: "Dr Asha P", eventCoordinators: "Kushaal Gowda R, Nanditha M Shetty" },
+  { id: 9, name: "Web Designing", description: "Design innovative 3D models using CAD software. Creativity and precision are key.", department: "AU", type: "Technical", date: "2025-11-10", startTime: "01:00:00", endTime: "02:00 PM", venue: "AU CS LAB 7", departmentCoordinator: "Dr Asha P", eventCoordinators: "Kushaal Gowda R, Nanditha M Shetty" },
+  { id: 10, name: "Tech Quiz", description: "Present your research and innovative ideas on emerging technologies to a panel of experts.", department: "AU", type: "Non-Technical", date: "2025-11-10", startTime: "02:00:00", endTime: "03:00 PM", venue: "AU CS LAB 7", departmentCoordinator: "Dr Asha P", eventCoordinators: "Kushaal Gowda R, Nanditha M Shetty" },
+  { id: 11, name: "Best Manager", description: "Test your knowledge across multiple domains including AI, blockchain, cybersecurity, and emerging technologies.", department: "AU", type: "Non-Technical", date: "2025-11-10", startTime: "03:00:00", endTime: "04:00 PM", venue: "AU CS LAB 7", departmentCoordinator: "Dr Asha P", eventCoordinators: "Kushaal Gowda R, Nanditha M Shetty" },
+
+  // AI&DS Department Events
+  { id: 12, name: "Code Quest", description: "Present your innovative project ideas and research through visually appealing posters.", department: "AI&DS", type: "Technical", date: "2025-11-10", startTime: "10:00:00", endTime: "11:00 AM", venue: "AI&DS CS Lab 9", departmentCoordinator: "Dr Rohini K, Dr. Mamatha S", eventCoordinators: "Meghana R Shetty, Nihan K" },
+  { id: 13, name: "Debugging Champions", description: "Compete in popular esports titles like BGMI, Valorant, and FIFA. Form your squad and dominate!", department: "AI&DS", type: "Technical", date: "2025-11-10", startTime: "11:00:00", endTime: "12:00 PM", venue: "AI&DS CS Lab 9", departmentCoordinator: "Dr Rohini K, Dr. Mamatha S", eventCoordinators: "Meghana R Shetty, Nihan K" },
+  { id: 14, name: "Poster Presentation", description: "Navigate through campus solving clues and riddles in this exciting outdoor adventure.", department: "AI&DS", type: "Non-Technical", date: "2025-11-10", startTime: "01:00:00", endTime: "02:00 PM", venue: "AI&DS CS Lab 9", departmentCoordinator: "Dr Rohini K, Dr. Mamatha S", eventCoordinators: "Meghana R Shetty, Nihan K" },
+  { id: 15, name: "Tech Quiz", description: "Celebrate diversity through music, dance, and drama performances representing various cultures.", department: "AI&DS", type: "Non-Technical", date: "2025-11-10", startTime: "02:00:00", endTime: "03:00 PM", venue: "AI&DS CS Lab 9", departmentCoordinator: "Dr Rohini K, Dr. Mamatha S", eventCoordinators: "Meghana R Shetty, Nihan K" },
+
+  // AIML Department Events
+  { id: 16, name: "Coding", description: "Navigate your robot through challenging obstacles and mazes. Speed and precision matter!", department: "AIML", type: "Technical", date: "2025-11-10", startTime: "10:00:00", endTime: "11:00 AM", venue: "AIML CS LAB 2", departmentCoordinator: "Dr. Nandakumar A N", eventCoordinators: "Mohammed Arshad, Anusha K Shetty" },
+  { id: 17, name: "Debugging", description: "24-hour hackathon focused on building innovative AI/ML solutions for real-world problems.", department: "AIML", type: "Technical", date: "2025-11-10", startTime: "11:00:00", endTime: "12:00 PM", venue: "AIML CS LAB 2", departmentCoordinator: "Dr. Nandakumar A N", eventCoordinators: "Mohammed Arshad, Anusha K Shetty" },
+  { id: 18, name: "Poster Presentation", description: "Analyze datasets, build predictive models, and present insights in this data science competition.", department: "AIML", type: "Technical", date: "2025-11-10", startTime: "01:00:00", endTime: "02:00 PM", venue: "AIML CS LAB 2", departmentCoordinator: "Dr. Nandakumar A N", eventCoordinators: "Mohammed Arshad, Anusha K Shetty" },
+  { id: 19, name: "Quiz", description: "Hands-on workshop on Internet of Things. Build smart devices and learn about connected systems.", department: "AIML", type: "Non-Technical", date: "2025-11-10", startTime: "02:00:00", endTime: "03:00 PM", venue: "AIML CS LAB 2", departmentCoordinator: "Dr. Nandakumar A N", eventCoordinators: "Mohammed Arshad, Anusha K Shetty" },
+  { id: 20, name: "Debate", description: "Capture The Flag competition testing your cybersecurity and ethical hacking skills.", department: "AIML", type: "Non-Technical", date: "2025-11-10", startTime: "03:00:00", endTime: "04:00 PM", venue: "AIML CS LAB 2", departmentCoordinator: "Dr. Nandakumar A N", eventCoordinators: "Mohammed Arshad, Anusha K Shetty" },
+  { id: 21, name: "Tech Huddle", description: "Design innovative 3D models using CAD software. Creativity and precision are key.", department: "AIML", type: "Non-Technical", date: "2025-11-10", startTime: "04:00:00", endTime: "05:00 PM", venue: "AIML CS LAB 2", departmentCoordinator: "Dr. Nandakumar A N", eventCoordinators: "Mohammed Arshad, Anusha K Shetty" },
+
+  // CSE Department Events
+  { id: 22, name: "Codathon", description: "Present your research and innovative ideas on emerging technologies to a panel of experts.", department: "CSE", type: "Technical", date: "2025-11-10", startTime: "10:00:00", endTime: "11:00 AM", venue: "CSE CS LAB 10", departmentCoordinator: "Dr. Ashok Kumar P S", eventCoordinators: "Deekshith G, Tanushree Rao B P" },
+  { id: 23, name: "Bug Byte", description: "Test your knowledge across multiple domains including AI, blockchain, cybersecurity, and emerging technologies.", department: "CSE", type: "Technical", date: "2025-11-10", startTime: "11:00:00", endTime: "12:00 PM", venue: "CSE CS LAB 10", departmentCoordinator: "Dr. Ashok Kumar P S", eventCoordinators: "Deekshith G, Tanushree Rao B P" },
+  { id: 24, name: "Code Relay", description: "Present your innovative project ideas and research through visually appealing posters.", department: "CSE", type: "Technical", date: "2025-11-10", startTime: "01:00:00", endTime: "02:00 PM", venue: "CSE CS LAB 10", departmentCoordinator: "Dr. Ashok Kumar P S", eventCoordinators: "Deekshith G, Tanushree Rao B P" },
+  { id: 25, name: "Tech Quiz", description: "Compete in popular esports titles like BGMI, Valorant, and FIFA. Form your squad and dominate!", department: "CSE", type: "Non-Technical", date: "2025-11-10", startTime: "02:00:00", endTime: "03:00 PM", venue: "CSE CS LAB 10", departmentCoordinator: "Dr. Ashok Kumar P S", eventCoordinators: "Deekshith G, Tanushree Rao B P" },
+  { id: 26, name: "Tech Huddle", description: "Navigate through campus solving clues and riddles in this exciting outdoor adventure.", department: "CSE", type: "Non-Technical", date: "2025-11-10", startTime: "03:00:00", endTime: "04:00 PM", venue: "CSE CS LAB 10", departmentCoordinator: "Dr. Ashok Kumar P S", eventCoordinators: "Deekshith G, Tanushree Rao B P" },
+
+  // CSBS Department Events
+  { id: 27, name: "Code Debugging", description: "Celebrate diversity through music, dance, and drama performances representing various cultures.", department: "CSBS", type: "Technical", date: "2025-11-10", startTime: "10:00:00", endTime: "11:00 AM", venue: "CSBS CS LAB 4", departmentCoordinator: "Dr. Gayathri Nayak", eventCoordinators: "Ruthwik K, Shruthi Mayya" },
+  { id: 28, name: "Think IT", description: "Navigate your robot through challenging obstacles and mazes. Speed and precision matter!", department: "CSBS", type: "Technical", date: "2025-11-10", startTime: "11:00:00", endTime: "12:00 PM", venue: "CSBS CS LAB 4", departmentCoordinator: "Dr. Gayathri Nayak", eventCoordinators: "Ruthwik K, Shruthi Mayya" },
+  { id: 29, name: "Code Relay", description: "24-hour hackathon focused on building innovative AI/ML solutions for real-world problems.", department: "CSBS", type: "Technical", date: "2025-11-10", startTime: "01:00:00", endTime: "02:00 PM", venue: "CSBS CS LAB 4", departmentCoordinator: "Dr. Gayathri Nayak", eventCoordinators: "Ruthwik K, Shruthi Mayya" },
+  { id: 30, name: "Paper Presentation", description: "Analyze datasets, build predictive models, and present insights in this data science competition.", department: "CSBS", type: "Non-Technical", date: "2025-11-10", startTime: "02:00:00", endTime: "03:00 PM", venue: "CSBS CS LAB 4", departmentCoordinator: "Dr. Gayathri Nayak", eventCoordinators: "Ruthwik K, Shruthi Mayya" },
+  { id: 31, name: "Tech Huddle", description: "Hands-on workshop on Internet of Things. Build smart devices and learn about connected systems.", department: "CSBS", type: "Non-Technical", date: "2025-11-10", startTime: "03:00:00", endTime: "04:00 PM", venue: "CSBS CS LAB 4", departmentCoordinator: "Dr. Gayathri Nayak", eventCoordinators: "Ruthwik K, Shruthi Mayya" },
+
+  // CSD Department Events
+  { id: 32, name: "Coding", description: "Capture The Flag competition testing your cybersecurity and ethical hacking skills.", department: "CSD", type: "Technical", date: "2025-11-10", startTime: "10:00:00", endTime: "11:00 AM", venue: "CSD CS LAB 1", departmentCoordinator: "Dr. Sandhya B", eventCoordinators: "Preetham R, Krishnachaitanya V" },
+  { id: 33, name: "Debugging", description: "Design innovative 3D models using CAD software. Creativity and precision are key.", department: "CSD", type: "Technical", date: "2025-11-10", startTime: "11:00:00", endTime: "12:00 PM", venue: "CSD CS LAB 1", departmentCoordinator: "Dr. Sandhya B", eventCoordinators: "Preetham R, Krishnachaitanya V" },
+  { id: 34, name: "Paper Presentation", description: "Present your research and innovative ideas on emerging technologies to a panel of experts.", department: "CSD", type: "Technical", date: "2025-11-10", startTime: "01:00:00", endTime: "02:00 PM", venue: "CSD CS LAB 1", departmentCoordinator: "Dr. Sandhya B", eventCoordinators: "Preetham R, Krishnachaitanya V" },
+  { id: 35, name: "Quiz", description: "Test your knowledge across multiple domains including AI, blockchain, cybersecurity, and emerging technologies.", department: "CSD", type: "Non-Technical", date: "2025-11-10", startTime: "02:00:00", endTime: "03:00 PM", venue: "CSD CS LAB 1", departmentCoordinator: "Dr. Sandhya B", eventCoordinators: "Preetham R, Krishnachaitanya V" },
+  { id: 36, name: "Tech Huddle", description: "Present your innovative project ideas and research through visually appealing posters.", department: "CSD", type: "Non-Technical", date: "2025-11-10", startTime: "03:00:00", endTime: "04:00 PM", venue: "CSD CS LAB 1", departmentCoordinator: "Dr. Sandhya B", eventCoordinators: "Preetham R, Krishnachaitanya V" },
+
+  // EEE Department Events
+  { id: 37, name: "Circuit Challenge", description: "Compete in popular esports titles like BGMI, Valorant, and FIFA. Form your squad and dominate!", department: "EEE", type: "Technical", date: "2025-11-10", startTime: "10:00:00", endTime: "11:00 AM", venue: "EEE EEE LAB 5", departmentCoordinator: "Dr. Rajesh Shanbhag", eventCoordinators: "Madhav Poojary, Vishwanath Shetty" },
+  { id: 38, name: "Transformers", description: "Navigate through campus solving clues and riddles in this exciting outdoor adventure.", department: "EEE", type: "Technical", date: "2025-11-10", startTime: "11:00:00", endTime: "12:00 PM", venue: "EEE EEE LAB 5", departmentCoordinator: "Dr. Rajesh Shanbhag", eventCoordinators: "Madhav Poojary, Vishwanath Shetty" },
+  { id: 39, name: "Logical Circuits", description: "Celebrate diversity through music, dance, and drama performances representing various cultures.", department: "EEE", type: "Technical", date: "2025-11-10", startTime: "01:00:00", endTime: "02:00 PM", venue: "EEE EEE LAB 5", departmentCoordinator: "Dr. Rajesh Shanbhag", eventCoordinators: "Madhav Poojary, Vishwanath Shetty" },
+  { id: 40, name: "Tech Talk", description: "Navigate your robot through challenging obstacles and mazes. Speed and precision matter!", department: "EEE", type: "Non-Technical", date: "2025-11-10", startTime: "02:00:00", endTime: "03:00 PM", venue: "EEE EEE LAB 5", departmentCoordinator: "Dr. Rajesh Shanbhag", eventCoordinators: "Madhav Poojary, Vishwanath Shetty" },
+  { id: 41, name: "Quiz", description: "24-hour hackathon focused on building innovative AI/ML solutions for real-world problems.", department: "EEE", type: "Non-Technical", date: "2025-11-10", startTime: "03:00:00", endTime: "04:00 PM", venue: "EEE EEE LAB 5", departmentCoordinator: "Dr. Rajesh Shanbhag", eventCoordinators: "Madhav Poojary, Vishwanath Shetty" },
+  { id: 42, name: "Tech Huddle", description: "Analyze datasets, build predictive models, and present insights in this data science competition.", department: "EEE", type: "Non-Technical", date: "2025-11-10", startTime: "04:00:00", endTime: "05:00 PM", venue: "EEE EEE LAB 5", departmentCoordinator: "Dr. Rajesh Shanbhag", eventCoordinators: "Madhav Poojary, Vishwanath Shetty" },
+
+  // ECE Department Events
+  { id: 43, name: "Coding Champions", description: "Hands-on workshop on Internet of Things. Build smart devices and learn about connected systems.", department: "ECE", type: "Technical", date: "2025-11-10", startTime: "10:00:00", endTime: "11:00 AM", venue: "ECE ECE LAB 6", departmentCoordinator: "Dr. Sharath Kumar H S", eventCoordinators: "Jnaneshwar Naik, Akshatha Shetty" },
+  { id: 44, name: "The Wire Less", description: "Capture The Flag competition testing your cybersecurity and ethical hacking skills.", department: "ECE", type: "Technical", date: "2025-11-10", startTime: "11:00:00", endTime: "12:00 PM", venue: "ECE ECE LAB 6", departmentCoordinator: "Dr. Sharath Kumar H S", eventCoordinators: "Jnaneshwar Naik, Akshatha Shetty" },
+  { id: 45, name: "Paper Presentation", description: "Design innovative 3D models using CAD software. Creativity and precision are key.", department: "ECE", type: "Technical", date: "2025-11-10", startTime: "01:00:00", endTime: "02:00 PM", venue: "ECE ECE LAB 6", departmentCoordinator: "Dr. Sharath Kumar H S", eventCoordinators: "Jnaneshwar Naik, Akshatha Shetty" },
+  { id: 46, name: "Quiz", description: "Present your research and innovative ideas on emerging technologies to a panel of experts.", department: "ECE", type: "Non-Technical", date: "2025-11-10", startTime: "02:00:00", endTime: "03:00 PM", venue: "ECE ECE LAB 6", departmentCoordinator: "Dr. Sharath Kumar H S", eventCoordinators: "Jnaneshwar Naik, Akshatha Shetty" },
+  { id: 47, name: "Tech Huddle", description: "Test your knowledge across multiple domains including AI, blockchain, cybersecurity, and emerging technologies.", department: "ECE", type: "Non-Technical", date: "2025-11-10", startTime: "03:00:00", endTime: "04:00 PM", venue: "ECE ECE LAB 6", departmentCoordinator: "Dr. Sharath Kumar H S", eventCoordinators: "Jnaneshwar Naik, Akshatha Shetty" },
+
+  // IS Department Events
+  { id: 48, name: "Code Quest", description: "Present your innovative project ideas and research through visually appealing posters.", department: "IS", type: "Technical", date: "2025-11-10", startTime: "10:00:00", endTime: "11:00 AM", venue: "IS CS LAB 5", departmentCoordinator: "Dr. Raghavendra S", eventCoordinators: "Vinayak S Naik, Siri Gowda P K" },
+  { id: 49, name: "Bug Detection", description: "Compete in popular esports titles like BGMI, Valorant, and FIFA. Form your squad and dominate!", department: "IS", type: "Technical", date: "2025-11-10", startTime: "11:00:00", endTime: "12:00 PM", venue: "IS CS LAB 5", departmentCoordinator: "Dr. Raghavendra S", eventCoordinators: "Vinayak S Naik, Siri Gowda P K" },
+  { id: 50, name: "Poster Presentation", description: "Navigate through campus solving clues and riddles in this exciting outdoor adventure.", department: "IS", type: "Technical", date: "2025-11-10", startTime: "01:00:00", endTime: "02:00 PM", venue: "IS CS LAB 5", departmentCoordinator: "Dr. Raghavendra S", eventCoordinators: "Vinayak S Naik, Siri Gowda P K" },
+  { id: 51, name: "Quiz", description: "Celebrate diversity through music, dance, and drama performances representing various cultures.", department: "IS", type: "Non-Technical", date: "2025-11-10", startTime: "02:00:00", endTime: "03:00 PM", venue: "IS CS LAB 5", departmentCoordinator: "Dr. Raghavendra S", eventCoordinators: "Vinayak S Naik, Siri Gowda P K" },
+  { id: 52, name: "Tech Huddle", description: "Navigate your robot through challenging obstacles and mazes. Speed and precision matter!", department: "IS", type: "Non-Technical", date: "2025-11-10", startTime: "03:00:00", endTime: "04:00 PM", venue: "IS CS LAB 5", departmentCoordinator: "Dr. Raghavendra S", eventCoordinators: "Vinayak S Naik, Siri Gowda P K" },
+
+  // ME Department Events
+  { id: 53, name: "CAD Designing", description: "24-hour hackathon focused on building innovative AI/ML solutions for real-world problems.", department: "ME", type: "Technical", date: "2025-11-10", startTime: "10:00:00", endTime: "11:00 AM", venue: "ME ME LAB 3", departmentCoordinator: "Dr. Ravikiran Y T", eventCoordinators: "Shreyas K R, Sahana M" },
+  { id: 54, name: "Treasure Hunt", description: "Analyze datasets, build predictive models, and present insights in this data science competition.", department: "ME", type: "Technical", date: "2025-11-10", startTime: "11:00:00", endTime: "12:00 PM", venue: "ME ME LAB 3", departmentCoordinator: "Dr. Ravikiran Y T", eventCoordinators: "Shreyas K R, Sahana M" },
+  { id: 55, name: "Paper Presentation", description: "Hands-on workshop on Internet of Things. Build smart devices and learn about connected systems.", department: "ME", type: "Technical", date: "2025-11-10", startTime: "01:00:00", endTime: "02:00 PM", venue: "ME ME LAB 3", departmentCoordinator: "Dr. Ravikiran Y T", eventCoordinators: "Shreyas K R, Sahana M" },
+  { id: 56, name: "Quiz", description: "Capture The Flag competition testing your cybersecurity and ethical hacking skills.", department: "ME", type: "Non-Technical", date: "2025-11-10", startTime: "02:00:00", endTime: "03:00 PM", venue: "ME ME LAB 3", departmentCoordinator: "Dr. Ravikiran Y T", eventCoordinators: "Shreyas K R, Sahana M" },
+  { id: 57, name: "Tech Huddle", description: "Design innovative 3D models using CAD software. Creativity and precision are key.", department: "ME", type: "Non-Technical", date: "2025-11-10", startTime: "03:00:00", endTime: "04:00 PM", venue: "ME ME LAB 3", departmentCoordinator: "Dr. Ravikiran Y T", eventCoordinators: "Shreyas K R, Sahana M" },
+
+  // MR Department Events
+  { id: 58, name: "Robo Relay", description: "Present your research and innovative ideas on emerging technologies to a panel of experts.", department: "MR", type: "Technical", date: "2025-11-10", startTime: "10:00:00", endTime: "11:00 AM", venue: "MR MR LAB 1", departmentCoordinator: "Dr. Sandesh G Bhat", eventCoordinators: "Nandan Gowda K, Anusha K" },
+  { id: 59, name: "Paper Presentation", description: "Test your knowledge across multiple domains including AI, blockchain, cybersecurity, and emerging technologies.", department: "MR", type: "Technical", date: "2025-11-10", startTime: "11:00:00", endTime: "12:00 PM", venue: "MR MR LAB 1", departmentCoordinator: "Dr. Sandesh G Bhat", eventCoordinators: "Nandan Gowda K, Anusha K" },
+  { id: 60, name: "Robo CAD", description: "Present your innovative project ideas and research through visually appealing posters.", department: "MR", type: "Technical", date: "2025-11-10", startTime: "01:00:00", endTime: "02:00 PM", venue: "MR MR LAB 1", departmentCoordinator: "Dr. Sandesh G Bhat", eventCoordinators: "Nandan Gowda K, Anusha K" },
+  { id: 61, name: "Quiz", description: "Compete in popular esports titles like BGMI, Valorant, and FIFA. Form your squad and dominate!", department: "MR", type: "Non-Technical", date: "2025-11-10", startTime: "02:00:00", endTime: "03:00 PM", venue: "MR MR LAB 1", departmentCoordinator: "Dr. Sandesh G Bhat", eventCoordinators: "Nandan Gowda K, Anusha K" },
+  { id: 62, name: "Tech Huddle", description: "Navigate through campus solving clues and riddles in this exciting outdoor adventure.", department: "MR", type: "Non-Technical", date: "2025-11-10", startTime: "03:00:00", endTime: "04:00 PM", venue: "MR MR LAB 1", departmentCoordinator: "Dr. Sandesh G Bhat", eventCoordinators: "Nandan Gowda K, Anusha K" },
+
+  // MBA Department Events
+  { id: 63, name: "Best Manager", description: "Celebrate diversity through music, dance, and drama performances representing various cultures.", department: "MBA", type: "Technical", date: "2025-11-10", startTime: "10:00:00", endTime: "11:00 AM", venue: "MBA MBA CLASS 1", departmentCoordinator: "Dr. Raveesh K", eventCoordinators: "Suresh Kumar, Priya Shetty" },
+  { id: 64, name: "Business Quiz", description: "Navigate your robot through challenging obstacles and mazes. Speed and precision matter!", department: "MBA", type: "Technical", date: "2025-11-10", startTime: "11:00:00", endTime: "12:00 PM", venue: "MBA MBA CLASS 1", departmentCoordinator: "Dr. Raveesh K", eventCoordinators: "Suresh Kumar, Priya Shetty" },
+  { id: 65, name: "Paper Presentation", description: "24-hour hackathon focused on building innovative AI/ML solutions for real-world problems.", department: "MBA", type: "Non-Technical", date: "2025-11-10", startTime: "01:00:00", endTime: "02:00 PM", venue: "MBA MBA CLASS 1", departmentCoordinator: "Dr. Raveesh K", eventCoordinators: "Suresh Kumar, Priya Shetty" },
+  { id: 66, name: "Tech Huddle", description: "Analyze datasets, build predictive models, and present insights in this data science competition.", department: "MBA", type: "Non-Technical", date: "2025-11-10", startTime: "02:00:00", endTime: "03:00 PM", venue: "MBA MBA CLASS 1", departmentCoordinator: "Dr. Raveesh K", eventCoordinators: "Suresh Kumar, Priya Shetty" },
+
+  // MCA Department Events
+  { id: 67, name: "Coding", description: "Hands-on workshop on Internet of Things. Build smart devices and learn about connected systems.", department: "MCA", type: "Technical", date: "2025-11-10", startTime: "10:00:00", endTime: "11:00 AM", venue: "MCA CS LAB 8", departmentCoordinator: "Dr. Harishchandra Hebbar", eventCoordinators: "Rakesh Naik, Divya K" },
+  { id: 68, name: "Debugging", description: "Capture The Flag competition testing your cybersecurity and ethical hacking skills.", department: "MCA", type: "Technical", date: "2025-11-10", startTime: "11:00:00", endTime: "12:00 PM", venue: "MCA CS LAB 8", departmentCoordinator: "Dr. Harishchandra Hebbar", eventCoordinators: "Rakesh Naik, Divya K" },
+  { id: 69, name: "Paper Presentation", description: "Design innovative 3D models using CAD software. Creativity and precision are key.", department: "MCA", type: "Technical", date: "2025-11-10", startTime: "01:00:00", endTime: "02:00 PM", venue: "MCA CS LAB 8", departmentCoordinator: "Dr. Harishchandra Hebbar", eventCoordinators: "Rakesh Naik, Divya K" },
+  { id: 70, name: "Poster Presentation", description: "Present your research and innovative ideas on emerging technologies to a panel of experts.", department: "MCA", type: "Technical", date: "2025-11-10", startTime: "02:00:00", endTime: "03:00 PM", venue: "MCA CS LAB 8", departmentCoordinator: "Dr. Harishchandra Hebbar", eventCoordinators: "Rakesh Naik, Divya K" },
+  { id: 71, name: "Quiz", description: "Test your knowledge across multiple domains including AI, blockchain, cybersecurity, and emerging technologies.", department: "MCA", type: "Non-Technical", date: "2025-11-10", startTime: "03:00:00", endTime: "04:00 PM", venue: "MCA CS LAB 8", departmentCoordinator: "Dr. Harishchandra Hebbar", eventCoordinators: "Rakesh Naik, Divya K" },
+  { id: 72, name: "Tech Huddle", description: "Present your innovative project ideas and research through visually appealing posters.", department: "MCA", type: "Non-Technical", date: "2025-11-10", startTime: "04:00:00", endTime: "05:00 PM", venue: "MCA CS LAB 8", departmentCoordinator: "Dr. Harishchandra Hebbar", eventCoordinators: "Rakesh Naik, Divya K" },
+
+  // Kannada Sangha Department Event
+  { id: 73, name: "Cultural Showcase", description: "Celebrate diversity through music, dance, and drama performances representing various cultures.", department: "Kannada Sangha", type: "Non-Technical", date: "2025-11-10", startTime: "05:00:00", endTime: "06:00 PM", venue: "Main Auditorium", departmentCoordinator: "Dr. Prema Shenoy", eventCoordinators: "Rakshith Kumar, Sowmya Hegde" },
 ];
 
 // Gallery Data

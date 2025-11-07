@@ -61,9 +61,10 @@ export default function Select({
   return (
     <motion.div
       ref={dropdownRef}
-      className={`${fullWidth ? "w-full" : "w-auto"} ${className} relative`}
+      className={`${fullWidth ? "w-full" : "w-auto"} ${className} relative z-10`}
       whileHover={{ scale: disabled ? 1 : 1.01 }}
       transition={{ duration: 0.2 }}
+      style={{ zIndex: isOpen ? 50 : 10 }}
     >
       {/* Label */}
       {label && (
@@ -115,8 +116,8 @@ export default function Select({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="absolute z-50 w-full mt-2 bg-[#1F2833] border-2 border-[#457B9D]/50 rounded-xl shadow-2xl shadow-[#0B0C10]/50 backdrop-blur-xl overflow-hidden"
-            style={{ top: "100%" }}
+            className="absolute z-[100] w-full mt-2 bg-[#1F2833] border-2 border-[#457B9D]/50 rounded-xl shadow-2xl shadow-[#0B0C10]/50 backdrop-blur-xl overflow-hidden"
+            style={{ top: "100%", position: "absolute" }}
           >
             <div className="max-h-60 overflow-y-auto custom-scrollbar">
               {options.map((option, index) => (

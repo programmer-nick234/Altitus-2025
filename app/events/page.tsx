@@ -79,14 +79,14 @@ export default function EventsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="mt-10 md:mt-12 flex justify-center"
+            className="mt-10 md:mt-12 flex justify-center relative z-20"
           >
             <SpotlightCard 
-              className="p-8 md:p-10 w-full max-w-5xl"
+              className="p-6 md:p-8 lg:p-10 w-full max-w-5xl"
               spotlightColor="rgba(69, 123, 157, 0.15)"
             >
               {/* Search Bar - Full Width */}
-              <div className="mb-8">
+              <div className="mb-6 md:mb-8">
                 <SearchBar
                   value={searchQuery}
                   onChange={setSearchQuery}
@@ -97,13 +97,13 @@ export default function EventsPage() {
               </div>
 
               {/* Divider */}
-              <div className="h-px bg-gradient-to-r from-transparent via-[#457B9D]/30 to-transparent mb-8"></div>
+              <div className="h-px bg-gradient-to-r from-transparent via-[#457B9D]/30 to-transparent mb-6 md:mb-8"></div>
 
               {/* Filter Dropdowns - Side by Side */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                 {/* Type Filter Dropdown */}
-                <div>
-                  <div className="flex items-center gap-2 mb-4">
+                <div className="relative z-30">
+                  <div className="flex items-center gap-2 mb-3 md:mb-4">
                     <span className="text-[#C5C6C7] inter-semibold text-sm uppercase tracking-wider">Filter by Type</span>
                   </div>
                   <Select
@@ -120,8 +120,8 @@ export default function EventsPage() {
                 </div>
 
                 {/* Department Filter Dropdown */}
-                <div>
-                  <div className="flex items-center gap-2 mb-4">
+                <div className="relative z-20">
+                  <div className="flex items-center gap-2 mb-3 md:mb-4">
                     <span className="text-[#C5C6C7] inter-semibold text-sm uppercase tracking-wider">Department</span>
                   </div>
                   <Select

@@ -429,16 +429,9 @@ function LightboxModal({
             {item.title}
           </h2>
           <div className="flex flex-wrap items-center gap-4 text-gray-300 inter-regular text-lg">
-            <span className="flex items-center gap-2">
-              <div className={`w-3 h-3 rounded-full ${item.type === "video" ? "bg-[#E63946]" : "bg-[#457B9D]"}`} />
-              {item.event}
-            </span>
+            <span>{item.event}</span>
             <span className="text-gray-500">•</span>
             <span>{new Date(item.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
-            <span className="text-gray-500">•</span>
-            <span className="px-3 py-1 bg-[#457B9D]/20 text-[#457B9D] rounded-full text-sm font-semibold">
-              {item.category}
-            </span>
           </div>
         </motion.div>
       </motion.div>

@@ -263,6 +263,7 @@ export default function Footer() {
                   src="/altius-bg.png"
                   alt="Altius Logo"
                   fill
+                  sizes="60px"
                   style={{ objectFit: "contain" }}
                 />
               </div>
@@ -289,7 +290,7 @@ export default function Footer() {
             <p style={styles.aboutText}>
               Join us for an extraordinary inter-department technical fest at{" "}
               <strong style={{ color: "#F1FAEE" }}>Srinivas Institute of Technology</strong>, Mangalore. 
-              With 20+ events, 13 departments, and 500+ participants, Altius 2025 is where innovation meets excellence.
+              With 80+ events, 10 departments, and 500+ participants, Altius 2025 is where innovation meets excellence.
             </p>
             <div style={styles.socialContainer} className="footer-social-container">
               <a
@@ -550,12 +551,12 @@ export default function Footer() {
               <div>
                 <strong style={{ color: "#F1FAEE", display: "block", marginBottom: "0.25rem" }}>Phone</strong>
                 <a
-                  href="tel:+911234567890"
+                  href="tel:+919611228298"
                   style={{ color: "#C5C6C7", textDecoration: "none" }}
                   onMouseEnter={(e) => (e.currentTarget.style.color = "#457B9D")}
                   onMouseLeave={(e) => (e.currentTarget.style.color = "#C5C6C7")}
                 >
-                  +91 12345 67890
+                  +91 96112 28298
                 </a>
               </div>
             </div>
@@ -586,7 +587,7 @@ export default function Footer() {
               Terms of Service
             </Link>
             <span>
-              Made with <span style={styles.heartbeat}>❤</span> by Team Altius
+              Made with by Team Altius
             </span>
           </div>
         </div>

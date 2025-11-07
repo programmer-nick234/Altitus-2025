@@ -32,13 +32,26 @@ export function getEventStatus(event: Event, currentTime: Date = new Date()): Ev
 }
 
 /**
- * Parse time string (e.g., "10:30 AM") into components
+ * Parse time string (supports "10:30 AM" or "10:30:00" formats)
  */
 function parseTime(timeStr: string): [number, number, string] {
-  const match = timeStr.match(/(\d+):(\d+)\s*(AM|PM)/i);
-  if (!match) throw new Error(`Invalid time format: ${timeStr}`);
+  // Try 12-hour format first (e.g., "10:30 AM")
+  const match12Hour = timeStr.match(/(\d+):(\d+)\s*(AM|PM)/i);
+  if (match12Hour) {
+    return [parseInt(match12Hour[1]), parseInt(match12Hour[2]), match12Hour[3].toUpperCase()];
+  }
   
-  return [parseInt(match[1]), parseInt(match[2]), match[3].toUpperCase()];
+  // Try 24-hour format (e.g., "10:30:00" or "10:30")
+  const match24Hour = timeStr.match(/(\d+):(\d+)(?::\d+)?$/);
+  if (match24Hour) {
+    const hour = parseInt(match24Hour[1]);
+    const minute = parseInt(match24Hour[2]);
+    const period = hour >= 12 ? "PM" : "AM";
+    const hour12 = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+    return [hour12, minute, period];
+  }
+  
+  throw new Error(`Invalid time format: ${timeStr}`);
 }
 
 /**
@@ -138,5 +151,24 @@ export function filterEventsByStatus(events: Event[], status: EventStatus, curre
  * Format time range (e.g., "10:00 AM - 1:00 PM")
  */
 export function formatTimeRange(startTime: string, endTime: string): string {
-  return `${startTime} - ${endTime}`;
+  const formatTime = (timeStr: string): string => {
+    // If already in 12-hour format, return as is
+    if (timeStr.match(/\d+:\d+\s*(AM|PM)/i)) {
+      return timeStr;
+    }
+    
+    // Convert 24-hour format to 12-hour
+    const match = timeStr.match(/(\d+):(\d+)(?::\d+)?$/);
+    if (match) {
+      const hour = parseInt(match[1]);
+      const minute = match[2];
+      const period = hour >= 12 ? "PM" : "AM";
+      const hour12 = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+      return `${hour12}:${minute} ${period}`;
+    }
+    
+    return timeStr;
+  };
+  
+  return `${formatTime(startTime)} - ${formatTime(endTime)}`;
 }
