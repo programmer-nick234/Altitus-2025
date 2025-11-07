@@ -56,13 +56,13 @@ export default function SearchBar({
   const sizes = {
     sm: "py-2 px-4 text-sm",
     md: "py-3 px-6 text-base",
-    lg: "py-4 px-8 text-lg",
+    lg: "py-4 px-8 text-lg md:text-xl",
   };
 
   const iconSizes = {
     sm: 18,
     md: 22,
-    lg: 26,
+    lg: 28,
   };
 
   return (

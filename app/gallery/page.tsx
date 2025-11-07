@@ -1,252 +1,652 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { X, Play, Image as ImageIcon, Video as VideoIcon } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { X, Play, ChevronLeft, ChevronRight, Pause, Download } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { gallery, type GalleryItem } from "@/lib/mockData";
-import { Button } from "@/components/ui";
+import Image from "next/image";
+
+// Gallery data structure
+interface MediaItem {
+  id: number;
+  src: string;
+  type: "photo" | "video";
+  title: string;
+  event: string;
+  date: string;
+  category: string;
+  gridSpan?: string; // For Bento grid layout
+}
+
+// Gallery data - All images and videos from public/gallery folder
+const galleryItems: MediaItem[] = [
+  // Row 1 - Large hero image
+  { 
+    id: 1, 
+    src: "/gallery/poster-main.jpeg", 
+    type: "photo", 
+    title: "Altius 2024 Official Poster", 
+    event: "Main Event Poster", 
+    date: "2024-11-10", 
+    category: "Promotional", 
+    gridSpan: "md:col-span-2 md:row-span-2" 
+  },
+  { 
+    id: 2, 
+    src: "/gallery/altius-inougration.jpeg", 
+    type: "photo", 
+    title: "Inauguration Ceremony", 
+    event: "Opening Day", 
+    date: "2024-11-10", 
+    category: "Ceremony" 
+  },
+  { 
+    id: 3, 
+    src: "/gallery/speech.jpeg", 
+    type: "photo", 
+    title: "Keynote Speech", 
+    event: "Opening Address", 
+    date: "2024-11-10", 
+    category: "Ceremony" 
+  },
+  
+  // Row 2
+  { 
+    id: 4, 
+    src: "/gallery/speech-2.jpeg", 
+    type: "photo", 
+    title: "Guest Speaker", 
+    event: "Special Address", 
+    date: "2024-11-10", 
+    category: "Ceremony" 
+  },
+  
+  // Row 3
+  { 
+    id: 5, 
+    src: "/gallery/team.jpeg", 
+    type: "photo", 
+    title: "Organizing Team", 
+    event: "Team Photo", 
+    date: "2024-11-10", 
+    category: "Behind The Scenes" 
+  },
+  { 
+    id: 6, 
+    src: "/gallery/team-2.jpeg", 
+    type: "photo", 
+    title: "Core Committee", 
+    event: "Team Photo", 
+    date: "2024-11-10", 
+    category: "Behind The Scenes" 
+  },
+  { 
+    id: 7, 
+    src: "/gallery/promo launching.jpeg", 
+    type: "photo", 
+    title: "Event Promo Launch", 
+    event: "Marketing Campaign", 
+    date: "2024-11-10", 
+    category: "Promotional" 
+  },
+  
+  // Row 4 - Large poster
+  { 
+    id: 8, 
+    src: "/gallery/poster-back.jpeg", 
+    type: "photo", 
+    title: "Event Details Poster", 
+    event: "Information Board", 
+    date: "2024-11-10", 
+    category: "Promotional", 
+    gridSpan: "md:col-span-2 md:row-span-2" 
+  },
+  { 
+    id: 9, 
+    src: "/gallery/altius-inivites.jpeg", 
+    type: "photo", 
+    title: "Official Invitations", 
+    event: "Invitation Design", 
+    date: "2024-11-10", 
+    category: "Promotional" 
+  },
+];
 
 export default function GalleryPage() {
-  const [filter, setFilter] = useState<"all" | "photo" | "video">("all");
-  const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
 
   // Scroll to top when page loads
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, []);
 
-  const filteredGallery = gallery.filter(item => 
-    filter === "all" ? true : item.type === filter
-  );
+  // Handle video playback
+  useEffect(() => {
+    if (selectedIndex !== null && galleryItems[selectedIndex].type === "video") {
+      if (videoRef.current) {
+        if (isPlaying) {
+          videoRef.current.play();
+        } else {
+          videoRef.current.pause();
+        }
+      }
+    }
+  }, [isPlaying, selectedIndex]);
+
+  const handlePrevious = () => {
+    if (selectedIndex !== null && selectedIndex > 0) {
+      setSelectedIndex(selectedIndex - 1);
+      setIsPlaying(false);
+    }
+  };
+
+  const handleNext = () => {
+    if (selectedIndex !== null && selectedIndex < galleryItems.length - 1) {
+      setSelectedIndex(selectedIndex + 1);
+      setIsPlaying(false);
+    }
+  };
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (selectedIndex === null) return;
+      if (e.key === "ArrowLeft") handlePrevious();
+      if (e.key === "ArrowRight") handleNext();
+      if (e.key === "Escape") {
+        setSelectedIndex(null);
+        setIsPlaying(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
+  }, [selectedIndex]);
 
   return (
     <div className="min-h-screen bg-[#0B0C10]">
       <Navbar />
 
-      {/* Header */}
-      <section className="pt-32 md:pt-40 pb-16 md:pb-20 min-h-[50vh] flex items-center">
-        <div className="content-container w-full">
+      {/* Header Section */}
+      <section className="page-header relative overflow-hidden">
+        {/* Animated Background Blobs */}
+        <div className="absolute inset-0 pointer-events-none">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.2, 0.4, 0.2],
+              rotate: [0, 90, 0],
+            }}
+            transition={{
+              duration: 15,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-[#E63946]/20 rounded-full blur-[150px]"
+          />
+          <motion.div
+            animate={{
+              scale: [1.2, 1, 1.2],
+              opacity: [0.2, 0.4, 0.2],
+              rotate: [0, -90, 0],
+            }}
+            transition={{
+              duration: 15,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2,
+            }}
+            className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-[#457B9D]/20 rounded-full blur-[150px]"
+          />
+        </div>
+
+        <div className="content-container relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center space-y-6 mb-16"
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="section-title"
           >
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#F1FAEE] goldman-bold drop-shadow-[0_0_30px_rgba(230,57,70,0.3)]">
-              Event <span className="text-[#E63946]">Gallery</span>
-            </h1>
-            <div className="w-24 h-1 bg-gradient-to-r from-[#1D3557] to-[#E63946] mx-auto rounded-full" />
-            <p className="text-[#C5C6C7] text-xl md:text-2xl max-w-3xl mx-auto inter-regular leading-relaxed px-4">
-              Relive the amazing moments from Altius 2025. Browse through photos and videos from all our events.
-            </p>
-          </motion.div>
-
-          {/* Filter Tabs */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="flex justify-center mb-12"
-          >
-            <div className="glass rounded-xl p-2 inline-flex flex-wrap gap-2 justify-center">
-              {[
-                { value: "all", label: "All", icon: null },
-                { value: "photo", label: "Photos", icon: ImageIcon },
-                { value: "video", label: "Videos", icon: VideoIcon },
-              ].map(({ value, label, icon: Icon }) => (
-                <button
-                  key={value}
-                  onClick={() => setFilter(value as typeof filter)}
-                  className={`px-6 py-3 rounded-lg inter-regular font-medium transition-all flex items-center space-x-2 ${
-                    filter === value
-                      ? "gradient-blue-red text-white shadow-lg"
-                      : "text-[#C5C6C7] hover:text-[#F1FAEE] hover:bg-[#1F2833]"
-                  }`}
-                >
-                  {Icon && <Icon size={18} />}
-                  <span>{label}</span>
-                </button>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Results Count */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="mb-10 text-center"
-          >
-            <p className="text-[#C5C6C7] inter-regular text-lg">
-              Showing <span className="text-[#457B9D] font-semibold">{filteredGallery.length}</span> {filter === "all" ? "items" : filter === "photo" ? "photos" : "videos"}
-            </p>
-          </motion.div>
-
-          {/* Masonry Grid */}
-          <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8 max-w-7xl mx-auto">
-            <AnimatePresence mode="popLayout">
-              {filteredGallery.map((item, index) => (
-                <motion.div
-                  key={item.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ delay: index * 0.05 }}
-                  className="break-inside-avoid mb-6"
-                >
-                  <motion.div
-                    whileHover={{ y: -4 }}
-                    onClick={() => setSelectedItem(item)}
-                    className="glass rounded-xl overflow-hidden cursor-pointer group hover:border-[#457B9D]/50 transition-all"
-                  >
-                    {/* Image/Video Placeholder */}
-                    <div className="relative aspect-[4/3] bg-gradient-to-br from-[#1D3557] to-[#457B9D] overflow-hidden">
-                      {/* Placeholder Pattern */}
-                      <div className="absolute inset-0 bg-black/20" />
-                      <motion.div
-                        className="absolute inset-0 bg-gradient-to-br from-[#E63946]/20 to-transparent"
-                        whileHover={{ opacity: 0.5 }}
-                        transition={{ duration: 0.3 }}
-                      />
-                      
-                      {/* Center Icon */}
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        {item.type === "video" ? (
-                          <motion.div
-                            whileHover={{ scale: 1.1 }}
-                            className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center shadow-lg"
-                          >
-                            <Play className="text-[#E63946] ml-1" size={24} fill="#E63946" />
-                          </motion.div>
-                        ) : (
-                          <span className="text-6xl font-bold text-white/10 goldman-bold">
-                            {item.title.charAt(0)}
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Type Badge */}
-                      <div className="absolute top-3 right-3 px-3 py-1 bg-black/50 backdrop-blur-sm rounded-full flex items-center space-x-1">
-                        {item.type === "video" ? (
-                          <VideoIcon size={14} className="text-white" />
-                        ) : (
-                          <ImageIcon size={14} className="text-white" />
-                        )}
-                        <span className="text-white text-xs inter-regular capitalize">
-                          {item.type}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Info */}
-                    <div className="p-4">
-                      <h3 className="text-lg font-bold text-[#F1FAEE] mb-1 goldman-bold group-hover:text-[#457B9D] transition-colors">
-                        {item.title}
-                      </h3>
-                      <div className="flex items-center justify-between text-sm text-[#C5C6C7]">
-                        <span className="inter-regular">{item.event}</span>
-                        <span className="inter-regular">
-                          {new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                        </span>
-                      </div>
-                    </div>
-                  </motion.div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </div>
-
-          {/* No Results */}
-          {filteredGallery.length === 0 && (
-            <motion.div
+            <motion.h1 
+              className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#F1FAEE] goldman-bold"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="text-center py-20"
+              transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <div className="text-6xl mb-4">📷</div>
-              <h3 className="text-2xl font-bold text-[#F1FAEE] mb-2 goldman-bold">
-                No {filter === "all" ? "Items" : filter === "photo" ? "Photos" : "Videos"} Found
-              </h3>
-              <p className="text-[#C5C6C7] inter-regular">
-                Check back later for more content
-              </p>
-            </motion.div>
-          )}
+              Altius 2024 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E63946] to-[#457B9D]">Memories</span>
+            </motion.h1>
+            <div className="divider"></div>
+            <motion.p 
+              className="text-[#C5C6C7] text-lg md:text-xl lg:text-2xl inter-regular leading-relaxed max-w-4xl"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+            >
+              Relive the incredible moments from our past event. Experience the energy, passion, and innovation that made Altius 2024 unforgettable.
+            </motion.p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Gallery Grid Section */}
+      <section ref={containerRef} className="section-spacing relative">
+        <div className="content-container">
+          {/* Bento Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6 auto-rows-[200px] md:auto-rows-[280px]">
+            {galleryItems.map((item, index) => (
+              <GalleryCard
+                key={item.id}
+                item={item}
+                index={index}
+                onClick={() => setSelectedIndex(index)}
+                scrollProgress={scrollYProgress}
+              />
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Lightbox Modal */}
       <AnimatePresence>
-        {selectedItem && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setSelectedItem(null)}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm"
-          >
-            {/* Close Button */}
-            <button
-              onClick={() => setSelectedItem(null)}
-              className="absolute top-4 right-4 z-10 w-12 h-12 rounded-full glass flex items-center justify-center text-[#F1FAEE] hover:text-[#E63946] transition-colors"
-            >
-              <X size={24} />
-            </button>
-
-            {/* Content */}
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-              className="max-w-5xl w-full"
-            >
-              {/* Media Container */}
-              <div className="relative aspect-video rounded-2xl overflow-hidden bg-gradient-to-br from-[#1D3557] to-[#457B9D] mb-4">
-                {/* Placeholder */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  {selectedItem.type === "video" ? (
-                    <div className="w-20 h-20 rounded-full bg-white/90 flex items-center justify-center shadow-lg cursor-pointer">
-                      <Play className="text-[#E63946] ml-1" size={32} fill="#E63946" />
-                    </div>
-                  ) : (
-                    <span className="text-9xl font-bold text-white/20 goldman-bold">
-                      {selectedItem.title.charAt(0)}
-                    </span>
-                  )}
-                </div>
-              </div>
-
-              {/* Info */}
-              <div className="glass rounded-2xl p-6">
-                <h2 className="text-2xl font-bold text-[#F1FAEE] mb-2 goldman-bold">
-                  {selectedItem.title}
-                </h2>
-                <div className="flex items-center space-x-4 text-[#C5C6C7] inter-regular">
-                  <span className="flex items-center space-x-2">
-                    {selectedItem.type === "video" ? <VideoIcon size={16} /> : <ImageIcon size={16} />}
-                    <span className="capitalize">{selectedItem.type}</span>
-                  </span>
-                  <span>•</span>
-                  <span>{selectedItem.event}</span>
-                  <span>•</span>
-                  <span>
-                    {new Date(selectedItem.date).toLocaleDateString('en-US', { 
-                      month: 'long', 
-                      day: 'numeric', 
-                      year: 'numeric' 
-                    })}
-                  </span>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
+        {selectedIndex !== null && (
+          <LightboxModal
+            item={galleryItems[selectedIndex]}
+            onClose={() => {
+              setSelectedIndex(null);
+              setIsPlaying(false);
+            }}
+            onPrevious={handlePrevious}
+            onNext={handleNext}
+            hasPrevious={selectedIndex > 0}
+            hasNext={selectedIndex < galleryItems.length - 1}
+            isPlaying={isPlaying}
+            setIsPlaying={setIsPlaying}
+            videoRef={videoRef}
+          />
         )}
       </AnimatePresence>
 
       <Footer />
     </div>
+  );
+}
+
+// Gallery Card Component with 3D Tilt and Parallax
+function GalleryCard({ item, index, onClick, scrollProgress }: {
+  item: MediaItem;
+  index: number;
+  onClick: () => void;
+  scrollProgress: any;
+}) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  // Parallax effect based on scroll
+  const y = useTransform(
+    scrollProgress,
+    [0, 1],
+    [index % 2 === 0 ? -50 : 50, index % 2 === 0 ? 50 : -50]
+  );
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    setMousePosition({ x, y });
+  };
+
+  return (
+    <motion.div
+      ref={cardRef}
+      style={{ y }}
+      initial={{ opacity: 0, scale: 0.8 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{
+        duration: 0.6,
+        delay: index * 0.05,
+        ease: [0.23, 1, 0.32, 1]
+      }}
+      className={`relative group cursor-pointer ${item.gridSpan || ""}`}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        setMousePosition({ x: 0, y: 0 });
+      }}
+      onClick={onClick}
+    >
+      <motion.div
+        className="relative w-full h-full rounded-2xl overflow-hidden"
+        animate={{
+          rotateX: isHovered ? mousePosition.y * 3 : 0,
+          rotateY: isHovered ? mousePosition.x * 3 : 0,
+          scale: isHovered ? 1.02 : 1,
+        }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        style={{
+          transformStyle: "preserve-3d",
+          perspective: 1000,
+        }}
+      >
+        {/* Loading Skeleton */}
+        {!imageLoaded && (
+          <div className="absolute inset-0 bg-gradient-to-br from-[#1D3557]/50 via-[#457B9D]/50 to-[#1D3557]/50 animate-pulse" />
+        )}
+
+        {/* Actual Image or Video Thumbnail */}
+        {item.type === "photo" ? (
+          <Image
+            src={item.src}
+            alt={item.title}
+            fill
+            className={`object-cover transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            onLoad={() => setImageLoaded(true)}
+          />
+        ) : (
+          <video
+            src={item.src}
+            className="absolute inset-0 w-full h-full object-contain bg-gradient-to-br from-[#1D3557] via-[#457B9D] to-[#1D3557]"
+            muted
+            playsInline
+            preload="metadata"
+            onLoadedData={() => setImageLoaded(true)}
+          />
+        )}
+
+        {/* Glow Effect */}
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-br from-[#E63946]/0 via-[#E63946]/30 to-[#457B9D]/0"
+          animate={{
+            opacity: isHovered ? 1 : 0,
+          }}
+          transition={{ duration: 0.3 }}
+        />
+
+        {/* Premium Shadow */}
+        <div className={`absolute inset-0 rounded-2xl transition-all duration-500 ${
+          isHovered 
+            ? "shadow-[0_10px_40px_rgba(230,57,70,0.3),0_0_20px_rgba(69,123,157,0.2)]"
+            : "shadow-[0_8px_25px_rgba(0,0,0,0.3)]"
+        }`} />
+
+        {/* Hover Play Icon for Videos */}
+        {item.type === "video" && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ 
+              opacity: isHovered ? 1 : 0,
+              scale: isHovered ? 1 : 0
+            }}
+            className="absolute inset-0 flex items-center justify-center z-10"
+          >
+            <div className="w-20 h-20 rounded-full bg-white/95 backdrop-blur-md flex items-center justify-center shadow-2xl">
+              <Play className="text-[#E63946] ml-1" size={32} fill="#E63946" />
+            </div>
+          </motion.div>
+        )}
+
+        {/* Enhanced Text Overlay - Always Visible with Better Contrast */}
+        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-5 md:p-6">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h3 className="text-xl md:text-2xl font-bold text-white goldman-bold mb-1.5 line-clamp-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+              {item.title}
+            </h3>
+            <p className="text-sm md:text-base text-gray-200 inter-regular line-clamp-1 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+              {item.event}
+            </p>
+          </motion.div>
+        </div>
+
+        {/* Premium Border Glow */}
+        <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-[#457B9D]/50 transition-all duration-300" />
+      </motion.div>
+    </motion.div>
+  );
+}
+
+// Lightbox Modal Component
+function LightboxModal({
+  item,
+  onClose,
+  onPrevious,
+  onNext,
+  hasPrevious,
+  hasNext,
+  isPlaying,
+  setIsPlaying,
+  videoRef,
+}: {
+  item: MediaItem;
+  onClose: () => void;
+  onPrevious: () => void;
+  onNext: () => void;
+  hasPrevious: boolean;
+  hasNext: boolean;
+  isPlaying: boolean;
+  setIsPlaying: (playing: boolean) => void;
+  videoRef: React.RefObject<HTMLVideoElement | null>;
+}) {
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+
+  // Swipe gesture handling
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStart - touchEnd > 75 && hasNext) {
+      // Swiped left
+      onNext();
+    }
+    if (touchStart - touchEnd < -75 && hasPrevious) {
+      // Swiped right
+      onPrevious();
+    }
+  };
+
+  // Get current index
+  const currentIndex = galleryItems.findIndex(i => i.id === item.id);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-black/95 backdrop-blur-xl pt-20 md:pt-24"
+    >
+      {/* Close Button */}
+      <motion.button
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        whileHover={{ scale: 1.1, rotate: 90 }}
+        whileTap={{ scale: 0.9 }}
+        onClick={(e) => {
+          e.stopPropagation();
+          onClose();
+        }}
+        className="absolute top-6 md:top-8 right-6 md:right-8 z-[110] w-14 h-14 md:w-16 md:h-16 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-[#E63946] hover:border-[#E63946] transition-all duration-300 shadow-2xl"
+      >
+        <X size={26} />
+      </motion.button>
+
+      {/* Download Button */}
+      <motion.a
+        href={item.src}
+        download={`${item.title}.jpg`}
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        onClick={(e) => e.stopPropagation()}
+        className="absolute top-6 md:top-8 right-24 md:right-28 z-[100] w-14 h-14 md:w-16 md:h-16 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-[#457B9D] hover:border-[#457B9D] transition-all duration-300 shadow-2xl"
+      >
+        <Download size={22} />
+      </motion.a>
+
+      {/* Photo Counter */}
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="absolute top-6 md:top-8 left-6 md:left-8 z-[100] px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white font-semibold inter-semibold text-sm md:text-base"
+      >
+        {currentIndex + 1} / {galleryItems.length}
+      </motion.div>
+
+      {/* Navigation Buttons - Larger Size */}
+      {hasPrevious && (
+        <motion.button
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          whileHover={{ scale: 1.1, x: -5 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={(e) => {
+            e.stopPropagation();
+            onPrevious();
+          }}
+          className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-[100] w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-[#457B9D] hover:border-[#457B9D] transition-all duration-300 shadow-2xl"
+        >
+          <ChevronLeft size={32} />
+        </motion.button>
+      )}
+
+      {hasNext && (
+        <motion.button
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          whileHover={{ scale: 1.1, x: 5 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={(e) => {
+            e.stopPropagation();
+            onNext();
+          }}
+          className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-[100] w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-[#457B9D] hover:border-[#457B9D] transition-all duration-300 shadow-2xl"
+        >
+          <ChevronRight size={32} />
+        </motion.button>
+      )}
+
+      {/* Content */}
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0, y: 20 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        exit={{ scale: 0.9, opacity: 0, y: 20 }}
+        transition={{ type: "spring", damping: 25, stiffness: 300 }}
+        onClick={(e) => e.stopPropagation()}
+        className="max-w-6xl w-full"
+      >
+        {/* Media Container */}
+        <div className="relative aspect-video rounded-2xl overflow-hidden mb-6 shadow-2xl shadow-[#E63946]/20">
+          {item.type === "video" ? (
+            <div className="relative w-full h-full bg-gradient-to-br from-[#1D3557] to-[#457B9D]">
+              {/* Actual Video */}
+              <video
+                ref={videoRef}
+                className="w-full h-full object-cover"
+                controls={false}
+              >
+                <source src={item.src} type="video/mp4" />
+              </video>
+
+              {/* Play/Pause Overlay */}
+              <div
+                className="absolute inset-0 flex items-center justify-center cursor-pointer"
+                onClick={() => setIsPlaying(!isPlaying)}
+              >
+                <motion.div
+                  animate={{ opacity: isPlaying ? 0 : 1 }}
+                  className="w-24 h-24 rounded-full bg-white/95 backdrop-blur-md flex items-center justify-center shadow-2xl"
+                >
+                  {isPlaying ? (
+                    <Pause className="text-[#E63946]" size={40} />
+                  ) : (
+                    <Play className="text-[#E63946] ml-2" size={40} fill="#E63946" />
+                  )}
+                </motion.div>
+              </div>
+            </div>
+          ) : (
+            <div className="relative w-full h-full bg-[#0B0C10]">
+              <Image
+                src={item.src}
+                alt={item.title}
+                fill
+                className="object-contain"
+                sizes="(max-width: 768px) 100vw, 1200px"
+              />
+            </div>
+          )}
+        </div>
+
+        {/* Keyboard Navigation Hints */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 px-6 py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-gray-300 text-xs md:text-sm inter-regular flex items-center gap-4"
+        >
+          <span className="flex items-center gap-1.5">
+            <kbd className="px-2 py-1 bg-white/20 rounded text-white font-semibold">←</kbd>
+            <kbd className="px-2 py-1 bg-white/20 rounded text-white font-semibold">→</kbd>
+            <span>Navigate</span>
+          </span>
+          <span className="text-gray-500">|</span>
+          <span className="flex items-center gap-1.5">
+            <kbd className="px-2 py-1 bg-white/20 rounded text-white font-semibold">ESC</kbd>
+            <span>Close</span>
+          </span>
+        </motion.div>
+
+        {/* Info Panel */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-white goldman-bold mb-3">
+            {item.title}
+          </h2>
+          <div className="flex flex-wrap items-center gap-4 text-gray-300 inter-regular text-lg">
+            <span className="flex items-center gap-2">
+              <div className={`w-3 h-3 rounded-full ${item.type === "video" ? "bg-[#E63946]" : "bg-[#457B9D]"}`} />
+              {item.event}
+            </span>
+            <span className="text-gray-500">•</span>
+            <span>{new Date(item.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+            <span className="text-gray-500">•</span>
+            <span className="px-3 py-1 bg-[#457B9D]/20 text-[#457B9D] rounded-full text-sm font-semibold">
+              {item.category}
+            </span>
+          </div>
+        </motion.div>
+      </motion.div>
+    </motion.div>
   );
 }
