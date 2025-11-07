@@ -119,15 +119,21 @@ export default function AboutPage() {
                   Explore Events
                 </Button>
               </Link>
-              <a href="YOUR_GOOGLE_DRIVE_RULEBOOK_LINK" target="_blank" rel="noopener noreferrer">
-                <Button 
-                  variant="outline" 
-                  size="lg"
-                  aria-label="View Altius 2025 Rulebook"
-                >
-                  📘 View Rulebook
-                </Button>
-              </a>
+              <Link
+  href="https://drive.google.com/file/d/1viaq7hCyFQSti37uFx-ZjAo3B3hQacy-/view?usp=drive_link"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="w-full sm:w-auto"
+  prefetch={false}
+>
+  <Button 
+    variant="primary" 
+    size="xl"
+    className="min-w-[220px] px-12 py-5 text-lg font-bold tracking-wide rounded-full w-full sm:w-auto shadow-2xl hover:shadow-[0_0_40px_rgba(230,57,70,0.5)] transition-all duration-300"
+  >
+    📘 View Rulebook
+  </Button>
+</Link>
             </motion.div>
           </motion.div>
         </div>

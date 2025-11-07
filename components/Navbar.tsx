@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
+import { Button } from "@/components/ui";
 
 const navLinks = [
   { name: "HOME", href: "/" },
@@ -94,14 +95,7 @@ export default function Navbar() {
 
             {/* Rulebook Button - Right */}
             <div className="flex items-center gap-4">
-              <a
-                href="YOUR_GOOGLE_DRIVE_RULEBOOK_LINK"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm px-6 py-2.5 bg-gradient-to-r from-[#E63946] to-[#1D3557] text-white rounded-full hover:shadow-[0_0_20px_rgba(230,57,70,0.5)] transition-all duration-300 font-semibold tracking-wide"
-              >
-                📘 RULEBOOK
-              </a>
+            
             </div>
           </div>
         </div>
@@ -174,15 +168,21 @@ export default function Navbar() {
 
               {/* Rulebook Button (Mobile) */}
               <div className="flex flex-col gap-4 mt-10">
-                <a
-                  href="YOUR_GOOGLE_DRIVE_RULEBOOK_LINK"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setIsOpen(false)}
-                  className="text-center px-6 py-3 bg-gradient-to-r from-[#E63946] to-[#1D3557] text-white rounded-full hover:shadow-[0_0_20px_rgba(230,57,70,0.5)] transition-all font-semibold"
-                >
-                  📘 RULEBOOK
-                </a>
+                <Link
+  href="https://drive.google.com/file/d/1viaq7hCyFQSti37uFx-ZjAo3B3hQacy-/view?usp=drive_link"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="w-full sm:w-auto"
+  prefetch={false}
+>
+  <Button 
+    variant="primary" 
+    size="xl"
+    className="min-w-[220px] px-12 py-5 text-lg font-bold tracking-wide rounded-full w-full sm:w-auto shadow-2xl hover:shadow-[0_0_40px_rgba(230,57,70,0.5)] transition-all duration-300"
+  >
+    📘Rulebook
+  </Button>
+</Link>
               </div>
             </div>
           </motion.div>

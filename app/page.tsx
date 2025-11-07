@@ -23,7 +23,20 @@ export default function Home() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="hero-section overflow-hidden">
+<section className="hero-section overflow-hidden relative">
+  {/* Looping Background */}
+  <div className="absolute inset-0 bg-scroll-x z-0" />
+
+  {/* Gradient overlays */}
+  <div className="absolute inset-0 bg-gradient-to-b from-[#0B0C10] via-[#1D3557]/20 to-[#0B0C10] z-10">
+    {/* glowing motion divs */}
+  </div>
+
+  {/* Foreground content */}
+  <div className="relative z-20 max-w-6xl mx-auto px-6 text-center flex flex-col items-center justify-center">
+    {/* Your logo, title, etc. */}
+  </div>
+
         {/* Animated Background */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#0B0C10] via-[#1D3557]/20 to-[#0B0C10]">
           <motion.div
@@ -207,15 +220,21 @@ export default function Home() {
               </Button>
             </Link>
             
-            <a href="YOUR_GOOGLE_DRIVE_RULEBOOK_LINK" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
-              <Button 
-                variant="primary" 
-                size="xl"
-                className="min-w-[220px] px-12 py-5 text-lg font-bold tracking-wide rounded-full w-full sm:w-auto shadow-2xl hover:shadow-[0_0_40px_rgba(230,57,70,0.5)] transition-all duration-300"
-              >
-                📘 View Rulebook
-              </Button>
-            </a>
+            <Link
+  href="https://drive.google.com/file/d/1viaq7hCyFQSti37uFx-ZjAo3B3hQacy-/view?usp=drive_link"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="w-full sm:w-auto"
+  prefetch={false}
+>
+  <Button 
+    variant="primary" 
+    size="xl"
+    className="min-w-[220px] px-12 py-5 text-lg font-bold tracking-wide rounded-full w-full sm:w-auto shadow-2xl hover:shadow-[0_0_40px_rgba(230,57,70,0.5)] transition-all duration-300"
+  >
+    📘 View Rulebook
+  </Button>
+</Link>
           </motion.div>
 
           {/* Scroll Down Indicator */}
@@ -236,30 +255,15 @@ export default function Home() {
       {/* UPDATED: Using .section-spacing from global.css */}
       <section id="about-section" className="section-spacing relative bg-[#0B0C10]">
         <div className="content-container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center space-y-6 mb-20"
-          >
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#F1FAEE] goldman-bold">
-              About <span className="text-[#E63946]">Altius 2025</span>
-            </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-[#1D3557] to-[#E63946] mx-auto rounded-full" />
-            <p className="text-[#C5C6C7] text-lg md:text-xl max-w-4xl mx-auto inter-regular leading-relaxed px-4">
-              Altius 2025 is the premier inter-department technical fest at Srinivas Institute of Technology. 
-              Bringing together brilliant minds from across departments to compete, collaborate, and celebrate innovation. 
-              Experience cutting-edge technology, intense competitions, and unforgettable moments.
-            </p>
-          </motion.div>
+          
 
           {/* Stats */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-16 mb-24">
             {[
               { value: "20+", label: "Events" },
               { value: "500+", label: "Participants" },
-              { value: "6", label: "Departments" },
-              { value: "3", label: "Days" },
+              { value: "15", label: "Departments" },
+              { value: "1", label: "Days" },
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}
@@ -269,50 +273,26 @@ export default function Home() {
                 transition={{ delay: index * 0.1 }}
                 className="flex flex-col items-center justify-center p-6 md:p-8 bg-white/5 border border-white/10 backdrop-blur-md rounded-xl hover:border-[#457B9D]/50 hover:scale-105 hover:shadow-[0_0_25px_rgba(230,57,70,0.15)] transition-all duration-300 group"
               >
-                <div className="text-6xl md:text-7xl font-bold gradient-blue-red bg-clip-text text-transparent goldman-bold mb-4 group-hover:scale-110 transition-transform">
-                  {stat.value}
-                </div>
+                <div className="relative">
+  {/* Soft glow background */}
+  <div className="absolute inset-0 blur-2xl bg-gradient-to-r from-[#E63946]/40 via-[#457B9D]/40 to-[#E63946]/40 opacity-50 group-hover:opacity-80 transition-all duration-300"></div>
+
+  {/* Animated gradient text */}
+  <div
+    className="relative text-6xl md:text-7xl font-bold goldman-bold mb-4 
+               bg-gradient-to-r from-[#E63946] via-[#F1FAEE] to-[#60859b] 
+               bg-[length:200%_200%] bg-clip-text text-transparent 
+               animate-gradientMove group-hover:scale-110 transition-transform"
+  >
+    {stat.value}
+  </div>
+</div>
                 <div className="text-lg md:text-xl text-[#C5C6C7] inter-semibold uppercase tracking-wider">{stat.label}</div>
               </motion.div>
             ))}
           </div>
 
-          {/* Featured Events */}
-          {featuredEvents.length > 0 && (
-            <>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-center space-y-6 mb-16"
-              >
-                <h3 className="text-4xl md:text-5xl font-bold text-[#F1FAEE] goldman-bold">
-                  Live <span className="text-[#E63946]">Events</span>
-                </h3>
-                <div className="w-24 h-1 bg-gradient-to-r from-[#1D3557] to-[#E63946] mx-auto rounded-full" />
-                <p className="text-[#C5C6C7] text-lg md:text-xl inter-regular max-w-2xl mx-auto px-4">
-                  Join the action happening right now
-                </p>
-              </motion.div>
-              
-              {/* UPDATED: Replaced .card-grid.card-grid-3 with Tailwind utility classes.
-                The gaps are based on the variables in your global.css
-              */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
-                {featuredEvents.map((event, index) => (
-                  <motion.div
-                    key={event.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    <EventCard event={event} />
-                  </motion.div>
-                ))}
-              </div>
-            </>
-          )}
+          
         </div>
       </section>
 
