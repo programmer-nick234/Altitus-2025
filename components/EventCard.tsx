@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Calendar, Clock, MapPin, ExternalLink } from "lucide-react";
+import Image from "next/image";
 import type { Event } from "@/lib/mockData";
 import { getEventStatus, getCountdown } from "@/lib/eventUtils";
 import SpotlightCard from "./SpotlightCard";
@@ -15,6 +16,7 @@ export default function EventCard({ event }: EventCardProps) {
   const currentTime = new Date();
   const status = getEventStatus(event, currentTime);
   const countdown = getCountdown(event, currentTime);
+  const [imageError, setImageError] = useState(false);
 
   // Status badge styles
   const getStatusBadge = () => {
@@ -62,18 +64,48 @@ export default function EventCard({ event }: EventCardProps) {
         className="relative overflow-hidden h-full flex flex-col p-0"
         spotlightColor={status === "live" ? "rgba(230, 57, 70, 0.25)" : "rgba(69, 123, 157, 0.2)"}
       >
-        <div className="h-48 bg-gradient-to-br from-[#1D3557] to-[#457B9D] relative overflow-hidden flex-shrink-0">
+        {/* Poster Image Section */}
+        <div className="h-56 md:h-64 bg-gradient-to-br from-[#1D3557] to-[#457B9D] relative overflow-hidden flex-shrink-0">
           {getStatusBadge()}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-7xl font-bold text-white/20 goldman-bold">
-              {event.name.charAt(0)}
-            </span>
+          
+          {/* Display poster image if available */}
+          {event.poster && !imageError ? (
+            <>
+              <Image
+                src={event.poster}
+                alt={event.name}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                onError={() => setImageError(true)}
+                priority={false}
+              />
+              {/* Dark overlay for better text visibility */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0B0C10]/90 via-[#0B0C10]/40 to-transparent" />
+            </>
+          ) : (
+            <>
+              {/* Fallback design when no poster */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-7xl md:text-8xl font-bold text-white/20 goldman-bold">
+                  {event.name.charAt(0)}
+                </span>
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1F2833]/80 to-transparent" />
+            </>
+          )}
+          
+          {/* Event name overlay at bottom */}
+          <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
+            <h3 className="text-xl md:text-2xl font-bold text-white goldman-bold drop-shadow-lg line-clamp-2">
+              {event.name}
+            </h3>
           </div>
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1F2833]/80 to-transparent" />
         </div>
 
         <div className="p-5 flex flex-col flex-grow">
-          <div className="flex items-center justify-center gap-2 flex-wrap mb-3">
+          {/* Department and Type Badges */}
+          <div className="flex items-center justify-center gap-2 flex-wrap mb-4">
             <span className="px-3 py-1 bg-[#1D3557]/30 text-[#457B9D] text-xs font-semibold rounded-full inter-regular">
               {event.department}
             </span>
@@ -82,10 +114,7 @@ export default function EventCard({ event }: EventCardProps) {
             </span>
           </div>
 
-          <h3 className="text-xl font-bold text-[#F1FAEE] goldman-bold group-hover:text-[#457B9D] transition-colors line-clamp-2 text-center mb-3">
-            {event.name}
-          </h3>
-
+          {/* Description */}
           <p className="text-[#C5C6C7] text-sm leading-relaxed inter-regular line-clamp-3 flex-grow text-center mb-4">
             {event.description}
           </p>
