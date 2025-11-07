@@ -272,7 +272,7 @@ export default function AboutPage() {
                 <div className="space-y-5 text-left">
                   <div>
                     <p className="text-sm text-[#457B9D] mb-1 inter-regular uppercase tracking-wide">Date</p>
-                    <p className="text-xl md:text-2xl font-semibold text-[#F1FAEE] goldman-bold">November 10-12, 2025</p>
+                    <p className="text-xl md:text-2xl font-semibold text-[#F1FAEE] goldman-bold">November 10</p>
                   </div>
                   <div>
                     <p className="text-sm text-[#457B9D] mb-1 inter-regular uppercase tracking-wide">Venue</p>
