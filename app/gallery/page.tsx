@@ -5,6 +5,7 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import { X, Play, ChevronLeft, ChevronRight, Pause, Download } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SpotlightCard from "@/components/SpotlightCard";
 import Image from "next/image";
 
 // Gallery data structure
@@ -280,7 +281,7 @@ export default function GalleryPage() {
   );
 }
 
-// Gallery Card Component with 3D Tilt and Parallax
+// Gallery Card Component with SpotlightCard and 3D Tilt
 function GalleryCard({ item, index, onClick, scrollProgress }: {
   item: MediaItem;
   index: number;
@@ -307,6 +308,14 @@ function GalleryCard({ item, index, onClick, scrollProgress }: {
     setMousePosition({ x, y });
   };
 
+  // Alternate spotlight colors for variety
+  const spotlightColors = [
+    "rgba(230, 57, 70, 0.2)",
+    "rgba(69, 123, 157, 0.2)",
+    "rgba(230, 57, 70, 0.25)",
+    "rgba(29, 53, 87, 0.2)",
+  ];
+
   return (
     <motion.div
       ref={cardRef}
@@ -328,96 +337,113 @@ function GalleryCard({ item, index, onClick, scrollProgress }: {
       }}
       onClick={onClick}
     >
-      <motion.div
-        className="relative w-full h-full rounded-2xl overflow-hidden"
-        animate={{
-          rotateX: isHovered ? mousePosition.y * 3 : 0,
-          rotateY: isHovered ? mousePosition.x * 3 : 0,
-          scale: isHovered ? 1.02 : 1,
-        }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
-        style={{
-          transformStyle: "preserve-3d",
-          perspective: 1000,
-        }}
+      <SpotlightCard
+        className="relative w-full h-full p-0 overflow-hidden"
+        spotlightColor={spotlightColors[index % spotlightColors.length]}
       >
-        {/* Loading Skeleton */}
-        {!imageLoaded && (
-          <div className="absolute inset-0 bg-gradient-to-br from-[#1D3557]/50 via-[#457B9D]/50 to-[#1D3557]/50 animate-pulse" />
-        )}
-
-        {/* Actual Image or Video Thumbnail */}
-        {item.type === "photo" ? (
-          <Image
-            src={item.src}
-            alt={item.title}
-            fill
-            className={`object-cover transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            onLoad={() => setImageLoaded(true)}
-          />
-        ) : (
-          <video
-            src={item.src}
-            className="absolute inset-0 w-full h-full object-contain bg-gradient-to-br from-[#1D3557] via-[#457B9D] to-[#1D3557]"
-            muted
-            playsInline
-            preload="metadata"
-            onLoadedData={() => setImageLoaded(true)}
-          />
-        )}
-
-        {/* Glow Effect */}
         <motion.div
-          className="absolute inset-0 bg-gradient-to-br from-[#E63946]/0 via-[#E63946]/30 to-[#457B9D]/0"
+          className="relative w-full h-full"
           animate={{
-            opacity: isHovered ? 1 : 0,
+            rotateX: isHovered ? mousePosition.y * 3 : 0,
+            rotateY: isHovered ? mousePosition.x * 3 : 0,
+            scale: isHovered ? 1.02 : 1,
           }}
-          transition={{ duration: 0.3 }}
-        />
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          style={{
+            transformStyle: "preserve-3d",
+            perspective: 1000,
+          }}
+        >
+          {/* Loading Skeleton */}
+          {!imageLoaded && (
+            <div className="absolute inset-0 bg-gradient-to-br from-[#1D3557]/50 via-[#457B9D]/50 to-[#1D3557]/50 animate-pulse" />
+          )}
 
-        {/* Premium Shadow */}
-        <div className={`absolute inset-0 rounded-2xl transition-all duration-500 ${
-          isHovered 
-            ? "shadow-[0_10px_40px_rgba(230,57,70,0.3),0_0_20px_rgba(69,123,157,0.2)]"
-            : "shadow-[0_8px_25px_rgba(0,0,0,0.3)]"
-        }`} />
+          {/* Actual Image or Video Thumbnail */}
+          {item.type === "photo" ? (
+            <Image
+              src={item.src}
+              alt={item.title}
+              fill
+              className={`object-cover transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              onLoad={() => setImageLoaded(true)}
+            />
+          ) : (
+            <video
+              src={item.src}
+              className="absolute inset-0 w-full h-full object-contain bg-gradient-to-br from-[#1D3557] via-[#457B9D] to-[#1D3557]"
+              muted
+              playsInline
+              preload="metadata"
+              onLoadedData={() => setImageLoaded(true)}
+            />
+          )}
 
-        {/* Hover Play Icon for Videos */}
-        {item.type === "video" && (
+          {/* Glow Effect */}
           <motion.div
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ 
+            className="absolute inset-0 bg-gradient-to-br from-[#E63946]/0 via-[#E63946]/30 to-[#457B9D]/0"
+            animate={{
               opacity: isHovered ? 1 : 0,
-              scale: isHovered ? 1 : 0
             }}
-            className="absolute inset-0 flex items-center justify-center z-10"
-          >
-            <div className="w-20 h-20 rounded-full bg-white/95 backdrop-blur-md flex items-center justify-center shadow-2xl">
-              <Play className="text-[#E63946] ml-1" size={32} fill="#E63946" />
-            </div>
-          </motion.div>
-        )}
+            transition={{ duration: 0.3 }}
+          />
 
-        {/* Enhanced Text Overlay - Always Visible with Better Contrast */}
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-5 md:p-6">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h3 className="text-xl md:text-2xl font-bold text-white goldman-bold mb-1.5 line-clamp-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-              {item.title}
-            </h3>
-            <p className="text-sm md:text-base text-gray-200 inter-regular line-clamp-1 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
-              {item.event}
-            </p>
-          </motion.div>
-        </div>
+          {/* Content Overlay */}
+          <div className="absolute inset-0 flex flex-col justify-end p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+            {/* Type Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="absolute top-4 right-4"
+            >
+              <div className="px-3 py-1.5 bg-black/60 backdrop-blur-md rounded-full flex items-center gap-2 border border-white/10">
+                {item.type === "video" ? (
+                  <>
+                    <Play size={14} className="text-[#E63946]" fill="#E63946" />
+                    <span className="text-white text-xs inter-semibold">Video</span>
+                  </>
+                ) : (
+                  <>
+                    <div className="w-3 h-3 bg-[#457B9D] rounded-sm" />
+                    <span className="text-white text-xs inter-semibold">Photo</span>
+                  </>
+                )}
+              </div>
+            </motion.div>
 
-        {/* Premium Border Glow */}
-        <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-[#457B9D]/50 transition-all duration-300" />
-      </motion.div>
+            {/* Hover Play Icon for Videos */}
+            {item.type === "video" && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ 
+                  opacity: isHovered ? 1 : 0,
+                  scale: isHovered ? 1 : 0
+                }}
+                className="absolute inset-0 flex items-center justify-center"
+              >
+                <div className="w-20 h-20 rounded-full bg-white/95 backdrop-blur-md flex items-center justify-center shadow-2xl">
+                  <Play className="text-[#E63946] ml-1" size={32} fill="#E63946" />
+                </div>
+              </motion.div>
+            )}
+
+            {/* Text Info - Always Visible */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <h3 className="text-lg md:text-xl font-bold text-white goldman-bold mb-1 line-clamp-2">
+                {item.title}
+              </h3>
+              <p className="text-xs md:text-sm text-gray-300 inter-regular line-clamp-1">
+                {item.event}
+              </p>
+            </motion.div>
+          </div>
+        </motion.div>
+      </SpotlightCard>
     </motion.div>
   );
 }
@@ -444,42 +470,13 @@ function LightboxModal({
   setIsPlaying: (playing: boolean) => void;
   videoRef: React.RefObject<HTMLVideoElement | null>;
 }) {
-  const [touchStart, setTouchStart] = useState(0);
-  const [touchEnd, setTouchEnd] = useState(0);
-
-  // Swipe gesture handling
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (touchStart - touchEnd > 75 && hasNext) {
-      // Swiped left
-      onNext();
-    }
-    if (touchStart - touchEnd < -75 && hasPrevious) {
-      // Swiped right
-      onPrevious();
-    }
-  };
-
-  // Get current index
-  const currentIndex = galleryItems.findIndex(i => i.id === item.id);
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-black/95 backdrop-blur-xl pt-20 md:pt-24"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 backdrop-blur-xl"
     >
       {/* Close Button */}
       <motion.button
@@ -487,13 +484,10 @@ function LightboxModal({
         animate={{ opacity: 1, scale: 1 }}
         whileHover={{ scale: 1.1, rotate: 90 }}
         whileTap={{ scale: 0.9 }}
-        onClick={(e) => {
-          e.stopPropagation();
-          onClose();
-        }}
-        className="absolute top-6 md:top-8 right-6 md:right-8 z-[110] w-14 h-14 md:w-16 md:h-16 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-[#E63946] hover:border-[#E63946] transition-all duration-300 shadow-2xl"
+        onClick={onClose}
+        className="absolute top-6 right-6 z-10 w-14 h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-[#E63946] hover:border-[#E63946] transition-all duration-300 shadow-2xl"
       >
-        <X size={26} />
+        <X size={24} />
       </motion.button>
 
       {/* Download Button */}
@@ -505,21 +499,12 @@ function LightboxModal({
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={(e) => e.stopPropagation()}
-        className="absolute top-6 md:top-8 right-24 md:right-28 z-[100] w-14 h-14 md:w-16 md:h-16 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-[#457B9D] hover:border-[#457B9D] transition-all duration-300 shadow-2xl"
+        className="absolute top-6 right-24 z-10 w-14 h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-[#457B9D] hover:border-[#457B9D] transition-all duration-300 shadow-2xl"
       >
         <Download size={22} />
       </motion.a>
 
-      {/* Photo Counter */}
-      <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="absolute top-6 md:top-8 left-6 md:left-8 z-[100] px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white font-semibold inter-semibold text-sm md:text-base"
-      >
-        {currentIndex + 1} / {galleryItems.length}
-      </motion.div>
-
-      {/* Navigation Buttons - Larger Size */}
+      {/* Navigation Buttons */}
       {hasPrevious && (
         <motion.button
           initial={{ opacity: 0, x: -20 }}
@@ -530,9 +515,9 @@ function LightboxModal({
             e.stopPropagation();
             onPrevious();
           }}
-          className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-[100] w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-[#457B9D] hover:border-[#457B9D] transition-all duration-300 shadow-2xl"
+          className="absolute left-6 z-10 w-14 h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-[#457B9D] hover:border-[#457B9D] transition-all duration-300 shadow-2xl"
         >
-          <ChevronLeft size={32} />
+          <ChevronLeft size={28} />
         </motion.button>
       )}
 
@@ -546,9 +531,9 @@ function LightboxModal({
             e.stopPropagation();
             onNext();
           }}
-          className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-[100] w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-[#457B9D] hover:border-[#457B9D] transition-all duration-300 shadow-2xl"
+          className="absolute right-6 z-10 w-14 h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-[#457B9D] hover:border-[#457B9D] transition-all duration-300 shadow-2xl"
         >
-          <ChevronRight size={32} />
+          <ChevronRight size={28} />
         </motion.button>
       )}
 
@@ -603,25 +588,6 @@ function LightboxModal({
             </div>
           )}
         </div>
-
-        {/* Keyboard Navigation Hints */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 px-6 py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-gray-300 text-xs md:text-sm inter-regular flex items-center gap-4"
-        >
-          <span className="flex items-center gap-1.5">
-            <kbd className="px-2 py-1 bg-white/20 rounded text-white font-semibold">←</kbd>
-            <kbd className="px-2 py-1 bg-white/20 rounded text-white font-semibold">→</kbd>
-            <span>Navigate</span>
-          </span>
-          <span className="text-gray-500">|</span>
-          <span className="flex items-center gap-1.5">
-            <kbd className="px-2 py-1 bg-white/20 rounded text-white font-semibold">ESC</kbd>
-            <span>Close</span>
-          </span>
-        </motion.div>
 
         {/* Info Panel */}
         <motion.div

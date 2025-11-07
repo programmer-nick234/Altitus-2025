@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import EventCard from "@/components/EventCard";
+import SpotlightCard from "@/components/SpotlightCard";
 import { SearchBar, Select } from "@/components/ui";
 import { events } from "@/lib/mockData";
 import { getEventStatus } from "@/lib/eventUtils";
@@ -73,16 +74,17 @@ export default function EventsPage() {
             </p>
           </motion.div>
 
-          {/* Filter Section - Industry Grade UI */}
+          {/* Filter Section - With SpotlightCard */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
             className="mt-10 md:mt-12 flex justify-center"
           >
-            {/* Glass Container */}
-            <div className="glass rounded-2xl p-8 md:p-10 w-full max-w-5xl backdrop-blur-xl bg-[#1F2833]/40 border-[#457B9D]/20">
-              
+            <SpotlightCard 
+              className="p-8 md:p-10 w-full max-w-5xl"
+              spotlightColor="rgba(69, 123, 157, 0.15)"
+            >
               {/* Search Bar - Full Width */}
               <div className="mb-8">
                 <SearchBar
@@ -133,7 +135,7 @@ export default function EventsPage() {
                   />
                 </div>
               </div>
-            </div>
+            </SpotlightCard>
           </motion.div>
 
           {/* Active Filter Tags */}

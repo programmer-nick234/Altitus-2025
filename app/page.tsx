@@ -8,6 +8,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CountdownTimer from "@/components/CountdownTimer";
 import EventCard from "@/components/EventCard";
+import SpotlightCard from "@/components/SpotlightCard";
 import { Button } from "@/components/ui";
 import { EVENT_START_DATE, events } from "@/lib/mockData";
 import { getEventStatus } from "@/lib/eventUtils";
@@ -255,19 +256,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* About Section */}
-      {/* UPDATED: Using .section-spacing from global.css */}
+      {/* About Section - With SpotlightCard */}
       <section id="about-section" className="section-spacing relative bg-[#0B0C10]">
         <div className="content-container">
-          
-
-          {/* Stats */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-16 mb-24">
+          {/* Stats - With SpotlightCard */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-24">
             {[
-              { value: "20+", label: "Events" },
-              { value: "500+", label: "Participants" },
-              { value: "15", label: "Departments" },
-              { value: "1", label: "Days" },
+              { value: "20+", label: "Events", color: "rgba(230, 57, 70, 0.2)" },
+              { value: "500+", label: "Participants", color: "rgba(69, 123, 157, 0.2)" },
+              { value: "15", label: "Departments", color: "rgba(230, 57, 70, 0.25)" },
+              { value: "1", label: "Days", color: "rgba(29, 53, 87, 0.2)" },
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}
@@ -275,23 +273,27 @@ export default function Home() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="flex flex-col items-center justify-center p-6 md:p-8 bg-white/5 border border-white/10 backdrop-blur-md rounded-xl hover:border-[#457B9D]/50 hover:scale-105 hover:shadow-[0_0_25px_rgba(230,57,70,0.15)] transition-all duration-300 group"
               >
-                <div className="relative">
-  {/* Soft glow background */}
-  <div className="absolute inset-0 blur-2xl bg-gradient-to-r from-[#E63946]/40 via-[#457B9D]/40 to-[#E63946]/40 opacity-50 group-hover:opacity-80 transition-all duration-300"></div>
+                <SpotlightCard 
+                  className="flex flex-col items-center justify-center p-6 md:p-8 min-h-[200px] group"
+                  spotlightColor={stat.color}
+                >
+                  <div className="relative">
+                    {/* Soft glow background */}
+                    <div className="absolute inset-0 blur-2xl bg-gradient-to-r from-[#E63946]/40 via-[#457B9D]/40 to-[#E63946]/40 opacity-50 group-hover:opacity-80 transition-all duration-300"></div>
 
-  {/* Animated gradient text */}
-  <div
-    className="relative text-6xl md:text-7xl font-bold goldman-bold mb-4 
-               bg-gradient-to-r from-[#E63946] via-[#F1FAEE] to-[#60859b] 
-               bg-[length:200%_200%] bg-clip-text text-transparent 
-               animate-gradientMove group-hover:scale-110 transition-transform"
-  >
-    {stat.value}
-  </div>
-</div>
-                <div className="text-lg md:text-xl text-[#C5C6C7] inter-semibold uppercase tracking-wider">{stat.label}</div>
+                    {/* Animated gradient text */}
+                    <div
+                      className="relative text-6xl md:text-7xl font-bold goldman-bold mb-4 
+                                bg-gradient-to-r from-[#E63946] via-[#F1FAEE] to-[#60859b] 
+                                bg-[length:200%_200%] bg-clip-text text-transparent 
+                                animate-gradientMove group-hover:scale-110 transition-transform"
+                    >
+                      {stat.value}
+                    </div>
+                  </div>
+                  <div className="text-lg md:text-xl text-[#C5C6C7] inter-semibold uppercase tracking-wider">{stat.label}</div>
+                </SpotlightCard>
               </motion.div>
             ))}
           </div>

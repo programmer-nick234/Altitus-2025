@@ -11,6 +11,7 @@
   --mouse-y: 50%;
   --spotlight-color: rgba(230, 57, 70, 0.2);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, box-shadow;
 }
 
 .card-spotlight::before {
@@ -29,6 +30,7 @@
   transition: opacity 0.5s ease;
   pointer-events: none;
   z-index: 0;
+  will-change: opacity;
 }
 
 .card-spotlight:hover,
@@ -58,4 +60,48 @@
   .card-spotlight:active {
     transform: scale(0.98);
   }
+  
+  .card-spotlight {
+    will-change: auto;
+  }
 }
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .card-spotlight,
+  .card-spotlight::before {
+    transition: none;
+  }
+  
+  .card-spotlight:hover {
+    transform: none;
+  }
+}
+
+/* Performance optimization for large screens */
+@media (min-width: 1920px) {
+  .card-spotlight::before {
+    background: radial-gradient(
+      800px circle at var(--mouse-x) var(--mouse-y),
+      var(--spotlight-color),
+      transparent 40%
+    );
+  }
+}
+
+/* Subtle animation when card enters viewport */
+@keyframes spotlightFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-spotlight {
+  animation: spotlightFadeIn 0.6s ease-out;
+}
+

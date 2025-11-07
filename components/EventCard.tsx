@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Calendar, Clock, MapPin, ExternalLink } from "lucide-react";
 import type { Event } from "@/lib/mockData";
 import { getEventStatus, getCountdown } from "@/lib/eventUtils";
+import SpotlightCard from "./SpotlightCard";
 
 interface EventCardProps {
   event: Event;
@@ -55,74 +56,79 @@ export default function EventCard({ event }: EventCardProps) {
       viewport={{ once: true }}
       whileHover={{ y: -4 }}
       transition={{ duration: 0.3 }}
-      className="relative bg-[#1F2833] rounded-xl overflow-hidden border border-[#457B9D]/10 hover:border-[#457B9D]/30 transition-all h-full flex flex-col hover:shadow-[0_8px_30px_rgba(69,123,157,0.15)]"
+      className="h-full"
     >
-      <div className="h-48 bg-gradient-to-br from-[#1D3557] to-[#457B9D] relative overflow-hidden flex-shrink-0">
-        {getStatusBadge()}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-7xl font-bold text-white/20 goldman-bold">
-            {event.name.charAt(0)}
-          </span>
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1F2833]/80 to-transparent" />
-      </div>
-
-      <div className="p-5 flex flex-col flex-grow">
-        <div className="flex items-center justify-center gap-2 flex-wrap mb-3">
-          <span className="px-3 py-1 bg-[#1D3557]/30 text-[#457B9D] text-xs font-semibold rounded-full inter-regular">
-            {event.department}
-          </span>
-          <span className={`px-3 py-1 text-xs font-semibold rounded-full inter-regular ${event.type === "Technical" ? "bg-[#1D3557]/30 text-[#457B9D]" : "bg-[#E63946]/10 text-[#E63946]"}`}>
-            {event.type}
-          </span>
-        </div>
-
-        <h3 className="text-xl font-bold text-[#F1FAEE] goldman-bold group-hover:text-[#457B9D] transition-colors line-clamp-2 text-center mb-3">
-          {event.name}
-        </h3>
-
-        <p className="text-[#C5C6C7] text-sm leading-relaxed inter-regular line-clamp-3 flex-grow text-center mb-4">
-          {event.description}
-        </p>
-
-        <div className="space-y-2 mb-4">
-          <div className="flex items-center justify-center gap-2 text-[#C5C6C7] text-sm">
-            <Calendar size={14} className="text-[#457B9D]" />
-            <span className="inter-regular">
-              {new Date(event.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+      <SpotlightCard 
+        className="relative overflow-hidden h-full flex flex-col p-0"
+        spotlightColor={status === "live" ? "rgba(230, 57, 70, 0.25)" : "rgba(69, 123, 157, 0.2)"}
+      >
+        <div className="h-48 bg-gradient-to-br from-[#1D3557] to-[#457B9D] relative overflow-hidden flex-shrink-0">
+          {getStatusBadge()}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="text-7xl font-bold text-white/20 goldman-bold">
+              {event.name.charAt(0)}
             </span>
           </div>
-          <div className="flex items-center justify-center gap-2 text-[#C5C6C7] text-sm">
-            <Clock size={14} className="text-[#457B9D]" />
-            <span className="inter-regular">{event.startTime} - {event.endTime}</span>
-          </div>
-          <div className="flex items-center justify-center gap-2 text-[#C5C6C7] text-sm">
-            <MapPin size={14} className="text-[#457B9D]" />
-            <span className="inter-regular">{event.venue}</span>
-          </div>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1F2833]/80 to-transparent" />
         </div>
 
-        {/* Register Button */}
-        {status !== "completed" && (
-          <motion.a
-            href={event.googleFormLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className={`
-              w-full py-3 rounded-lg font-semibold inter-bold text-sm flex items-center justify-center gap-2 transition-all duration-300
-              ${status === "live" 
-                ? "bg-gradient-to-r from-[#E63946] to-[#E63946]/80 text-white shadow-lg shadow-[#E63946]/30 hover:shadow-[#E63946]/50" 
-                : "bg-gradient-to-r from-[#1D3557] to-[#457B9D] text-white shadow-lg shadow-[#457B9D]/30 hover:shadow-[#457B9D]/50"
-              }
-            `}
-          >
-            {status === "live" ? "Register Now - Live!" : "Register Now"}
-            <ExternalLink size={16} />
-          </motion.a>
-        )}
-      </div>
+        <div className="p-5 flex flex-col flex-grow">
+          <div className="flex items-center justify-center gap-2 flex-wrap mb-3">
+            <span className="px-3 py-1 bg-[#1D3557]/30 text-[#457B9D] text-xs font-semibold rounded-full inter-regular">
+              {event.department}
+            </span>
+            <span className={`px-3 py-1 text-xs font-semibold rounded-full inter-regular ${event.type === "Technical" ? "bg-[#1D3557]/30 text-[#457B9D]" : "bg-[#E63946]/10 text-[#E63946]"}`}>
+              {event.type}
+            </span>
+          </div>
+
+          <h3 className="text-xl font-bold text-[#F1FAEE] goldman-bold group-hover:text-[#457B9D] transition-colors line-clamp-2 text-center mb-3">
+            {event.name}
+          </h3>
+
+          <p className="text-[#C5C6C7] text-sm leading-relaxed inter-regular line-clamp-3 flex-grow text-center mb-4">
+            {event.description}
+          </p>
+
+          <div className="space-y-2 mb-4">
+            <div className="flex items-center justify-center gap-2 text-[#C5C6C7] text-sm">
+              <Calendar size={14} className="text-[#457B9D]" />
+              <span className="inter-regular">
+                {new Date(event.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+              </span>
+            </div>
+            <div className="flex items-center justify-center gap-2 text-[#C5C6C7] text-sm">
+              <Clock size={14} className="text-[#457B9D]" />
+              <span className="inter-regular">{event.startTime} - {event.endTime}</span>
+            </div>
+            <div className="flex items-center justify-center gap-2 text-[#C5C6C7] text-sm">
+              <MapPin size={14} className="text-[#457B9D]" />
+              <span className="inter-regular">{event.venue}</span>
+            </div>
+          </div>
+
+          {/* Register Button */}
+          {status !== "completed" && (
+            <motion.a
+              href={event.googleFormLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className={`
+                w-full py-3 rounded-lg font-semibold inter-bold text-sm flex items-center justify-center gap-2 transition-all duration-300
+                ${status === "live" 
+                  ? "bg-gradient-to-r from-[#E63946] to-[#E63946]/80 text-white shadow-lg shadow-[#E63946]/30 hover:shadow-[#E63946]/50" 
+                  : "bg-gradient-to-r from-[#1D3557] to-[#457B9D] text-white shadow-lg shadow-[#457B9D]/30 hover:shadow-[#457B9D]/50"
+                }
+              `}
+            >
+              {status === "live" ? "Register Now - Live!" : "Register Now"}
+              <ExternalLink size={16} />
+            </motion.a>
+          )}
+        </div>
+      </SpotlightCard>
     </motion.div>
   );
 }
