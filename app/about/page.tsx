@@ -7,6 +7,7 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
+import SpotlightCard from "@/components/SpotlightCard";
 import { Button } from "@/components/ui";
 
 export default function AboutPage() {
@@ -139,15 +140,15 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Stats Section - Improved with better spacing and hover effects */}
+      {/* Stats Section - With SpotlightCard Effect */}
       <section className="section-spacing bg-[#11131A]">
         <div className="content-container">
-          <div className="card-grid card-grid-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {[
-              { icon: Calendar, value: counters.days, suffix: "", label: "Days of Innovation" },
-              { icon: Users, value: counters.participants, suffix: "+", label: "Participants" },
-              { icon: Zap, value: counters.events, suffix: "+", label: "Events & Workshops" },
-              { icon: MapPin, value: counters.departments, suffix: "", label: "Departments" },
+              { icon: Calendar, value: counters.days, suffix: "", label: "Days of Innovation", color: "rgba(230, 57, 70, 0.2)" },
+              { icon: Users, value: counters.participants, suffix: "+", label: "Participants", color: "rgba(69, 123, 157, 0.2)" },
+              { icon: Zap, value: counters.events, suffix: "+", label: "Events & Workshops", color: "rgba(230, 57, 70, 0.25)" },
+              { icon: MapPin, value: counters.departments, suffix: "", label: "Departments", color: "rgba(29, 53, 87, 0.2)" },
             ].map((stat, index) => {
               const Icon = stat.icon;
               return (
@@ -159,25 +160,21 @@ export default function AboutPage() {
                     viewport: { once: true }, 
                     transition: { delay: index * 0.1, duration: 0.5, type: "spring", stiffness: 200 } 
                   })}
-                  whileHover={prefersReducedMotion ? {} : { scale: 1.05, y: -4 }}
-                  className="stats-card bg-white/5 border border-white/10 backdrop-blur-sm rounded-3xl hover:border-[#E63946]/40 hover:shadow-[0_0_30px_rgba(230,57,70,0.15)] transition-all group min-h-[220px]"
                 >
-                  <div className="inline-flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-full bg-[#E63946]/10 mb-5 group-hover:bg-[#E63946]/20 transition-colors">
-                    <Icon className="text-[#E63946]" size={28} aria-hidden="true" />
-                  </div>
-                  <div className="text-5xl md:text-6xl lg:text-7xl font-black text-[#F1FAEE] mb-3 goldman-bold relative" aria-label={`${stat.value}${stat.suffix} ${stat.label}`}>
-                    {stat.value}{stat.suffix}
-                    {/* Animated underline on hover */}
-                    <motion.div
-                      className="absolute -bottom-1 left-1/2 -translate-x-1/2 h-0.5 bg-[#E63946]"
-                      initial={{ width: 0 }}
-                      whileHover={{ width: "80%" }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  </div>
-                  <div className="text-sm md:text-base lg:text-lg text-gray-400 inter-regular uppercase tracking-wide px-2">
-                    {stat.label}
-                  </div>
+                  <SpotlightCard 
+                    className="stats-card min-h-[220px] flex flex-col items-center justify-center group"
+                    spotlightColor={stat.color}
+                  >
+                    <div className="inline-flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-full bg-[#E63946]/10 mb-5 group-hover:bg-[#E63946]/20 transition-colors">
+                      <Icon className="text-[#E63946]" size={28} aria-hidden="true" />
+                    </div>
+                    <div className="text-5xl md:text-6xl lg:text-7xl font-black text-[#F1FAEE] mb-3 goldman-bold" aria-label={`${stat.value}${stat.suffix} ${stat.label}`}>
+                      {stat.value}{stat.suffix}
+                    </div>
+                    <div className="text-sm md:text-base lg:text-lg text-gray-400 inter-regular uppercase tracking-wide px-2">
+                      {stat.label}
+                    </div>
+                  </SpotlightCard>
                 </motion.div>
               );
             })}
@@ -185,7 +182,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Why Participate Section - Equal height cards with better styling */}
+      {/* Why Participate Section - With SpotlightCard Effect */}
       <section className="section-spacing">
         <div className="content-container">
           <motion.div
@@ -200,22 +197,25 @@ export default function AboutPage() {
             </p>
           </motion.div>
 
-          <div className="card-grid card-grid-3 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-stretch">
             {[
               {
                 icon: Trophy,
                 title: "Compete & Win",
                 description: "Battle for glory with exciting prizes, cash rewards, and recognition that elevates your career. Winners gain industry visibility and exclusive opportunities.",
+                color: "rgba(230, 57, 70, 0.25)"
               },
               {
                 icon: Network,
                 title: "Network",
                 description: "Connect with 500+ talented peers, industry professionals, and tech leaders. Build relationships that open doors to internships, collaborations, and mentorship.",
+                color: "rgba(69, 123, 157, 0.25)"
               },
               {
                 icon: Lightbulb,
                 title: "Learn & Grow",
                 description: "Gain hands-on experience through workshops, expert talks, and real-world challenges. Develop skills that companies actively seek in tomorrow's innovators.",
+                color: "rgba(230, 57, 70, 0.2)"
               },
             ].map((item, index) => {
               const Icon = item.icon;
@@ -228,18 +228,22 @@ export default function AboutPage() {
                     viewport: { once: true }, 
                     transition: { delay: index * 0.15, duration: 0.6 } 
                   })}
-                  whileHover={prefersReducedMotion ? {} : { y: -8 }}
-                  className="info-card bg-[#11131A]/60 border border-white/10 rounded-2xl backdrop-blur-sm hover:border-[#E63946]/40 hover:shadow-[0_0_30px_rgba(230,57,70,0.15)] transition-all duration-300 group flex flex-col h-full"
+                  className="flex flex-col h-full"
                 >
-                  <div className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center bg-[#E63946]/10 rounded-full text-[#E63946] mx-auto group-hover:bg-[#E63946]/20 group-hover:scale-110 transition-all">
-                    <Icon size={24} aria-hidden="true" />
-                  </div>
-                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#F1FAEE] goldman-bold text-center">
-                    {item.title}
-                  </h3>
-                  <p className="text-[#C5C6C7] text-base md:text-lg inter-regular leading-relaxed text-center flex-grow max-w-prose mx-auto">
-                    {item.description}
-                  </p>
+                  <SpotlightCard 
+                    className="info-card flex flex-col h-full p-8 md:p-10 gap-6 group"
+                    spotlightColor={item.color}
+                  >
+                    <div className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center bg-[#E63946]/10 rounded-full text-[#E63946] mx-auto group-hover:bg-[#E63946]/20 group-hover:scale-110 transition-all">
+                      <Icon size={24} aria-hidden="true" />
+                    </div>
+                    <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#F1FAEE] goldman-bold text-center">
+                      {item.title}
+                    </h3>
+                    <p className="text-[#C5C6C7] text-base md:text-lg inter-regular leading-relaxed text-center flex-grow max-w-prose mx-auto">
+                      {item.description}
+                    </p>
+                  </SpotlightCard>
                 </motion.div>
               );
             })}
@@ -247,96 +251,103 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* When & Where + Mission - 2-column with divider */}
+      {/* When & Where + Mission - With SpotlightCard Effect */}
       <section className="section-spacing bg-[#11131A]">
         <div className="content-container">
-          <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-stretch">
             {/* When & Where */}
             <motion.div
               {...(prefersReducedMotion ? {} : { initial: { opacity: 0, x: -20 }, whileInView: { opacity: 1, x: 0 }, viewport: { once: true }, transition: { duration: 0.6 } })}
-              className="glass rounded-3xl p-8 lg:p-10"
             >
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 flex items-center justify-center bg-[#E63946]/10 rounded-full">
-                  <Calendar className="text-[#E63946]" size={20} aria-hidden="true" />
+              <SpotlightCard 
+                className="h-full p-8 lg:p-10"
+                spotlightColor="rgba(230, 57, 70, 0.2)"
+              >
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 flex items-center justify-center bg-[#E63946]/10 rounded-full">
+                    <Calendar className="text-[#E63946]" size={20} aria-hidden="true" />
+                  </div>
+                  <h3 className="text-3xl md:text-4xl font-bold text-[#F1FAEE] goldman-bold">When & Where</h3>
                 </div>
-                <h3 className="text-3xl md:text-4xl font-bold text-[#F1FAEE] goldman-bold">When & Where</h3>
-              </div>
-              <div className="space-y-5 text-left">
-                <div>
-                  <p className="text-sm text-[#457B9D] mb-1 inter-regular uppercase tracking-wide">Date</p>
-                  <p className="text-xl md:text-2xl font-semibold text-[#F1FAEE] goldman-bold">November 10-12, 2025</p>
+                <div className="space-y-5 text-left">
+                  <div>
+                    <p className="text-sm text-[#457B9D] mb-1 inter-regular uppercase tracking-wide">Date</p>
+                    <p className="text-xl md:text-2xl font-semibold text-[#F1FAEE] goldman-bold">November 10-12, 2025</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-[#457B9D] mb-1 inter-regular uppercase tracking-wide">Venue</p>
+                    <p className="text-xl md:text-2xl font-semibold text-[#F1FAEE] goldman-bold">Srinivas Institute of Technology</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-[#457B9D] mb-1 inter-regular uppercase tracking-wide">Location</p>
+                    <p className="text-xl md:text-2xl font-semibold text-[#F1FAEE] goldman-bold">Mangalore, Karnataka</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm text-[#457B9D] mb-1 inter-regular uppercase tracking-wide">Venue</p>
-                  <p className="text-xl md:text-2xl font-semibold text-[#F1FAEE] goldman-bold">Srinivas Institute of Technology</p>
-                </div>
-                <div>
-                  <p className="text-sm text-[#457B9D] mb-1 inter-regular uppercase tracking-wide">Location</p>
-                  <p className="text-xl md:text-2xl font-semibold text-[#F1FAEE] goldman-bold">Mangalore, Karnataka</p>
-                </div>
-              </div>
+              </SpotlightCard>
             </motion.div>
-
-            {/* Vertical Divider (hidden on mobile) */}
-            <div className="hidden md:flex items-center justify-center">
-              <div className="h-32 w-px bg-white/10" />
-            </div>
 
             {/* Mission */}
             <motion.div
               {...(prefersReducedMotion ? {} : { initial: { opacity: 0, x: 20 }, whileInView: { opacity: 1, x: 0 }, viewport: { once: true }, transition: { duration: 0.6 } })}
-              className="glass rounded-3xl p-8 lg:p-10"
             >
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 flex items-center justify-center bg-[#1D3557]/30 rounded-full">
-                  <Zap className="text-[#457B9D]" size={20} aria-hidden="true" />
+              <SpotlightCard 
+                className="h-full p-8 lg:p-10"
+                spotlightColor="rgba(69, 123, 157, 0.2)"
+              >
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 flex items-center justify-center bg-[#1D3557]/30 rounded-full">
+                    <Zap className="text-[#457B9D]" size={20} aria-hidden="true" />
+                  </div>
+                  <h3 className="text-3xl md:text-4xl font-bold text-[#F1FAEE] goldman-bold">Our Mission</h3>
                 </div>
-                <h3 className="text-3xl md:text-4xl font-bold text-[#F1FAEE] goldman-bold">Our Mission</h3>
-              </div>
-              <p className="text-base md:text-lg text-[#C5C6C7] leading-relaxed inter-regular text-left" style={{ maxWidth: "70ch" }}>
-                To foster <span className="text-[#F1FAEE] font-semibold">innovation</span>, 
-                <span className="text-[#F1FAEE] font-semibold"> creativity</span>, and 
-                <span className="text-[#F1FAEE] font-semibold"> collaboration</span> among students while providing 
-                a world-class platform to showcase technical excellence and develop the practical skills that shape tomorrow's leaders.
-              </p>
+                <p className="text-base md:text-lg text-[#C5C6C7] leading-relaxed inter-regular text-left" style={{ maxWidth: "70ch" }}>
+                  To foster <span className="text-[#F1FAEE] font-semibold">innovation</span>, 
+                  <span className="text-[#F1FAEE] font-semibold"> creativity</span>, and 
+                  <span className="text-[#F1FAEE] font-semibold"> collaboration</span> among students while providing 
+                  a world-class platform to showcase technical excellence and develop the practical skills that shape tomorrow's leaders.
+                </p>
+              </SpotlightCard>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Final CTA - Compact with gradient background */}
+      {/* Final CTA - With SpotlightCard Effect */}
       <section className="section-spacing bg-gradient-to-b from-[#0B0C10] via-[#1D3557]/10 to-[#0B0C10]">
         <div className="content-container text-center">
           <motion.div
             {...motionProps}
-            className="glass rounded-3xl p-12 md:p-16 lg:p-20"
           >
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-[#F1FAEE] mb-6 goldman-bold tracking-tight">
-              ALTIUS <span className="text-[#E63946]">2025</span>
-            </h2>
-            
-            <div className="w-20 h-1 bg-gradient-to-r from-transparent via-[#E63946] to-transparent mx-auto mb-6" />
-            
-            <p className="text-lg md:text-xl text-[#C5C6C7] inter-regular leading-relaxed mb-2">
-              Ignite Innovation • Shape the Future • Soar Beyond Limits
-            </p>
-            
-            <p className="text-base md:text-lg text-[#457B9D] montserrat-light mb-8">
-              Srinivas Institute of Technology's Premier Inter-Department Technical Fest
-            </p>
+            <SpotlightCard 
+              className="p-12 md:p-16 lg:p-20"
+              spotlightColor="rgba(230, 57, 70, 0.3)"
+            >
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-[#F1FAEE] mb-6 goldman-bold tracking-tight">
+                ALTIUS <span className="text-[#E63946]">2025</span>
+              </h2>
+              
+              <div className="w-20 h-1 bg-gradient-to-r from-transparent via-[#E63946] to-transparent mx-auto mb-6" />
+              
+              <p className="text-lg md:text-xl text-[#C5C6C7] inter-regular leading-relaxed mb-2">
+                Ignite Innovation • Shape the Future • Soar Beyond Limits
+              </p>
+              
+              <p className="text-base md:text-lg text-[#457B9D] montserrat-light mb-8">
+                Srinivas Institute of Technology's Premier Inter-Department Technical Fest
+              </p>
 
-            <Link href="/events">
-              <Button 
-                variant="primary" 
-                size="lg"
-                icon={<ChevronRight size={20} aria-hidden="true" />}
-                iconPosition="right"
-                aria-label="View all events at Altius 2025"
-              >
-                View All Events
-              </Button>
-            </Link>
+              <Link href="/events">
+                <Button 
+                  variant="primary" 
+                  size="lg"
+                  icon={<ChevronRight size={20} aria-hidden="true" />}
+                  iconPosition="right"
+                  aria-label="View all events at Altius 2025"
+                >
+                  View All Events
+                </Button>
+              </Link>
+            </SpotlightCard>
           </motion.div>
         </div>
       </section>
