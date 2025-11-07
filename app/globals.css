@@ -559,16 +559,30 @@ section:nth-of-type(odd) {
 
 @keyframes scroll-x {
   from {
-    background-position-x: 0;
+    transform: translateX(0);
   }
   to {
-    background-position-x: -2000px; /* adjust depending on your image width */
+    transform: translateX(-2000px);
   }
 }
 
 .bg-scroll-x {
-  background: url("../public/bg_loop/bg-loop-r.jpg") repeat-x; /* replace with your image */
-  background-size: contain; /* or 'cover' if you want it stretched */
-  animation: scroll-x 40s linear infinite;
-  opacity: 0.5; /* adjust transparency to fit your design */
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
 }
+
+.bg-scroll-x::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4000px; /* twice the width for smooth looping */
+  height: 100%;
+  background: url("/bg_loop/bg-loop-r.jpg") repeat-x;
+  background-size: contain;
+  animation: scroll-x 40s linear infinite;
+  will-change: transform;
+  opacity: 0.3;
+}
+

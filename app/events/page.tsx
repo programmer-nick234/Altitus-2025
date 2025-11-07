@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import EventCard from "@/components/EventCard";
-import SpotlightCard from "@/components/SpotlightCard";
 import { SearchBar, Select } from "@/components/ui";
 import { events } from "@/lib/mockData";
 import { getEventStatus } from "@/lib/eventUtils";
@@ -74,69 +73,72 @@ export default function EventsPage() {
             </p>
           </motion.div>
 
-          {/* Filter Section - With SpotlightCard */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="mt-10 md:mt-12 flex justify-center relative z-20"
-          >
-            <SpotlightCard 
-              className="p-6 md:p-8 lg:p-10 w-full max-w-5xl"
-              spotlightColor="rgba(69, 123, 157, 0.15)"
-            >
-              {/* Search Bar - Full Width */}
-              <div className="mb-6 md:mb-8">
-                <SearchBar
-                  value={searchQuery}
-                  onChange={setSearchQuery}
-                  placeholder="Search events..."
-                  size="lg"
-                  className="w-full"
-                />
-              </div>
+         {/* Filter Section (Without SpotlightCard) */}
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.2 }}
+  className="mt-10 md:mt-12 flex justify-center relative z-30"
+>
+  <div className="w-full max-w-5xl bg-[#1F2833]/40 backdrop-blur-md rounded-xl border border-[#457B9D]/20 shadow-lg shadow-[#457B9D]/10 p-6 md:p-8 lg:p-10">
+    
+    {/* Search Bar - Full Width */}
+    <div className="mb-6 md:mb-8">
+      <SearchBar
+        value={searchQuery}
+        onChange={setSearchQuery}
+        placeholder="Search events..."
+        size="lg"
+        className="w-full"
+      />
+    </div>
 
-              {/* Divider */}
-              <div className="h-px bg-gradient-to-r from-transparent via-[#457B9D]/30 to-transparent mb-6 md:mb-8"></div>
+    {/* Divider */}
+    <div className="h-px bg-gradient-to-r from-transparent via-[#457B9D]/30 to-transparent mb-6 md:mb-8"></div>
 
-              {/* Filter Dropdowns - Side by Side */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                {/* Type Filter Dropdown */}
-                <div className="relative z-30">
-                  <div className="flex items-center gap-2 mb-3 md:mb-4">
-                    <span className="text-[#C5C6C7] inter-semibold text-sm uppercase tracking-wider">Filter by Type</span>
-                  </div>
-                  <Select
-                    value={selectedType}
-                    onChange={(value) => setSelectedType(value as FilterType)}
-                    options={[
-                      { value: "All", label: "All Events" },
-                      { value: "Technical", label: "Technical" },
-                      { value: "Non-Technical", label: "Non-Technical" },
-                      { value: "Live", label: "🔴 Live Events" },
-                    ]}
-                    className="w-full"
-                  />
-                </div>
+    {/* Filter Dropdowns - Side by Side */}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+      
+      {/* Type Filter Dropdown */}
+      <div className="relative z-[9999] overflow-visible">
+        <div className="flex items-center gap-2 mb-3 md:mb-4">
+          <span className="text-[#C5C6C7] inter-semibold text-sm uppercase tracking-wider">
+            Filter by Type
+          </span>
+        </div>
+        <Select
+          value={selectedType}
+          onChange={(value) => setSelectedType(value as FilterType)}
+          options={[
+            { value: "All", label: "All Events" },
+            { value: "Technical", label: "Technical" },
+            { value: "Non-Technical", label: "Non-Technical" },
+            { value: "Live", label: "🔴 Live Events" },
+          ]}
+          className="w-full"
+        />
+      </div>
 
-                {/* Department Filter Dropdown */}
-                <div className="relative z-20">
-                  <div className="flex items-center gap-2 mb-3 md:mb-4">
-                    <span className="text-[#C5C6C7] inter-semibold text-sm uppercase tracking-wider">Department</span>
-                  </div>
-                  <Select
-                    value={selectedDepartment}
-                    onChange={(value) => setSelectedDepartment(value)}
-                    options={departments.map(dept => ({ 
-                      value: dept, 
-                      label: dept === "All" ? "All Departments" : dept 
-                    }))}
-                    className="w-full"
-                  />
-                </div>
-              </div>
-            </SpotlightCard>
-          </motion.div>
+      {/* Department Filter Dropdown */}
+      <div className="relative z-[9999] overflow-visible">
+        <div className="flex items-center gap-2 mb-3 md:mb-4">
+          <span className="text-[#C5C6C7] inter-semibold text-sm uppercase tracking-wider">
+            Department
+          </span>
+        </div>
+        <Select
+          value={selectedDepartment}
+          onChange={(value) => setSelectedDepartment(value)}
+          options={departments.map((dept) => ({
+            value: dept,
+            label: dept === "All" ? "All Departments" : dept,
+          }))}
+          className="w-full"
+        />
+      </div>
+    </div>
+  </div>
+</motion.div>
 
           {/* Active Filter Tags */}
           {(selectedDepartment !== "All" || selectedType !== "All") && (

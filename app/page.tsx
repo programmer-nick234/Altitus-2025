@@ -29,7 +29,10 @@ export default function Home() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="hero-section overflow-hidden relative">
+<section className="hero-section overflow-hidden relative">
+  {/* Looping Horizontal Background */}
+  <div className="absolute inset-0 bg-scroll-x z-0" />
+
         {/* PixelBlast Background */}
         <div className="absolute inset-0 z-0">
           <PixelBlast
