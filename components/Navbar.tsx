@@ -10,7 +10,6 @@ import { usePathname } from "next/navigation";
 const navLinks = [
   { name: "HOME", href: "/" },
   { name: "EVENTS", href: "/events" },
-  { name: "LEADERBOARD", href: "/scoreboard" },
   { name: "GALLERY", href: "/gallery" },
   { name: "ABOUT", href: "/about" },
 ];
@@ -93,20 +92,16 @@ export default function Navbar() {
               </ul>
             </nav>
 
-            {/* Auth Buttons - Right */}
+            {/* Rulebook Button - Right */}
             <div className="flex items-center gap-4">
-              <Link
-                href="/login"
-                className="text-sm px-4 py-2 text-gray-300 border border-gray-500 rounded-full hover:text-white hover:border-[#E63946] transition-all"
+              <a
+                href="YOUR_GOOGLE_DRIVE_RULEBOOK_LINK"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm px-6 py-2.5 bg-gradient-to-r from-[#E63946] to-[#1D3557] text-white rounded-full hover:shadow-[0_0_20px_rgba(230,57,70,0.5)] transition-all duration-300 font-semibold tracking-wide"
               >
-                Login
-              </Link>
-              <Link
-                href="/signup"
-                className="text-sm px-4 py-2 bg-[#E63946] text-white rounded-full hover:bg-[#E63946]/80 transition-all"
-              >
-                Sign Up
-              </Link>
+                📘 RULEBOOK
+              </a>
             </div>
           </div>
         </div>
@@ -177,22 +172,17 @@ export default function Navbar() {
                 );
               })}
 
-              {/* Auth Buttons (Mobile) */}
+              {/* Rulebook Button (Mobile) */}
               <div className="flex flex-col gap-4 mt-10">
-                <Link
-                  href="/login"
+                <a
+                  href="YOUR_GOOGLE_DRIVE_RULEBOOK_LINK"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => setIsOpen(false)}
-                  className="text-center px-6 py-2 border border-gray-400 text-gray-300 rounded-full hover:text-white hover:border-[#E63946] transition-all"
+                  className="text-center px-6 py-3 bg-gradient-to-r from-[#E63946] to-[#1D3557] text-white rounded-full hover:shadow-[0_0_20px_rgba(230,57,70,0.5)] transition-all font-semibold"
                 >
-                  Login
-                </Link>
-                <Link
-                  href="/signup"
-                  onClick={() => setIsOpen(false)}
-                  className="text-center px-6 py-2 bg-[#E63946] text-white rounded-full hover:bg-[#E63946]/80 transition-all"
-                >
-                  Sign Up
-                </Link>
+                  📘 RULEBOOK
+                </a>
               </div>
             </div>
           </motion.div>

@@ -104,7 +104,6 @@ export default function AboutPage() {
               </p>
             </motion.div>
 
-            {/* Hero CTAs - Side by side with better spacing */}
             <motion.div
               className="button-group"
               {...(prefersReducedMotion ? {} : { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 }, transition: { delay: 0.9 } })}
@@ -120,15 +119,15 @@ export default function AboutPage() {
                   Explore Events
                 </Button>
               </Link>
-              <Link href="/register">
+              <a href="YOUR_GOOGLE_DRIVE_RULEBOOK_LINK" target="_blank" rel="noopener noreferrer">
                 <Button 
                   variant="outline" 
                   size="lg"
-                  aria-label="Register for Altius 2025"
+                  aria-label="View Altius 2025 Rulebook"
                 >
-                  Register Now
+                  📘 View Rulebook
                 </Button>
-              </Link>
+              </a>
             </motion.div>
           </motion.div>
         </div>

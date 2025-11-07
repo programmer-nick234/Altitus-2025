@@ -11,16 +11,6 @@ export interface Event {
   venue: string;
   isLive: boolean;
   image?: string;
-  registrationLink?: string;
-}
-
-export interface LeaderboardEntry {
-  rank: number;
-  department: string;
-  points: number;
-  goldMedals: number;
-  silverMedals: number;
-  bronzeMedals: number;
 }
 
 export interface GalleryItem {
@@ -57,8 +47,7 @@ export const events: Event[] = [
     date: "2025-11-15",
     time: "10:00 AM - 1:00 PM",
     venue: "Lab A-301",
-    isLive: true,
-    registrationLink: "#"
+    isLive: true
   },
   {
     id: 2,
@@ -69,8 +58,7 @@ export const events: Event[] = [
     date: "2025-11-15",
     time: "2:00 PM - 5:00 PM",
     venue: "Lab B-205",
-    isLive: false,
-    registrationLink: "#"
+    isLive: false
   },
   {
     id: 3,
@@ -81,8 +69,7 @@ export const events: Event[] = [
     date: "2025-11-16",
     time: "9:00 AM - 12:00 PM",
     venue: "Lab A-302",
-    isLive: false,
-    registrationLink: "#"
+    isLive: false
   },
   {
     id: 4,
@@ -93,8 +80,7 @@ export const events: Event[] = [
     date: "2025-11-16",
     time: "11:00 AM - 3:00 PM",
     venue: "Robotics Arena",
-    isLive: true,
-    registrationLink: "#"
+    isLive: true
   },
   {
     id: 5,
@@ -105,8 +91,7 @@ export const events: Event[] = [
     date: "2025-11-16",
     time: "4:00 PM - 6:00 PM",
     venue: "Auditorium",
-    isLive: false,
-    registrationLink: "#"
+    isLive: false
   },
   {
     id: 6,
@@ -117,8 +102,7 @@ export const events: Event[] = [
     date: "2025-11-17",
     time: "8:00 AM - 8:00 AM (Next Day)",
     venue: "Innovation Lab",
-    isLive: false,
-    registrationLink: "#"
+    isLive: false
   },
   {
     id: 7,
@@ -129,8 +113,7 @@ export const events: Event[] = [
     date: "2025-11-17",
     time: "10:00 AM - 1:00 PM",
     venue: "Seminar Hall",
-    isLive: false,
-    registrationLink: "#"
+    isLive: false
   },
   {
     id: 8,
@@ -141,60 +124,7 @@ export const events: Event[] = [
     date: "2025-11-17",
     time: "2:00 PM - 8:00 PM",
     venue: "Gaming Zone",
-    isLive: true,
-    registrationLink: "#"
-  }
-];
-
-// Leaderboard Data
-export const leaderboard: LeaderboardEntry[] = [
-  {
-    rank: 1,
-    department: "Computer Science & Engineering",
-    points: 485,
-    goldMedals: 8,
-    silverMedals: 5,
-    bronzeMedals: 3
-  },
-  {
-    rank: 2,
-    department: "Electronics & Communication",
-    points: 420,
-    goldMedals: 6,
-    silverMedals: 7,
-    bronzeMedals: 4
-  },
-  {
-    rank: 3,
-    department: "Mechanical Engineering",
-    points: 395,
-    goldMedals: 5,
-    silverMedals: 6,
-    bronzeMedals: 6
-  },
-  {
-    rank: 4,
-    department: "Civil Engineering",
-    points: 340,
-    goldMedals: 4,
-    silverMedals: 5,
-    bronzeMedals: 5
-  },
-  {
-    rank: 5,
-    department: "Information Science",
-    points: 315,
-    goldMedals: 3,
-    silverMedals: 6,
-    bronzeMedals: 4
-  },
-  {
-    rank: 6,
-    department: "Electrical Engineering",
-    points: 280,
-    goldMedals: 2,
-    silverMedals: 4,
-    bronzeMedals: 7
+    isLive: true
   }
 ];
 

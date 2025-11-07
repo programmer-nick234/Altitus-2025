@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Filter, X } from "lucide-react";
+import { Search, Filter } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import EventCard from "@/components/EventCard";
-import { SearchBar, Select, Badge, Modal, Button, Input } from "@/components/ui";
+import { SearchBar, Select, Badge } from "@/components/ui";
 import { events, type Event } from "@/lib/mockData";
 
 export default function EventsPage() {
@@ -14,7 +14,6 @@ export default function EventsPage() {
   const [selectedDepartment, setSelectedDepartment] = useState("All");
   const [selectedType, setSelectedType] = useState("All");
   const [showFilters, setShowFilters] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
   // Scroll to top when page loads
   useEffect(() => {
@@ -34,10 +33,6 @@ export default function EventsPage() {
     
     return matchesSearch && matchesDepartment && matchesType;
   });
-
-  const handleRegister = (event: Event) => {
-    setSelectedEvent(event);
-  };
 
   return (
     <div className="min-h-screen bg-[#0B0C10]">
@@ -80,14 +75,13 @@ export default function EventsPage() {
               </div>
 
               {/* Filter Toggle Button (Mobile) */}
-              <Button
+              <button
                 onClick={() => setShowFilters(!showFilters)}
-                variant="secondary"
-                className="md:hidden"
-                icon={<Filter size={18} />}
+                className="md:hidden px-4 py-2 bg-[#1F2833] text-[#F1FAEE] rounded-xl hover:bg-[#1D3557] transition-all flex items-center gap-2"
               >
+                <Filter size={18} />
                 Filters
-              </Button>
+              </button>
 
               {/* Filters (Desktop) */}
               <div className="hidden md:flex gap-3 lg:gap-4">
@@ -178,7 +172,7 @@ export default function EventsPage() {
                   transition={{ delay: index * 0.05 }}
                   className="h-full"
                 >
-                  <EventCard event={event} onRegister={handleRegister} />
+                  <EventCard event={event} />
                 </motion.div>
               ))}
             </AnimatePresence>
@@ -202,51 +196,6 @@ export default function EventsPage() {
           )}
         </div>
       </section>
-
-      {/* Registration Modal */}
-      {selectedEvent && (
-        <Modal
-          isOpen={true}
-          onClose={() => setSelectedEvent(null)}
-          title={selectedEvent.name}
-        >
-          <div className="text-center space-y-6">
-            <div className="w-16 h-16 mx-auto rounded-full gradient-blue-red flex items-center justify-center text-2xl font-bold text-white">
-              {selectedEvent.name.charAt(0)}
-            </div>
-            
-            <p className="text-[#C5C6C7] inter-regular">
-              {selectedEvent.description}
-            </p>
-
-            <div className="space-y-4">
-              <Input
-                type="text"
-                placeholder="Your Name"
-                required
-              />
-              <Input
-                type="email"
-                placeholder="Your Email"
-                required
-              />
-              <Input
-                type="tel"
-                placeholder="Your Phone"
-                required
-              />
-            </div>
-
-            <Button
-              variant="primary"
-              fullWidth
-              onClick={() => setSelectedEvent(null)}
-            >
-              Complete Registration
-            </Button>
-          </div>
-        </Modal>
-      )}
 
       <Footer />
     </div>

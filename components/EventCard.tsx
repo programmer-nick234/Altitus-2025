@@ -7,10 +7,9 @@ import { Button } from "@/components/ui";
 
 interface EventCardProps {
   event: Event;
-  onRegister?: (event: Event) => void;
 }
 
-export default function EventCard({ event, onRegister }: EventCardProps) {
+export default function EventCard({ event }: EventCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -96,15 +95,12 @@ export default function EventCard({ event, onRegister }: EventCardProps) {
           </div>
         </div>
 
-        {/* Register Button */}
-        <Button
-          variant="gradient"
-          size="lg"
-          fullWidth
-          onClick={() => onRegister?.(event)}
-        >
-          {event.isLive ? "Join Now" : "Register"}
-        </Button>
+        {/* Event Info - No Registration */}
+        <div className="text-center">
+          <p className="text-[#457B9D] text-sm inter-semibold">
+            {event.isLive ? "🔴 Event in Progress" : "📅 Event Details Available"}
+          </p>
+        </div>
       </div>
 
       {/* Hover Glow Effect */}
