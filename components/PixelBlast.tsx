@@ -133,13 +133,23 @@ const PixelBlast: React.FC<PixelBlastProps> = ({
         threeRef.current = null;
       }
 
-      const renderer = new THREE.WebGLRenderer({
-        antialias,
-        alpha: transparent,
-        powerPreference: 'high-performance',
-        stencil: false,
-        depth: false
-      });
+      // Try to create WebGL renderer with error handling
+      let renderer: THREE.WebGLRenderer;
+      try {
+        renderer = new THREE.WebGLRenderer({
+          antialias,
+          alpha: transparent,
+          powerPreference: 'high-performance',
+          stencil: false,
+          depth: false,
+          failIfMajorPerformanceCaveat: false
+        });
+      } catch (error) {
+        console.warn('WebGL context creation failed, falling back to basic rendering:', error);
+        // Optionally render a fallback or just return
+        return;
+      }
+      
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       renderer.setSize(container.offsetWidth, container.offsetHeight);
       
@@ -151,6 +161,23 @@ const PixelBlast: React.FC<PixelBlastProps> = ({
       canvas.style.width = '100%';
       canvas.style.height = '100%';
       canvas.style.display = 'block';
+      
+      // Add context loss/restore handlers
+      const handleContextLost = (event: Event) => {
+        event.preventDefault();
+        console.warn('WebGL context lost');
+        if (threeRef.current?.raf) {
+          cancelAnimationFrame(threeRef.current.raf);
+        }
+      };
+      
+      const handleContextRestored = () => {
+        console.log('WebGL context restored');
+        // Context will be recreated on next render
+      };
+      
+      canvas.addEventListener('webglcontextlost', handleContextLost, false);
+      canvas.addEventListener('webglcontextrestored', handleContextRestored, false);
       
       container.appendChild(canvas);
 
