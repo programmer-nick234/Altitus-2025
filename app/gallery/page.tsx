@@ -20,11 +20,11 @@ interface MediaItem {
   height: number;
 }
 
-// Gallery data - All images from public/gallery folder with accurate aspect ratios
+// Gallery data - All images from public/Gallery folder with accurate aspect ratios
 const galleryItems: MediaItem[] = [
   { 
     id: "1", 
-    img: "/gallery/poster-main.jpeg", 
+    img: "/Gallery/poster-main.jpeg", 
     type: "photo", 
     title: "Altius 2024 Official Poster", 
     event: "Main Event Poster", 
@@ -34,7 +34,7 @@ const galleryItems: MediaItem[] = [
   },
   { 
     id: "2", 
-    img: "/gallery/altius-inougration.jpeg", 
+    img: "/Gallery/altius-inougration.jpeg", 
     type: "photo", 
     title: "Inauguration Ceremony", 
     event: "Opening Day", 
@@ -44,7 +44,7 @@ const galleryItems: MediaItem[] = [
   },
   { 
     id: "3", 
-    img: "/gallery/speech.jpeg", 
+    img: "/Gallery/speech.jpeg", 
     type: "photo", 
     title: "Keynote Speech", 
     event: "Opening Address", 
@@ -54,7 +54,7 @@ const galleryItems: MediaItem[] = [
   },
   { 
     id: "4", 
-    img: "/gallery/speech-2.jpeg", 
+    img: "/Gallery/speech-2.jpeg", 
     type: "photo", 
     title: "Guest Speaker", 
     event: "Special Address", 
@@ -64,7 +64,7 @@ const galleryItems: MediaItem[] = [
   },
   { 
     id: "5", 
-    img: "/gallery/team.jpeg", 
+    img: "/Gallery/team.jpeg", 
     type: "photo", 
     title: "Organizing Team", 
     event: "Team Photo", 
@@ -74,7 +74,7 @@ const galleryItems: MediaItem[] = [
   },
   { 
     id: "6", 
-    img: "/gallery/team-2.jpeg", 
+    img: "/Gallery/team-2.jpeg", 
     type: "photo", 
     title: "Core Committee", 
     event: "Team Photo", 
@@ -84,7 +84,7 @@ const galleryItems: MediaItem[] = [
   },
   { 
     id: "7", 
-    img: "/gallery/promo launching.jpeg", 
+    img: "/Gallery/promo launching.jpeg", 
     type: "photo", 
     title: "Event Promo Launch", 
     event: "Marketing Campaign", 
@@ -94,7 +94,7 @@ const galleryItems: MediaItem[] = [
   },
   { 
     id: "8", 
-    img: "/gallery/poster-back.jpeg", 
+    img: "/Gallery/poster-back.jpeg", 
     type: "photo", 
     title: "Event Details Poster", 
     event: "Information Board", 
@@ -104,7 +104,7 @@ const galleryItems: MediaItem[] = [
   },
   { 
     id: "9", 
-    img: "/gallery/altius-inivites.jpeg", 
+    img: "/Gallery/altius-inivites.jpeg", 
     type: "photo", 
     title: "Official Invitations", 
     event: "Invitation Design", 
