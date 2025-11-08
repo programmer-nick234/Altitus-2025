@@ -115,7 +115,7 @@ export default function EventCard({ event }: EventCardProps) {
           </div>
 
           {/* Description */}
-          <p className="text-[#C5C6C7] text-sm leading-relaxed inter-regular line-clamp-3 flex-grow text-center mb-4">
+          <p className="text-[#C5C6C7] text-sm leading-relaxed inter-regular line-clamp-3 flex-grow text-center mb-4 py-3">
             {event.description}
           </p>
 
