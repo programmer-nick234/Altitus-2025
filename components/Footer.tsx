@@ -290,7 +290,7 @@ export default function Footer() {
             <p style={styles.aboutText}>
               Join us for an extraordinary inter-department technical fest at{" "}
               <strong style={{ color: "#F1FAEE" }}>Srinivas Institute of Technology</strong>, Mangalore. 
-              With 80+ events, 10 departments, and 500+ participants, Altius 2025 is where innovation meets excellence.
+              With 85+ events, 15 departments, and 500+ participants, Altius 2025 is where innovation meets excellence.
             </p>
             <div style={styles.socialContainer} className="footer-social-container">
               <a

@@ -16,7 +16,7 @@ export default function AboutPage() {
 
   // Count-up animation
   useEffect(() => {
-    const targets = { days: 1, participants: 500, events: 70, departments: 15 };
+    const targets = { days: 1, participants: 500, events: 85, departments: 15 };
     const duration = 2000;
     const steps = 50;
     const interval = duration / steps;
@@ -97,7 +97,7 @@ export default function AboutPage() {
             >
               <p className="text-lg md:text-xl text-[#C5C6C7] leading-relaxed inter-regular mb-6 text-left" style={{ maxWidth: "70ch", marginLeft: "auto", marginRight: "auto" }}>
                 Altius 2025 is the flagship inter-department technical fest of <span className="text-[#F1FAEE] font-semibold">Srinivas Institute of Technology, Mangalore</span>. 
-                A three-day celebration where innovation meets creativity, bringing together brilliant minds from 13 departments to compete, collaborate, and showcase their talents.
+                A three-day celebration where innovation meets creativity, bringing together brilliant minds from 15 departments to compete, collaborate, and showcase their talents.
               </p>
               <p className="text-base md:text-lg text-[#C5C6C7] leading-relaxed inter-regular text-left" style={{ maxWidth: "70ch", marginLeft: "auto", marginRight: "auto" }}>
                 With over 20 cutting-edge technical and non-technical events, expert-led workshops, and thrilling competitions, 
