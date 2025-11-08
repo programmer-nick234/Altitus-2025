@@ -93,9 +93,21 @@ export default function Navbar() {
             </ul>
           </nav>
 
-          {/* Rulebook Button - Right (Absolute positioning) */}
+          {/* Login Button - Right (Absolute positioning) */}
           <div className="absolute right-6 lg:right-8 top-1/2 -translate-y-1/2 flex items-center gap-4 z-20">
-          
+            <Link 
+              href="https://altius-2k25.onrender.com/" 
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button 
+                variant="primary" 
+                size="md"
+                className="px-6 py-2.5 text-sm font-semibold tracking-wide hover:shadow-[0_0_20px_rgba(230,57,70,0.4)] transition-all duration-300"
+              >
+                Login
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
@@ -165,23 +177,37 @@ export default function Navbar() {
                 );
               })}
 
-              {/* Rulebook Button (Mobile) */}
-              <div className="flex flex-col gap-4 mt-10">
+              {/* Buttons (Mobile) */}
+              <div className="flex flex-col gap-4 mt-10 w-full max-w-sm">
                 <Link
-  href="https://drive.google.com/file/d/1viaq7hCyFQSti37uFx-ZjAo3B3hQacy-/view?usp=drive_link"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="w-full sm:w-auto"
-  prefetch={false}
->
-  <Button 
-    variant="primary" 
-    size="xl"
-    className="min-w-[220px] px-12 py-5 text-lg font-bold tracking-wide rounded-full w-full sm:w-auto shadow-2xl hover:shadow-[0_0_40px_rgba(230,57,70,0.5)] transition-all duration-300"
-  >
-    Rulebook
-  </Button>
-</Link>
+                  href="https://altius-2k25.onrender.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full"
+                >
+                  <Button 
+                    variant="primary" 
+                    size="xl"
+                    className="min-w-[220px] px-12 py-5 text-lg font-bold tracking-wide rounded-full w-full shadow-2xl hover:shadow-[0_0_40px_rgba(230,57,70,0.5)] transition-all duration-300"
+                  >
+                    Login
+                  </Button>
+                </Link>
+                <Link
+                  href="https://drive.google.com/file/d/1viaq7hCyFQSti37uFx-ZjAo3B3hQacy-/view?usp=drive_link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full"
+                  prefetch={false}
+                >
+                  <Button 
+                    variant="primary" 
+                    size="xl"
+                    className="min-w-[220px] px-12 py-5 text-lg font-bold tracking-wide rounded-full w-full shadow-2xl hover:shadow-[0_0_40px_rgba(230,57,70,0.5)] transition-all duration-300"
+                  >
+                    Rulebook
+                  </Button>
+                </Link>
               </div>
             </div>
           </motion.div>
