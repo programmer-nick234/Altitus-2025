@@ -37,67 +37,65 @@ export default function Navbar() {
     >
       {/* Desktop & Tablet Navigation */}
       <div className="hidden md:block">
-        <div className="max-w-screen-xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20 relative">
-            {/* Logo - Left */}
-            <Link href="/" className="flex items-center gap-2 group flex-shrink-0 z-20">
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center gap-2"
-              >
-                <div className="relative w-10 h-10 rounded-full overflow-hidden group-hover:drop-shadow-[0_0_10px_#E63946] transition-all">
-                  <Image
-                    src="/altius-bg.png"
-                    alt="Altius 2025"
-                    fill
-                    sizes="40px"
-                    className="object-cover"
-                    priority
-                  />
-                </div>
-                <span className="goldman-bold text-xl text-white tracking-widest group-hover:text-[#E63946] transition-colors whitespace-nowrap">
-                  ALTIUS <span className="text-[#E63946]">2025</span>
-                </span>
-              </motion.div>
-            </Link>
+        <div className="relative h-20 w-full">
+          {/* Logo - Left (Absolute positioning) */}
+          <Link href="/" className="absolute left-6 lg:left-8 top-1/2 -translate-y-1/2 flex items-center gap-2 group flex-shrink-0 z-20">
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center gap-2"
+            >
+              <div className="relative w-10 h-10 rounded-full overflow-hidden group-hover:drop-shadow-[0_0_10px_#E63946] transition-all">
+                <Image
+                  src="/altius-bg.png"
+                  alt="Altius 2025"
+                  fill
+                  sizes="40px"
+                  className="object-cover"
+                  priority
+                />
+              </div>
+              <span className="goldman-bold text-xl text-white tracking-widest group-hover:text-[#E63946] transition-colors whitespace-nowrap">
+                ALTIUS <span className="text-[#E63946]">2025</span>
+              </span>
+            </motion.div>
+          </Link>
 
-            {/* Navigation Links - Center */}
-            <nav>
-              <ul className="flex items-center gap-8 lg:gap-10">
-                {navLinks.map((link) => {
-                  const isActive = pathname === link.href;
-                  return (
-                    <li key={link.name}>
-                      <Link href={link.href} className="relative group block">
-                        <span
-                          className={`text-sm goldman-regular uppercase tracking-wide transition-colors ${
-                            isActive ? "text-white" : "text-gray-300 hover:text-white"
-                          }`}
-                        >
-                          {link.name}
-                        </span>
-                        {isActive && (
-                          <motion.div
-                            layoutId="activeNav"
-                            className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#E63946]"
-                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                          />
-                        )}
-                        {!isActive && (
-                          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#E63946] group-hover:w-full transition-all duration-300" />
-                        )}
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            </nav>
+          {/* Navigation Links - Center (Absolute positioning globally centered) */}
+          <nav className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+            <ul className="flex items-center gap-8 lg:gap-10">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <li key={link.name}>
+                    <Link href={link.href} className="relative group block">
+                      <span
+                        className={`text-sm goldman-regular uppercase tracking-wide transition-colors ${
+                          isActive ? "text-white" : "text-gray-300 hover:text-white"
+                        }`}
+                      >
+                        {link.name}
+                      </span>
+                      {isActive && (
+                        <motion.div
+                          layoutId="activeNav"
+                          className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#E63946]"
+                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                        />
+                      )}
+                      {!isActive && (
+                        <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#E63946] group-hover:w-full transition-all duration-300" />
+                      )}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
 
-            {/* Rulebook Button - Right */}
-            <div className="flex items-center gap-4">
-            
-            </div>
+          {/* Rulebook Button - Right (Absolute positioning) */}
+          <div className="absolute right-6 lg:right-8 top-1/2 -translate-y-1/2 flex items-center gap-4 z-20">
+          
           </div>
         </div>
       </div>
@@ -181,7 +179,7 @@ export default function Navbar() {
     size="xl"
     className="min-w-[220px] px-12 py-5 text-lg font-bold tracking-wide rounded-full w-full sm:w-auto shadow-2xl hover:shadow-[0_0_40px_rgba(230,57,70,0.5)] transition-all duration-300"
   >
-    📘Rulebook
+    Rulebook
   </Button>
 </Link>
               </div>

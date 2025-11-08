@@ -95,13 +95,18 @@ export default function AboutPage() {
               className="max-w-4xl mx-auto mb-12"
               {...(prefersReducedMotion ? {} : { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 }, transition: { delay: 0.7 } })}
             >
-              <p className="text-lg md:text-xl text-[#C5C6C7] leading-relaxed inter-regular mb-6 text-left" style={{ maxWidth: "70ch", marginLeft: "auto", marginRight: "auto" }}>
-                Altius 2025 is the flagship inter-department technical fest of <span className="text-[#F1FAEE] font-semibold">Srinivas Institute of Technology, Mangalore</span>. 
-                A three-day celebration where innovation meets creativity, bringing together brilliant minds from 15 departments to compete, collaborate, and showcase their talents.
+              <p className="text-lg md:text-xl text-[#C5C6C7] leading-relaxed inter-regular mb-6 text-center">
+                <span className="text-[#F1FAEE] font-semibold">Altius 25</span> is the grand annual inter-departmental fest of <span className="text-[#F1FAEE] font-semibold">Srinivas Institute of Technology</span>, where innovation meets excellence. The event brings together creative minds from every department to compete, collaborate, and celebrate the spirit of knowledge, technology, and talent.
               </p>
-              <p className="text-base md:text-lg text-[#C5C6C7] leading-relaxed inter-regular text-left" style={{ maxWidth: "70ch", marginLeft: "auto", marginRight: "auto" }}>
-                With over 20 cutting-edge technical and non-technical events, expert-led workshops, and thrilling competitions, 
-                Altius provides a launchpad for students to push boundaries, gain real-world experience, and connect with industry leaders.
+              <p className="text-base md:text-lg text-[#C5C6C7] leading-relaxed inter-regular mb-6 text-center">
+                This year's edition, <span className="text-[#F1FAEE] font-semibold">Altius 25</span>, takes inspiration from the interstellar theme — <span className="text-[#E63946] font-semibold">"Innovate, Compete, Ascend."</span> Like a comet blazing across the sky, Altius represents brilliance, momentum, and discovery. It's not just an event, but a journey that challenges students to think beyond limits, push their creativity, and rise to new heights of achievement.
+              </p>
+              <p className="text-base md:text-lg text-[#C5C6C7] leading-relaxed inter-regular mb-6 text-center">
+                With a vibrant lineup of technical, non-technical, and cultural competitions, Altius provides a platform for every student to showcase their potential and passion. The fest embodies teamwork, leadership, and innovation — qualities that define the true spirit of Srinivas.
+              </p>
+              <p className="text-lg md:text-xl text-[#F1FAEE] leading-relaxed inter-regular font-semibold text-center">
+                Join us as we launch into an extraordinary experience of ideas, art, and intellect —<br />
+                <span className="text-[#E63946]">Welcome to Altius 25. Let the ascent begin.</span>
               </p>
             </motion.div>
 
