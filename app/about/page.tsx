@@ -132,7 +132,7 @@ export default function AboutPage() {
     size="xl"
     className="min-w-[220px] px-12 py-5 text-lg font-bold tracking-wide rounded-full w-full sm:w-auto shadow-2xl hover:shadow-[0_0_40px_rgba(230,57,70,0.5)] transition-all duration-300"
   >
-    📘 View Rulebook
+    View Rulebook
   </Button>
 </Link>
             </motion.div>
