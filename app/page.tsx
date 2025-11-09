@@ -31,7 +31,7 @@ export default function Home() {
       {/* Hero Section */}
 <section className="hero-section overflow-hidden relative">
   {/* Looping Horizontal Background */}
-  <div className="absolute inset-0 bg-scroll-x z-0" />
+  <div className="bg-scroll-x " />
 
         {/* PixelBlast Background */}
         <div className="absolute inset-0 z-0">

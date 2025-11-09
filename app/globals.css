@@ -556,7 +556,6 @@ section:nth-of-type(odd) {
     border-radius: 1rem;
   }
 }
-
 @keyframes scroll-x {
   from {
     transform: translateX(0);
@@ -566,10 +565,16 @@ section:nth-of-type(odd) {
   }
 }
 
+/* Optimized Background Scroller */
 .bg-scroll-x {
-  position: absolute;
+  position: fixed; /* ✅ stays fixed behind everything */
   inset: 0;
   overflow: hidden;
+  z-index: 0; /* stays behind hero content */
+  will-change: transform;
+  pointer-events: none;
+  backface-visibility: hidden;
+  transform: translateZ(0); /* GPU acceleration */
 }
 
 .bg-scroll-x::before {
@@ -577,12 +582,12 @@ section:nth-of-type(odd) {
   position: absolute;
   top: 0;
   left: 0;
-  width: 4000px; /* twice the width for smooth looping */
+  width: 4000px; /* twice viewport width for smooth loop */
   height: 100%;
   background: url("/bg_loop/bg-loop-r.jpg") repeat-x;
   background-size: contain;
   animation: scroll-x 40s linear infinite;
   will-change: transform;
-  opacity: 0.3;
+  opacity: 0.25;
+  transform: translate3d(0, 0, 0);
 }
-
