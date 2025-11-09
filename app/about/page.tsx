@@ -149,18 +149,20 @@ const leadership = [
     imageUrl: "/Team/srinivas-maya.jpg" 
   },
 ];
-
+const facultyCoordinators = [
+{ 
+    name: "Prof. Mohamed Gowspeer", 
+    role: "Altius staff Coordinator", 
+    imageUrl: "/Team/MGP.jpg" 
+  },
+]
 const coordinators = [
   { 
     name: "Dheeraj D", 
     role: "Altius Coordinator", 
     imageUrl: "/Team/dheeraj.jpg" 
   },
-  { 
-    name: "Prof. Mohamed Gowspeer", 
-    role: "Altius staff Coordinator", 
-    imageUrl: "/Team/MGP.jpg" 
-  },
+  
   { 
     name: "Sudharma", 
     role: "Altius Coordinator", 
@@ -433,9 +435,10 @@ export default function AboutPage() {
     {/* --- Animated Team Grid --- */}
     {[
       { title: "Our Principal", data: leadership },
-      { title: "Altius Coordinators", data: coordinators },
+      { title: "Altius Faculty Coordinators", data: facultyCoordinators },
+      { title: "Altius Student Coordinators", data: coordinators },
       { title: "Development Team", data: developers },
-      { title: "Department Heads", data: heads },
+      { title: "Committee Heads", data: heads },
     ].map((group, groupIndex) => (
       <motion.div
         key={group.title}
