@@ -161,6 +161,11 @@ const coordinators = [
     role: "Event Coordinator", 
     imageUrl: "/Team/MGP.jpg" 
   },
+  { 
+    name: "Sudharma", 
+    role: "Backend Developer", 
+    imageUrl: "/Team/sudharma.jpg" 
+  },
 ];
 
 const developers = [
@@ -172,7 +177,7 @@ const developers = [
   { 
     name: "Suraj BM", 
     role: "Fullstack Developer", 
-    imageUrl: "/Team/suraj2.jpg" 
+    imageUrl: "/Team/suraj.jpg" 
   },
   { 
     name: "Sudharma", 
