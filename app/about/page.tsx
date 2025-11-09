@@ -167,6 +167,24 @@ const coordinators = [
     imageUrl: "/Team/sudharma.jpg" 
   },
 ];
+const heads = [
+  {
+    name: "Malvika",
+    role: "Altius Score & Data Head",
+    imageUrl: "/Team/malvika.jpg",
+  },
+  {
+    name: "Roshed",
+    role: "Social Media Head",
+    imageUrl: "/Team/roshed.jpg",
+  },
+  {
+    name: "Abhijna",
+    role: "Certificate Team Head",
+    imageUrl: "/Team/abhijna.jpg",
+  },
+];
+
 
 const developers = [
   { 
@@ -374,55 +392,65 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-       {/* --- NEW: Meet the Team Section (Improved) --- */}
+{/* --- ✨ MEET THE TEAM (Enhanced Cinematic Edition) --- */}
 <section className="section-spacing relative overflow-hidden">
-  {/* Background gradient orbs */}
+  {/* Floating gradient orbs for dynamic background */}
   <div className="absolute inset-0 -z-10 pointer-events-none">
     <motion.div
-      className="absolute top-1/3 left-1/4 w-[500px] h-[500px] rounded-full bg-[#E63946]/10 blur-[120px]"
-      animate={{ x: [0, 50, 0], y: [0, -30, 0], scale: [1, 1.1, 1] }}
-      transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+      className="absolute top-1/3 left-1/4 w-[500px] h-[500px] rounded-full bg-[#E63946]/10 blur-[140px]"
+      animate={{ x: [0, 60, 0], y: [0, -40, 0], scale: [1, 1.15, 1] }}
+      transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
     />
     <motion.div
-      className="absolute bottom-1/3 right-1/4 w-[450px] h-[450px] rounded-full bg-[#1D3557]/15 blur-[120px]"
-      animate={{ x: [0, -40, 0], y: [0, 30, 0], scale: [1, 1.15, 1] }}
-      transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+      className="absolute bottom-1/4 right-1/4 w-[450px] h-[450px] rounded-full bg-[#457B9D]/15 blur-[140px]"
+      animate={{ x: [0, -50, 0], y: [0, 35, 0], scale: [1, 1.1, 1] }}
+      transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
     />
   </div>
 
   <div className="content-container relative z-10">
-    {/* Title */}
+    {/* Header */}
     <motion.div {...motionProps} className="text-center mb-20">
-      <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-[#F1FAEE] mb-4 goldman-bold tracking-tight">
+      <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-[#F1FAEE] mb-4 goldman-bold tracking-tight drop-shadow-[0_0_25px_rgba(230,57,70,0.5)]">
         MEET THE <span className="text-[#E63946]">TEAM</span>
       </h2>
       <p className="text-lg md:text-xl text-[#A8DADC] inter-regular max-w-2xl mx-auto">
-        The brilliant minds powering the vision of <span className="text-[#E63946] font-semibold">Altius 2025</span>.
+        The brilliant minds driving the spirit of{" "}
+        <span className="text-[#E63946] font-semibold">Altius 2025</span>.
       </p>
       <motion.div
-        className="w-24 h-1 bg-gradient-to-r from-transparent via-[#E63946] to-transparent mx-auto mt-8"
-        {...(prefersReducedMotion ? {} : { initial: { scaleX: 0 }, animate: { scaleX: 1 }, transition: { duration: 0.8 } })}
+        className="w-32 h-[3px] bg-gradient-to-r from-transparent via-[#E63946] to-transparent mx-auto mt-8 rounded-full"
+        {...(prefersReducedMotion
+          ? {}
+          : {
+              initial: { scaleX: 0 },
+              animate: { scaleX: 1 },
+              transition: { duration: 0.8 },
+            })}
       />
     </motion.div>
 
-    {/* --- Helper: Animated Team Grid Wrapper --- */}
+    {/* --- Animated Team Grid --- */}
     {[
       { title: "Our Principal", data: leadership },
-      { title: "Event Coordinators", data: coordinators },
+      { title: "Altius Coordinators", data: coordinators },
       { title: "Development Team", data: developers },
+      { title: "Department Heads", data: heads },
     ].map((group, groupIndex) => (
       <motion.div
         key={group.title}
         {...motionProps}
-        className="mb-24"
+        className="mb-28"
       >
-        <div className="text-center mb-12">
-          <h3 className="text-3xl md:text-4xl font-bold text-[#F1FAEE] goldman-bold mb-4">
+        {/* Group Title */}
+        <div className="text-center mb-14">
+          <h3 className="text-3xl md:text-4xl font-bold text-[#F1FAEE] goldman-bold mb-3 drop-shadow-[0_0_15px_rgba(230,57,70,0.6)]">
             {group.title}
           </h3>
-          <div className="w-16 h-[2px] bg-gradient-to-r from-transparent via-[#E63946] to-transparent mx-auto" />
+          <div className="w-20 h-[2px] bg-gradient-to-r from-transparent via-[#E63946] to-transparent mx-auto rounded-full" />
         </div>
 
+        {/* Team Grid */}
         <motion.div
           className="flex justify-center flex-wrap gap-10 md:gap-12"
           initial="hidden"
@@ -434,8 +462,8 @@ export default function AboutPage() {
               opacity: 1,
               y: 0,
               transition: {
-                staggerChildren: 0.12,
-                duration: 0.5,
+                staggerChildren: 0.15,
+                duration: 0.6,
               },
             },
           }}
@@ -443,35 +471,41 @@ export default function AboutPage() {
           {group.data.map((person) => (
             <motion.div
               key={person.name}
-              whileHover={{ scale: 1.08, rotateX: 2, rotateY: -2 }}
-              transition={{ type: "spring", stiffness: 200, damping: 15 }}
+              whileHover={{
+                scale: 1.08,
+                rotateX: 3,
+                rotateY: -3,
+                transition: { type: "spring", stiffness: 180, damping: 12 },
+              }}
+              className="relative group"
             >
-              <div className="relative w-[220px] h-[290px] rounded-2xl overflow-hidden shadow-[0_0_25px_rgba(230,57,70,0.15)] bg-[#0B0C10] hover:shadow-[0_0_40px_rgba(230,57,70,0.4)] transition-all duration-500 group">
-                {/* Image */}
-                <div className="relative w-full h-[70%] overflow-hidden">
+              {/* Card */}
+              <div className="relative w-[240px] h-[300px] rounded-2xl overflow-hidden bg-gradient-to-b from-[#0B0C10]/80 to-[#1F2833]/90 shadow-[0_0_25px_rgba(230,57,70,0.2)] border border-[#E63946]/10 hover:border-[#E63946]/30 transition-all duration-500">
+                {/* Image Layer */}
+                <div className="relative w-full h-[72%] overflow-hidden">
                   <img
                     src={person.imageUrl}
                     alt={person.name}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     onError={(e) =>
                       (e.currentTarget.src =
-                        "https://placehold.co/220x180/1F2833/F1FAEE?text=Image")
+                        "https://placehold.co/240x200/1F2833/F1FAEE?text=Image")
                     }
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B0C10]/90 via-transparent to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B0C10]/90 via-transparent to-transparent opacity-0 group-hover:opacity-90 transition-opacity duration-700" />
                 </div>
 
-                {/* Content */}
-                <div className="absolute bottom-0 w-full p-4 text-center backdrop-blur-md bg-[#0B0C10]/70 border-t border-[#E63946]/20">
-                  <h4 className="text-lg font-bold text-[#F1FAEE] mb-1">
+                {/* Text Info */}
+                <div className="absolute bottom-0 w-full py-3 px-4 text-center backdrop-blur-md bg-[#0B0C10]/70 border-t border-[#E63946]/20">
+                  <h4 className="text-lg font-bold text-[#F1FAEE] mb-1 drop-shadow-[0_0_5px_rgba(255,255,255,0.2)]">
                     {person.name}
                   </h4>
-                  <p className="text-sm text-[#C5C6C7] tracking-wide">
+                  <p className="text-sm text-[#C5C6C7] tracking-wide leading-tight">
                     {person.role}
                   </p>
                 </div>
 
-                {/* Outer glow aura */}
+                {/* Glow ring on hover */}
                 <motion.div
                   className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"
                   animate={{
@@ -488,6 +522,20 @@ export default function AboutPage() {
                   }}
                 />
               </div>
+
+              {/* Subtle Floating Animation */}
+              <motion.div
+                className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-t from-[#E63946]/5 to-transparent blur-[40px]"
+                animate={{
+                  y: [0, -10, 0],
+                  opacity: [0.3, 0.6, 0.3],
+                }}
+                transition={{
+                  duration: 5 + Math.random() * 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              />
             </motion.div>
           ))}
         </motion.div>
@@ -495,6 +543,7 @@ export default function AboutPage() {
     ))}
   </div>
 </section>
+
 
       {/* Why Participate Section - With SpotlightCard Effect */}
       <section className="section-spacing">
