@@ -217,6 +217,13 @@ const developers = [
     imageUrl: "/Team/arsh.jpg" 
   },
 ];
+const presidents = [
+{
+    name: "Athmi Shetty", 
+    role: "Student President",
+    imageUrl: "/Team/athmi.jpg"
+}
+];
 
 
 // --- Main Page Component ---
@@ -441,6 +448,7 @@ export default function AboutPage() {
       { title: "Altius Student Coordinators", data: coordinators },
       { title: "Development Team", data: developers },
       { title: "Committee Heads", data: heads },
+      { title:"Student President", data: presidents},
     ].map((group, groupIndex) => (
       <motion.div
         key={group.title}
