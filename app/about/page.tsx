@@ -165,14 +165,14 @@ const coordinators = [
 
 const developers = [
   { 
-    name: "Nikhil", 
+    name: "Nikhil Bajantri", 
     role: "Fullstack Developer", 
-    imageUrl: "/team/nikhil2.jpg" 
+    imageUrl: "/team/nikhil.jpg" 
   },
   { 
-    name: "Suraj", 
+    name: "Suraj BM", 
     role: "Fullstack Developer", 
-    imageUrl: "/team/suraj.jpg" 
+    imageUrl: "/team/suraj2.jpg" 
   },
   { 
     name: "Sudharma", 
