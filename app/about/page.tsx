@@ -146,7 +146,7 @@ const leadership = [
   { 
     name: "Dr. Shrinivasa Mayya D", 
     role: "Principal", 
-    imageUrl: "/team/srinivas-maya.jpg" 
+    imageUrl: "/Team/srinivas-maya.jpg" 
   },
 ];
 
@@ -154,12 +154,12 @@ const coordinators = [
   { 
     name: "Dheeraj D", 
     role: "Event Coordinator", 
-    imageUrl: "/team/dheeraj.jpg" 
+    imageUrl: "/Team/dheeraj.jpg" 
   },
   { 
     name: "Prof. Mohamed Gowspeer", 
     role: "Event Coordinator", 
-    imageUrl: "/team/MGP.jpg" 
+    imageUrl: "/Team/MGP.jpg" 
   },
 ];
 
@@ -167,27 +167,27 @@ const developers = [
   { 
     name: "Nikhil Bajantri", 
     role: "Fullstack Developer", 
-    imageUrl: "/team/nikhil.jpg" 
+    imageUrl: "/Team/nikhil.jpg" 
   },
   { 
     name: "Suraj BM", 
     role: "Fullstack Developer", 
-    imageUrl: "/team/suraj2.jpg" 
+    imageUrl: "/Team/suraj2.jpg" 
   },
   { 
     name: "Sudharma", 
     role: "Backend Developer", 
-    imageUrl: "/team/sudharma.jpg" 
+    imageUrl: "/Team/sudharma.jpg" 
   },
   { 
     name: "Chirag", 
     role: "Frontend Developer", 
-    imageUrl: "/team/chirag.jpg" 
+    imageUrl: "/Team/chirag.jpg" 
   },
   { 
     name: "Arsh", 
     role: "Frontend Developer", 
-    imageUrl: "/team/arsh.jpg" 
+    imageUrl: "/Team/arsh.jpg" 
   },
 ];
 
