@@ -9,7 +9,190 @@ import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
 import SpotlightCard from "@/components/SpotlightCard";
 import { Button } from "@/components/ui";
+import styled from 'styled-components'; // Added for the team cards
 
+// --- Team Card Component ---
+// Using the styled-component definition you provided
+const StyledWrapper = styled.div`
+  /* ===== LOCAL CSS RESET ===== */
+  /* This resets the global * { margin: 3px; } rule ONLY for this component */
+  margin: 0; 
+  * {
+    margin: 0;
+    box-sizing: border-box;
+  }
+  /* =========================== */
+
+  .card {
+    position: relative;
+    width: 190px;
+    height: 254px;
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: end; <-- Removed to allow image at top */
+    /* padding: 12px; <-- Moved to card-content */
+    /* gap: 12px; <-- Moved to card-content */
+    border-radius: 8px;
+    cursor: pointer;
+    overflow: hidden; /* Added to clip the image to the card's rounded corners */
+  }
+  
+  .card-image {
+    width: 100%;
+    height: 150px; /* Set a fixed height for the image */
+    object-fit: cover;
+    background-color: #1F2833; /* Placeholder bg while image loads */
+  }
+
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: end; /* Pushes text to the bottom */
+    flex-grow: 1; /* Takes up remaining space */
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    left: -5px;
+    margin: auto;
+    width: 200px;
+    height: 264px;
+    border-radius: 10px;
+    background: linear-gradient(-45deg, #e81cff 0%, #40c9ff 100% );
+    z-index: -10;
+    pointer-events: none;
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .card::after {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(-45deg, #fc00ff 0%, #00dbde 100% );
+    transform: translate3d(0, 0, 0) scale(0.95);
+    filter: blur(20px);
+  }
+
+  .heading {
+    font-size: 20px;
+    text-transform: capitalize;
+    font-weight: 700;
+    color: #F1FAEE; /* Ensure text is visible on black bg */
+  }
+
+  .card p:not(.heading) {
+    font-size: 14px;
+    color: #C5C6C7; /* Ensure text is visible on black bg */
+  }
+
+  .card p:last-child {
+    color: #e81cff;
+    font-weight: 600;
+  }
+
+  .card:hover::after {
+    filter: blur(30px);
+  }
+
+  .card:hover::before {
+    transform: rotate(-90deg) scaleX(1.34) scaleY(0.77);
+  }
+`;
+
+type TeamCardProps = {
+  name: string;
+  role: string;
+  imageUrl: string; // Added image URL prop
+};
+
+/**
+ * Reusable Team Card component based on user's style.
+ * @param {object} props - Component props.
+ * @param {string} props.name - Person's name.
+ * @param {string} props.role - Person's role.
+ * @param {string} props.imageUrl - URL for the person's image.
+ */
+const TeamCard: React.FC<TeamCardProps> = ({ name, role, imageUrl }) => {
+  return (
+    <StyledWrapper>
+      <div className="card">
+        <img 
+          src={imageUrl} 
+          alt={name} 
+          className="card-image" 
+          onError={(e) => (e.currentTarget.src = 'https://placehold.co/190x150/1F2833/F1FAEE?text=Image')}
+        />
+        <div className="card-content">
+          <p className="heading">
+            {name}
+          </p>
+          <p>
+            {role}
+          </p>
+        </div>
+      </div>
+    </StyledWrapper>
+  );
+}
+
+// --- Team Data (Updated with imageUrl) ---
+const leadership = [
+  { 
+    name: "Dr. Shrinivasa Mayya D", 
+    role: "Principal", 
+    imageUrl: "/team/srinivas-maya.jpg" 
+  },
+];
+
+const coordinators = [
+  { 
+    name: "Dheeraj D", 
+    role: "Event Coordinator", 
+    imageUrl: "/team/dheeraj.jpg" 
+  },
+  { 
+    name: "Prof. Mohamed Gawspear", 
+    role: "Event Coordinator", 
+    imageUrl: "/team/MGP.jpg" 
+  },
+];
+
+const developers = [
+  { 
+    name: "Nikhil", 
+    role: "Fullstack Developer", 
+    imageUrl: "/team/nikhil2.jpg" 
+  },
+  { 
+    name: "Suraj", 
+    role: "Fullstack Developer", 
+    imageUrl: "/team/suraj.jpg" 
+  },
+  { 
+    name: "Sudharma", 
+    role: "Backend Developer", 
+    imageUrl: "/team/sudharma.jpg" 
+  },
+  { 
+    name: "Chirag", 
+    role: "Frontend Developer", 
+    imageUrl: "/team/chirag.jpg" 
+  },
+  { 
+    name: "Arsh", 
+    role: "Frontend Developer", 
+    imageUrl: "/team/arsh.jpg" 
+  },
+];
+
+
+// --- Main Page Component ---
 export default function AboutPage() {
   const prefersReducedMotion = useReducedMotion();
   const [counters, setCounters] = useState({ days: 0, participants: 0, events: 0, departments: 0 });
@@ -126,20 +309,20 @@ export default function AboutPage() {
                 </Button>
               </Link>
               <Link
-  href="https://drive.google.com/file/d/1viaq7hCyFQSti37uFx-ZjAo3B3hQacy-/view?usp=drive_link"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="w-full sm:w-auto"
-  prefetch={false}
->
-  <Button 
-    variant="primary" 
-    size="xl"
-    className="min-w-[220px] px-12 py-5 text-lg font-bold tracking-wide rounded-full w-full sm:w-auto shadow-2xl hover:shadow-[0_0_40px_rgba(230,57,70,0.5)] transition-all duration-300"
-  >
-    View Rulebook
-  </Button>
-</Link>
+                href="https://drive.google.com/file/d/1viaq7hCyFQSti37uFx-ZjAo3B3hQacy-/view?usp=drive_link"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto"
+                prefetch={false}
+              >
+                <Button 
+                  variant="primary" 
+                  size="xl"
+                  className="min-w-[220px] px-12 py-5 text-lg font-bold tracking-wide rounded-full w-full sm:w-auto shadow-2xl hover:shadow-[0_0_40px_rgba(230,57,70,0.5)] transition-all duration-300"
+                >
+                  View Rulebook
+                </Button>
+              </Link>
             </motion.div>
           </motion.div>
         </div>
@@ -314,6 +497,74 @@ export default function AboutPage() {
               </SpotlightCard>
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* --- NEW: Meet the Team Section --- */}
+      <section className="section-spacing">
+        <div className="content-container">
+          <motion.div
+            {...motionProps}
+            className="text-center mb-16"
+          >
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-[#F1FAEE] mb-4 goldman-bold tracking-tight">
+              MEET THE <span className="text-[#E63946]">TEAM</span>
+            </h2>
+            <p className="text-lg md:text-xl text-[#457B9D] inter-regular max-w-2xl mx-auto">
+              The minds behind the magic and the leaders guiding the way.
+            </p>
+          </motion.div>
+
+          {/* Leadership */}
+          <motion.div {...motionProps} className="mb-16">
+            <h3 className="text-3xl md:text-4xl font-bold text-[#F1FAEE] goldman-bold text-center mb-10">
+              Our Principal
+            </h3>
+            <div className="flex justify-center flex-wrap gap-8">
+              {leadership.map((person) => (
+                <TeamCard 
+                  key={person.name} 
+                  name={person.name} 
+                  role={person.role} 
+                  imageUrl={person.imageUrl} 
+                />
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Event Coordinators */}
+          <motion.div {...motionProps} className="mb-16">
+            <h3 className="text-3xl md:text-4xl font-bold text-[#F1FAEE] goldman-bold text-center mb-10">
+              Event Coordinators
+            </h3>
+            <div className="flex justify-center flex-wrap gap-8">
+              {coordinators.map((person) => (
+                <TeamCard 
+                  key={person.name} 
+                  name={person.name} 
+                  role={person.role} 
+                  imageUrl={person.imageUrl} 
+                />
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Developers */}
+          <motion.div {...motionProps}>
+            <h3 className="text-3xl md:text-4xl font-bold text-[#F1FAEE] goldman-bold text-center mb-10">
+              Development Team
+            </h3>
+            <div className="flex justify-center flex-wrap gap-8">
+              {developers.map((person) => (
+                <TeamCard 
+                  key={person.name} 
+                  name={person.name} 
+                  role={person.role} 
+                  imageUrl={person.imageUrl} 
+                />
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
 
