@@ -153,17 +153,17 @@ const leadership = [
 const coordinators = [
   { 
     name: "Dheeraj D", 
-    role: "Event Coordinator", 
+    role: "Altius Coordinator", 
     imageUrl: "/Team/dheeraj.jpg" 
   },
   { 
     name: "Prof. Mohamed Gowspeer", 
-    role: "Event Coordinator", 
+    role: "Altius staff Coordinator", 
     imageUrl: "/Team/MGP.jpg" 
   },
   { 
     name: "Sudharma", 
-    role: "Backend Developer", 
+    role: "Altius Coordinator", 
     imageUrl: "/Team/sudharma.jpg" 
   },
 ];
