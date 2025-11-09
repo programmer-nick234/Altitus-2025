@@ -157,7 +157,7 @@ const coordinators = [
     imageUrl: "/team/dheeraj.jpg" 
   },
   { 
-    name: "Prof. Mohamed Gawspear", 
+    name: "Prof. Mohamed Gowspeer", 
     role: "Event Coordinator", 
     imageUrl: "/team/MGP.jpg" 
   },
@@ -369,6 +369,127 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+       {/* --- NEW: Meet the Team Section (Improved) --- */}
+<section className="section-spacing relative overflow-hidden">
+  {/* Background gradient orbs */}
+  <div className="absolute inset-0 -z-10 pointer-events-none">
+    <motion.div
+      className="absolute top-1/3 left-1/4 w-[500px] h-[500px] rounded-full bg-[#E63946]/10 blur-[120px]"
+      animate={{ x: [0, 50, 0], y: [0, -30, 0], scale: [1, 1.1, 1] }}
+      transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+    />
+    <motion.div
+      className="absolute bottom-1/3 right-1/4 w-[450px] h-[450px] rounded-full bg-[#1D3557]/15 blur-[120px]"
+      animate={{ x: [0, -40, 0], y: [0, 30, 0], scale: [1, 1.15, 1] }}
+      transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+    />
+  </div>
+
+  <div className="content-container relative z-10">
+    {/* Title */}
+    <motion.div {...motionProps} className="text-center mb-20">
+      <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-[#F1FAEE] mb-4 goldman-bold tracking-tight">
+        MEET THE <span className="text-[#E63946]">TEAM</span>
+      </h2>
+      <p className="text-lg md:text-xl text-[#A8DADC] inter-regular max-w-2xl mx-auto">
+        The brilliant minds powering the vision of <span className="text-[#E63946] font-semibold">Altius 2025</span>.
+      </p>
+      <motion.div
+        className="w-24 h-1 bg-gradient-to-r from-transparent via-[#E63946] to-transparent mx-auto mt-8"
+        {...(prefersReducedMotion ? {} : { initial: { scaleX: 0 }, animate: { scaleX: 1 }, transition: { duration: 0.8 } })}
+      />
+    </motion.div>
+
+    {/* --- Helper: Animated Team Grid Wrapper --- */}
+    {[
+      { title: "Our Principal", data: leadership },
+      { title: "Event Coordinators", data: coordinators },
+      { title: "Development Team", data: developers },
+    ].map((group, groupIndex) => (
+      <motion.div
+        key={group.title}
+        {...motionProps}
+        className="mb-24"
+      >
+        <div className="text-center mb-12">
+          <h3 className="text-3xl md:text-4xl font-bold text-[#F1FAEE] goldman-bold mb-4">
+            {group.title}
+          </h3>
+          <div className="w-16 h-[2px] bg-gradient-to-r from-transparent via-[#E63946] to-transparent mx-auto" />
+        </div>
+
+        <motion.div
+          className="flex justify-center flex-wrap gap-10 md:gap-12"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={{
+            hidden: { opacity: 0, y: 30 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: {
+                staggerChildren: 0.12,
+                duration: 0.5,
+              },
+            },
+          }}
+        >
+          {group.data.map((person) => (
+            <motion.div
+              key={person.name}
+              whileHover={{ scale: 1.08, rotateX: 2, rotateY: -2 }}
+              transition={{ type: "spring", stiffness: 200, damping: 15 }}
+            >
+              <div className="relative w-[220px] h-[290px] rounded-2xl overflow-hidden shadow-[0_0_25px_rgba(230,57,70,0.15)] bg-[#0B0C10] hover:shadow-[0_0_40px_rgba(230,57,70,0.4)] transition-all duration-500 group">
+                {/* Image */}
+                <div className="relative w-full h-[70%] overflow-hidden">
+                  <img
+                    src={person.imageUrl}
+                    alt={person.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    onError={(e) =>
+                      (e.currentTarget.src =
+                        "https://placehold.co/220x180/1F2833/F1FAEE?text=Image")
+                    }
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B0C10]/90 via-transparent to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-500" />
+                </div>
+
+                {/* Content */}
+                <div className="absolute bottom-0 w-full p-4 text-center backdrop-blur-md bg-[#0B0C10]/70 border-t border-[#E63946]/20">
+                  <h4 className="text-lg font-bold text-[#F1FAEE] mb-1">
+                    {person.name}
+                  </h4>
+                  <p className="text-sm text-[#C5C6C7] tracking-wide">
+                    {person.role}
+                  </p>
+                </div>
+
+                {/* Outer glow aura */}
+                <motion.div
+                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                  animate={{
+                    boxShadow: [
+                      "0 0 0 rgba(230,57,70,0)",
+                      "0 0 30px rgba(230,57,70,0.3)",
+                      "0 0 0 rgba(230,57,70,0)",
+                    ],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </motion.div>
+    ))}
+  </div>
+</section>
 
       {/* Why Participate Section - With SpotlightCard Effect */}
       <section className="section-spacing">
@@ -500,127 +621,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-  {/* --- NEW: Meet the Team Section (Improved) --- */}
-<section className="section-spacing relative overflow-hidden">
-  {/* Background gradient orbs */}
-  <div className="absolute inset-0 -z-10 pointer-events-none">
-    <motion.div
-      className="absolute top-1/3 left-1/4 w-[500px] h-[500px] rounded-full bg-[#E63946]/10 blur-[120px]"
-      animate={{ x: [0, 50, 0], y: [0, -30, 0], scale: [1, 1.1, 1] }}
-      transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-    />
-    <motion.div
-      className="absolute bottom-1/3 right-1/4 w-[450px] h-[450px] rounded-full bg-[#1D3557]/15 blur-[120px]"
-      animate={{ x: [0, -40, 0], y: [0, 30, 0], scale: [1, 1.15, 1] }}
-      transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-    />
-  </div>
-
-  <div className="content-container relative z-10">
-    {/* Title */}
-    <motion.div {...motionProps} className="text-center mb-20">
-      <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-[#F1FAEE] mb-4 goldman-bold tracking-tight">
-        MEET THE <span className="text-[#E63946]">TEAM</span>
-      </h2>
-      <p className="text-lg md:text-xl text-[#A8DADC] inter-regular max-w-2xl mx-auto">
-        The brilliant minds powering the vision of <span className="text-[#E63946] font-semibold">Altius 2025</span>.
-      </p>
-      <motion.div
-        className="w-24 h-1 bg-gradient-to-r from-transparent via-[#E63946] to-transparent mx-auto mt-8"
-        {...(prefersReducedMotion ? {} : { initial: { scaleX: 0 }, animate: { scaleX: 1 }, transition: { duration: 0.8 } })}
-      />
-    </motion.div>
-
-    {/* --- Helper: Animated Team Grid Wrapper --- */}
-    {[
-      { title: "Our Principal", data: leadership },
-      { title: "Event Coordinators", data: coordinators },
-      { title: "Development Team", data: developers },
-    ].map((group, groupIndex) => (
-      <motion.div
-        key={group.title}
-        {...motionProps}
-        className="mb-24"
-      >
-        <div className="text-center mb-12">
-          <h3 className="text-3xl md:text-4xl font-bold text-[#F1FAEE] goldman-bold mb-4">
-            {group.title}
-          </h3>
-          <div className="w-16 h-[2px] bg-gradient-to-r from-transparent via-[#E63946] to-transparent mx-auto" />
-        </div>
-
-        <motion.div
-          className="flex justify-center flex-wrap gap-10 md:gap-12"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={{
-            hidden: { opacity: 0, y: 30 },
-            visible: {
-              opacity: 1,
-              y: 0,
-              transition: {
-                staggerChildren: 0.12,
-                duration: 0.5,
-              },
-            },
-          }}
-        >
-          {group.data.map((person) => (
-            <motion.div
-              key={person.name}
-              whileHover={{ scale: 1.08, rotateX: 2, rotateY: -2 }}
-              transition={{ type: "spring", stiffness: 200, damping: 15 }}
-            >
-              <div className="relative w-[220px] h-[290px] rounded-2xl overflow-hidden shadow-[0_0_25px_rgba(230,57,70,0.15)] bg-[#0B0C10] hover:shadow-[0_0_40px_rgba(230,57,70,0.4)] transition-all duration-500 group">
-                {/* Image */}
-                <div className="relative w-full h-[70%] overflow-hidden">
-                  <img
-                    src={person.imageUrl}
-                    alt={person.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    onError={(e) =>
-                      (e.currentTarget.src =
-                        "https://placehold.co/220x180/1F2833/F1FAEE?text=Image")
-                    }
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B0C10]/90 via-transparent to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-500" />
-                </div>
-
-                {/* Content */}
-                <div className="absolute bottom-0 w-full p-4 text-center backdrop-blur-md bg-[#0B0C10]/70 border-t border-[#E63946]/20">
-                  <h4 className="text-lg font-bold text-[#F1FAEE] mb-1">
-                    {person.name}
-                  </h4>
-                  <p className="text-sm text-[#C5C6C7] tracking-wide">
-                    {person.role}
-                  </p>
-                </div>
-
-                {/* Outer glow aura */}
-                <motion.div
-                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-                  animate={{
-                    boxShadow: [
-                      "0 0 0 rgba(230,57,70,0)",
-                      "0 0 30px rgba(230,57,70,0.3)",
-                      "0 0 0 rgba(230,57,70,0)",
-                    ],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </motion.div>
-    ))}
-  </div>
-</section>
+ 
 
 
       {/* Final CTA - With SpotlightCard Effect */}
