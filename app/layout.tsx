@@ -27,12 +27,12 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Altius 2025 | Inter-Department Technical Fest",
+  title: "ALTIUS 25 | Inter-Department Technical Fest",
   description: "Soar Beyond Limits — Altius 2025 at Srinivas Institute of Technology. Join us for an exciting inter-department technical fest featuring competitions, live updates, and more!",
-  keywords: ["Altius 2025", "Technical Fest", "Srinivas Institute", "College Fest", "Tech Event"],
+  keywords: ["Altius 25", "ALTIUS 25", "Altius 2025", "Technical Fest", "Srinivas Institute", "College Fest", "Tech Event"],
   authors: [{ name: "Srinivas Institute of Technology" }],
   openGraph: {
-    title: "Altius 2025 | Inter-Department Technical Fest",
+    title: "ALTIUS 25 | Inter-Department Technical Fest",
     description: "Soar Beyond Limits — Join Altius 2025",
     type: "website",
   },

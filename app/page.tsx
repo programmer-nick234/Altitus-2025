@@ -139,7 +139,7 @@ export default function Home() {
             className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-[#F1FAEE] goldman-bold leading-none tracking-wide 
                        mt-4" // ADDED: mt-4, REMOVED: mb-3
           >
-            ALTIUS <span className="text-[#E63946]">2025</span>
+            ALTIUS <span className="text-[#E63946]">25</span>
           </motion.h1>
 
           {/* Tagline */}
@@ -271,7 +271,7 @@ export default function Home() {
           {/* Stats - With SpotlightCard */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-24">
             {[
-              { value: "85+", label: "Events", color: "rgba(230, 57, 70, 0.2)" },
+              { value: "75+", label: "Events", color: "rgba(230, 57, 70, 0.2)" },
               { value: "500+", label: "Participants", color: "rgba(69, 123, 157, 0.2)" },
               { value: "15", label: "Departments", color: "rgba(230, 57, 70, 0.25)" },
               { value: "1", label: "Day", color: "rgba(29, 53, 87, 0.2)" },

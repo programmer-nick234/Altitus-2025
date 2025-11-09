@@ -48,7 +48,7 @@ export default function Navbar() {
               <div className="relative w-10 h-10 rounded-full overflow-hidden group-hover:drop-shadow-[0_0_10px_#E63946] transition-all">
                 <Image
                   src="/altius-bg.png"
-                  alt="Altius 2025"
+                  alt="ALTIUS 25"
                   fill
                   sizes="40px"
                   className="object-cover"
@@ -56,7 +56,7 @@ export default function Navbar() {
                 />
               </div>
               <span className="goldman-bold text-xl text-white tracking-widest group-hover:text-[#E63946] transition-colors whitespace-nowrap">
-                ALTIUS <span className="text-[#E63946]">2025</span>
+                ALTIUS <span className="text-[#E63946]">25</span>
               </span>
             </motion.div>
           </Link>
@@ -117,10 +117,10 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16 px-4">
           <Link href="/" className="flex items-center gap-2">
             <div className="relative w-8 h-8 rounded-full overflow-hidden">
-              <Image src="/altius-bg.png" alt="Altius 2025" fill sizes="32px" className="object-cover" priority />
+              <Image src="/altius-bg.png" alt="ALTIUS 25" fill sizes="32px" className="object-cover" priority />
             </div>
             <span className="goldman-bold text-lg text-white tracking-wider">
-              ALTIUS <span className="text-[#E63946]">2025</span>
+              ALTIUS <span className="text-[#E63946]">25</span>
             </span>
           </Link>
 

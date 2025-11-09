@@ -16,7 +16,7 @@ export default function AboutPage() {
 
   // Count-up animation
   useEffect(() => {
-    const targets = { days: 1, participants: 500, events: 85, departments: 15 };
+    const targets = { days: 1, participants: 500, events: 75, departments: 15 };
     const duration = 2000;
     const steps = 50;
     const interval = duration / steps;
