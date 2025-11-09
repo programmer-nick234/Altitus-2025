@@ -10,6 +10,8 @@ import BackToTop from "@/components/BackToTop";
 import SpotlightCard from "@/components/SpotlightCard";
 import { Button } from "@/components/ui";
 import styled from 'styled-components'; // Added for the team cards
+// We'll import icons for the social links
+import { FaLinkedin, FaGithub, FaTwitter, FaGlobe } from "react-icons/fa";
 
 // --- Team Card Component ---
 // Using the styled-component definition you provided
@@ -394,9 +396,9 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-{/* --- ✨ MEET THE TEAM (Enhanced Cinematic Edition) --- */}
+{/* --- ✨ MEET THE TEAM (Enhanced Cinematic Edition v2) --- */}
 <section className="section-spacing relative overflow-hidden">
-  {/* Floating gradient orbs for dynamic background */}
+  {/* --- Floating gradient orbs for dynamic cinematic backdrop --- */}
   <div className="absolute inset-0 -z-10 pointer-events-none">
     <motion.div
       className="absolute top-1/3 left-1/4 w-[500px] h-[500px] rounded-full bg-[#E63946]/10 blur-[140px]"
@@ -411,9 +413,9 @@ export default function AboutPage() {
   </div>
 
   <div className="content-container relative z-10">
-    {/* Header */}
-    <motion.div {...motionProps} className="text-center mb-20">
-      <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-[#F1FAEE] mb-4 goldman-bold tracking-tight drop-shadow-[0_0_25px_rgba(230,57,70,0.5)]">
+    {/* --- Section Header --- */}
+    <motion.div {...motionProps} className="text-center mb-28">
+      <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-[#F1FAEE] mb-6 goldman-bold tracking-tight drop-shadow-[0_0_25px_rgba(230,57,70,0.5)]">
         MEET THE <span className="text-[#E63946]">TEAM</span>
       </h2>
       <p className="text-lg md:text-xl text-[#A8DADC] inter-regular max-w-2xl mx-auto">
@@ -432,10 +434,10 @@ export default function AboutPage() {
       />
     </motion.div>
 
-    {/* --- Animated Team Grid --- */}
+    {/* --- Team Groups --- */}
     {[
       { title: "Our Principal", data: leadership },
-      { title: "Altius Faculty Coordinators", data: facultyCoordinators },
+      { title: "Altius Faculty Coordinator", data: facultyCoordinators },
       { title: "Altius Student Coordinators", data: coordinators },
       { title: "Development Team", data: developers },
       { title: "Committee Heads", data: heads },
@@ -443,17 +445,17 @@ export default function AboutPage() {
       <motion.div
         key={group.title}
         {...motionProps}
-        className="mb-28"
+        className={`mb-${groupIndex === 4 ? "32" : "44"}`} // slightly less margin after last group
       >
-        {/* Group Title */}
-        <div className="text-center mb-14">
-          <h3 className="text-3xl md:text-4xl font-bold text-[#F1FAEE] goldman-bold mb-3 drop-shadow-[0_0_15px_rgba(230,57,70,0.6)]">
+        {/* --- Group Title --- */}
+        <div className="text-center mt-36 mb-24">
+          <h3 className="text-3xl md:text-4xl font-bold text-[#F1FAEE] goldman-bold mb-4 drop-shadow-[0_0_15px_rgba(230,57,70,0.6)]">
             {group.title}
           </h3>
           <div className="w-20 h-[2px] bg-gradient-to-r from-transparent via-[#E63946] to-transparent mx-auto rounded-full" />
         </div>
 
-        {/* Team Grid */}
+        {/* --- Team Cards Grid --- */}
         <motion.div
           className="flex justify-center flex-wrap gap-10 md:gap-12"
           initial="hidden"
@@ -482,9 +484,9 @@ export default function AboutPage() {
               }}
               className="relative group"
             >
-              {/* Card */}
-              <div className="relative w-[240px] h-[300px] rounded-2xl overflow-hidden bg-gradient-to-b from-[#0B0C10]/80 to-[#1F2833]/90 shadow-[0_0_25px_rgba(230,57,70,0.2)] border border-[#E63946]/10 hover:border-[#E63946]/30 transition-all duration-500">
-                {/* Image Layer */}
+              {/* --- Card Container --- */}
+              <div className="relative w-[240px] h-[300px] rounded-2xl overflow-hidden bg-gradient-to-b from-[#0B0C10]/80 to-[#1F2833]/90 shadow-[0_0_25px_rgba(230,57,70,0.25)] border border-[#E63946]/10 hover:border-[#E63946]/30 transition-all duration-500">
+                {/* Image */}
                 <div className="relative w-full h-[72%] overflow-hidden">
                   <img
                     src={person.imageUrl}
@@ -508,13 +510,13 @@ export default function AboutPage() {
                   </p>
                 </div>
 
-                {/* Glow ring on hover */}
+                {/* Glow Pulse Effect */}
                 <motion.div
                   className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"
                   animate={{
                     boxShadow: [
                       "0 0 0 rgba(230,57,70,0)",
-                      "0 0 30px rgba(230,57,70,0.3)",
+                      "0 0 35px rgba(230,57,70,0.35)",
                       "0 0 0 rgba(230,57,70,0)",
                     ],
                   }}
@@ -526,11 +528,11 @@ export default function AboutPage() {
                 />
               </div>
 
-              {/* Subtle Floating Animation */}
+              {/* Floating Glow Base */}
               <motion.div
                 className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-t from-[#E63946]/5 to-transparent blur-[40px]"
                 animate={{
-                  y: [0, -10, 0],
+                  y: [0, -12, 0],
                   opacity: [0.3, 0.6, 0.3],
                 }}
                 transition={{
