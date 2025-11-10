@@ -6,7 +6,7 @@ export type EventStatus = "upcoming" | "live" | "completed";
 
 /**
  * Get event status based on current time
- * Shows LIVE 5 minutes before start time
+ * Shows LIVE only during the actual event time
  */
 export function getEventStatus(event: Event, currentTime: Date = new Date()): EventStatus {
   const eventDate = new Date(event.date);
@@ -19,12 +19,10 @@ export function getEventStatus(event: Event, currentTime: Date = new Date()): Ev
   const endTime = new Date(eventDate);
   endTime.setHours(convertTo24Hour(endHour, endPeriod), endMinute, 0, 0);
 
-  // Show LIVE 5 minutes before start
-  const liveStartTime = new Date(startTime.getTime() - 5 * 60 * 1000);
-
+  // Show LIVE only between start and end time
   if (currentTime >= endTime) {
     return "completed";
-  } else if (currentTime >= liveStartTime) {
+  } else if (currentTime >= startTime && currentTime < endTime) {
     return "live";
   } else {
     return "upcoming";
